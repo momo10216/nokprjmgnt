@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field name="id"  type="text" class="readonly" label="JGLOBAL_FIELD_ID_LABEL"
+			description ="JGLOBAL_FIELD_ID_DESC" size="10" default="0"
+			readonly="true" />
+
+		<field name="title" type="text" label="COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_DESC" size="40" required="true" />
+
+		<field name="description" type="editor" label="COM_NOKPRJMGNT_PROJECT_FIELD_DECRIPTION_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_DESCRIPTION_DESC" filter="JComponentHelper::filterText" buttons="true" />
+
+		<field addfieldpath="/administrator/components/com_categories/models/fields" name="catid"
+			type="categoryedit" label="COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_DESC" required="false" default="" />
+
+		<field name="priority" type="integer" label="COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_DESC" required="true" first="1" last="5" step="1" default="1" />
+
+		<field name="duedate" type="calendar" label="COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_DESC" default="NOW" required="false" />
+
+		<field name="status" type="configselection" paramname="project_status" label="COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_DESC" default="" required="true" />
+
+		<field name="read_asset_id" type="accesslevel" label="COM_NOKPRJMGNT_PROJECT_FIELD_READ_ACCESS_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_READ_ACCESS_DESC" size="1" default="Public" />
+
+		<field name="modify_asset_id" type="accesslevel" label="COM_NOKPRJMGNT_PROJECT_FIELD_MODIFY_ACCESS_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_MODIFY_ACCESS_DESC" size="1" default="Public" />
+
+		<field name="custom1" type="cmcustom" label="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM1_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM1_DESC"
+			size="40"
+			required="false" />
+
+		<field name="custom2" type="cmcustom" label="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM2_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM2_DESC"
+			size="40"
+			required="false" />
+
+		<field name="custom3" type="cmcustom" label="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM3_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM3_DESC"
+			size="40"
+			required="false" />
+
+		<field name="custom4" type="cmcustom" label="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM4_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM4_DESC"
+			size="40"
+			required="false" />
+
+		<field name="custom5" type="cmcustom" label="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM5_LABEL"
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_CUSTOM5_DESC"
+			size="40"
+			required="false" />
+
+		<field name="createdby" type="user" label="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL"
+			description="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_DESC"
+			required="false"
+			readonly="true" />
+
+		<field name="createddate" type="calendar" label="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL"
+			description="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_DESC"
+			size="22"
+			format="%Y-%m-%d %H:%M:%S" filter="user_utc"
+			required="false"
+			readonly="true" />
+
+		<field name="modifiedby" type="user" label="COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL"
+			description="COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_DESC"
+			required="false"
+			readonly="true" />
+
+		<field name="modifieddate" type="calendar" label="COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_LABEL"
+			description="COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_DESC"
+			size="22"
+			format="%Y-%m-%d %H:%M:%S" filter="user_utc"
+			required="false"
+			readonly="true" />
+	</fieldset>
+</form>

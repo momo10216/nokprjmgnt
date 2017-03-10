@@ -1,0 +1,9 @@
+Objects & Structure
+===================
+Projects
+	Tags
+	Tasks
+		Joins (Subtasks, Before/After)
+		Tags
+		Responsible (single user)
+		Assigned (multiple users)

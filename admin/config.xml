@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset name="common"
+		  label="COM_NOKPRJMGNT_CONFIGSET_COMMON_LABEL"
+		  description="COM_NOKPRJMGNT_CONFIGSET_COMMON_DESC">
+	</fieldset>
+	<fieldset name="project"
+		  label="COM_NOKPRJMGNT_CONFIGSET_PROJECT_LABEL"
+		  description="COM_NOKPRJMGNT_CONFIGSET_PROJECT_DESC">
+		<field name="project_status" type="text" default="Open;Progressing;Cancelled;Finished"
+			label="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_STATUS_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_STATUS_DESC"/>
+		<field addfieldpath="/administrator/components/com_nokprjmgnt/models/fields" name="project_finished_status"
+			type="configselection" paramname="project_status" default="" multiple="true"
+			label="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_FINISHED_STATUS_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_FINISHED_STATUS_DESC"/>
+		<field name="default_read_access" type="accesslevel" default=""
+			label="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_DEFAULT_READ_ACCESS_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_DEFAULT_READ_ACCESS_DESC"/>
+		<field name="default_modify_access" type="accesslevel" default=""
+			label="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_DEFAULT_MODIFY_ACCESS_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_DEFAULT_MODIFY_ACCESS_DESC"/>
+	</fieldset>
+	<fieldset name="task"
+		  label="COM_NOKPRJMGNT_CONFIGSET_TASK_LABEL"
+		  description="COM_NOKPRJMGNT_CONFIGSET_TASK_DESC">
+		<field name="task_status" type="text" default="Open;Progressing;Cancelled;Finished"
+			label="COM_NOKPRJMGNT_CONFIGFIELD_TASK_STATUS_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_TASK_STATUS_DESC"/>
+		<field addfieldpath="/administrator/components/com_nokprjmgnt/models/fields" name="project_finished_status"
+			type="configselection" paramname="task_status" default="" multiple="true"
+			label="COM_NOKPRJMGNT_CONFIGFIELD_TASK_FINISHED_STATUS_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_TASK_FINISHED_STATUS_DESC"/>
+	</fieldset>
+	<fieldset name="customfields"
+		  label="COM_NOKPRJMGNT_CONFIGSET_CUSTOM_LABEL"
+		  description="COM_NOKPRJMGNT_CONFIGSET_CUSTOM_DESC">
+		<field name="custom1" type="text" default="Custom field 1" label="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_1_LABEL" description="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_1_DESC"/>
+		<field name="custom2" type="text" default="Custom field 2" label="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_2_LABEL" description="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_2_DESC"/>
+		<field name="custom3" type="text" default="Custom field 3" label="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_3_LABEL" description="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_3_DESC"/>
+		<field name="custom4" type="text" default="Custom field 4" label="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_4_LABEL" description="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_4_DESC"/>
+		<field name="custom5" type="text" default="Custom field 5" label="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_5_LABEL" description="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_5_DESC"/>
+	</fieldset>
+</config>
