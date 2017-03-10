@@ -27,7 +27,6 @@
 		</sql>
 	</uninstall>
 
-<!--
 	<files folder="site">
 		<filename>nokprjmgnt.php</filename>
 		<filename>controller.php</filename>
@@ -35,7 +34,6 @@
 		<folder>models</folder>
 		<folder>views</folder>
 	</files>
--->
 
 	<media/>
 
