@@ -6,8 +6,6 @@ CREATE TABLE `#__nok_pm_projects` (
   `priority` integer NOT NULL default 1,
   `duedate` datetime NOT NULL default '0000-00-00 00:00:00',
   `status` varchar(255) NOT NULL,
-  `read_asset_id` int(255) UNSIGNED NOT NULL default '0',
-  `modify_asset_id` int(255) UNSIGNED NOT NULL default '0',
   `custom1` varchar(255) default NULL,
   `custom2` varchar(255) default NULL,
   `custom3` varchar(255) default NULL,

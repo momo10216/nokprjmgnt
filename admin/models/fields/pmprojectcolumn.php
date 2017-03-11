@@ -31,8 +31,6 @@ class JFormFieldPmProjectColumn extends JFormField {
 			"priority" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_LABEL'),
 			"duedate" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_LABEL'),
 			"status" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_LABEL'),
-			"read_asset_id" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_READ_ACCESS_LABEL'),
-			"modify_asset_id" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_MODIFY_ACCESS_LABEL'),
 			"custom1" => $param->get('custom1'),
 			"custom2" => $param->get('custom2'),
 			"custom3" => $param->get('custom3'),

@@ -16,6 +16,7 @@ class NoKPrjMgntViewProjects extends JViewLegacy {
 	protected $paramsComponent;
 	protected $paramsMenuEntry;
 	protected $user;
+	protected $viewAccessLevels;
 
 	function display($tpl = null) {
 		// Init variables
@@ -38,6 +39,7 @@ class NoKPrjMgntViewProjects extends JViewLegacy {
 		$this->document = JFactory::getDocument();
 		$this->items = $this->get('Items');
 		$this->form = $this->get('Form');
+		$this->paramsComponent = $this->state->get('params');
 		$menu = $app->getMenu();
 		if (is_object($menu)) {
 			$currentMenu = $menu->getActive();
@@ -45,9 +47,14 @@ class NoKPrjMgntViewProjects extends JViewLegacy {
 				$this->paramsMenuEntry = $currentMenu->params;
 			}
 		}
+		$this->viewAccessLevels = JAccess::getAuthorisedViewLevels($user->id);
 		// Init document
 		JFactory::getDocument()->setMetaData('robots', 'noindex, nofollow');
 		parent::display($tpl);
+	}
+
+	function hasAccess($assetId) {
+		return in_array($assetId, $this->viewAccessLevels);
 	}
 }
 ?>

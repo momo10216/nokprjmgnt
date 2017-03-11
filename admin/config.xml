@@ -14,12 +14,6 @@
 			type="configselection" paramname="project_status" default="" multiple="true"
 			label="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_FINISHED_STATUS_LABEL"
 			description="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_FINISHED_STATUS_DESC"/>
-		<field name="default_read_access" type="accesslevel" default=""
-			label="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_DEFAULT_READ_ACCESS_LABEL"
-			description="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_DEFAULT_READ_ACCESS_DESC"/>
-		<field name="default_modify_access" type="accesslevel" default=""
-			label="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_DEFAULT_MODIFY_ACCESS_LABEL"
-			description="COM_NOKPRJMGNT_CONFIGFIELD_PROJECT_DEFAULT_MODIFY_ACCESS_DESC"/>
 	</fieldset>
 	<fieldset name="task"
 		  label="COM_NOKPRJMGNT_CONFIGSET_TASK_LABEL"
@@ -40,5 +34,9 @@
 		<field name="custom3" type="text" default="Custom field 3" label="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_3_LABEL" description="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_3_DESC"/>
 		<field name="custom4" type="text" default="Custom field 4" label="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_4_LABEL" description="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_4_DESC"/>
 		<field name="custom5" type="text" default="Custom field 5" label="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_5_LABEL" description="COM_NOKPRJMGNT_CONFIGFIELD_CUSTOM_5_DESC"/>
+	</fieldset>
+	<fieldset name="permission" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
+		<field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC"
+			validate="rules" filter="rules" component="com_nokprjmgnt" section="component" />
 	</fieldset>
 </config>
