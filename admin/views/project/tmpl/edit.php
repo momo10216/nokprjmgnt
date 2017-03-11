@@ -38,8 +38,7 @@ JHtml::_('behavior.tooltip');
 						<?php echo $this->form->renderField('priority'); ?>
 						<?php echo $this->form->renderField('duedate'); ?>
 						<?php echo $this->form->renderField('status'); ?>
-						<?php echo $this->form->renderField('read_asset_id'); ?>
-						<?php echo $this->form->renderField('modify_asset_id'); ?>
+						<?php echo $this->form->renderField('access'); ?>
 					</div>
 				</div>
 			</div>

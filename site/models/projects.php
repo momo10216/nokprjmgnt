@@ -38,8 +38,7 @@ class NoKPrjMgntModelProjects extends JModelList {
 			"priority" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_LABEL',true),'`p`.`priority`'),
 			"duedate" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_LABEL',true),'`p`.`duedate`'),
 			"status" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_LABEL',true),'`p`.`status`'),
-			"read_asset_id" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_READ_ACCESS_LABEL',true),'`p`.`read_asset_id`'),
-			"modify_asset_id" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_MODIFY_ACCESS_LABEL',true),'`p`.`modify_asset_id`'),
+			"asset_id" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_ACCESS_LABEL',true),'`p`.`asset_id`'),
 			"custom1" => array($params->get('custom1'),'`p`.`custom1`'),
 			"custom2" => array($params->get('custom2'),'`p`.`custom2`'),
 			"custom3" => array($params->get('custom3'),'`p`.`custom3`'),
@@ -73,6 +72,7 @@ class NoKPrjMgntModelProjects extends JModelList {
 	 * @since   1.6
 	 */
 	protected function getListQuery() {
+		$user = JFactory::getUser();
 		// Create a new query object.           
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -103,6 +103,7 @@ class NoKPrjMgntModelProjects extends JModelList {
 		if (count($statuslist) > 0) {
 			array_push($where,$db->quoteName('p.status').' IN ('.implode(',',$db->quote($statuslist)).')');
 		}
+		array_push($where, $db->quoteName('p.access').' IN ('.implode(',',$user->getAuthorisedViewLevels()).')');
 		$catid = $this->paramsMenuEntry->get('catid');
 		if ($catid != '0') {
 			array_push($where,$db->quoteName('p.catid').' = '.$db->quote($catid));
@@ -126,6 +127,7 @@ class NoKPrjMgntModelProjects extends JModelList {
 		if (count($sort) > 0) {
 			$query->order(implode(', ',$sort));
 		}
+echo $query;
 		return $query;
 	}
 

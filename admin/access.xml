@@ -3,7 +3,6 @@
 	<section name="component">
 		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
 		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
-		<action name="core.read" title="JACTION_READ" description="JACTION_READ_COMPONENT_DESC" />
 		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
 		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
 		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
@@ -17,7 +16,6 @@
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="COM_CATEGORIES_ACCESS_EDITOWN_DESC" />
 	</section>
 	<section name="project">
-		<action name="core.read" title="JACTION_READ" description="COM_NOKPRJMGNT_PROJECT_ACCESS_READ_DESC" />
 		<action name="core.create" title="JACTION_CREATE" description="COM_NOKPRJMGNT_PROJECT_ACCESS_CREATE_DESC" />
 		<action name="core.delete" title="JACTION_DELETE" description="COM_NOKPRJMGNT_PROJECT_ACCESS_DELETE_DESC" />
 		<action name="core.edit" title="JACTION_EDIT" description="COM_NOKPRJMGNT_PROJECT_ACCESS_EDIT_DESC" />

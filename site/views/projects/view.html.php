@@ -47,7 +47,7 @@ class NoKPrjMgntViewProjects extends JViewLegacy {
 				$this->paramsMenuEntry = $currentMenu->params;
 			}
 		}
-		$this->viewAccessLevels = JAccess::getAuthorisedViewLevels($user->id);
+		$this->viewAccessLevels = JAccess::getAuthorisedViewLevels($this->user->id);
 		// Init document
 		JFactory::getDocument()->setMetaData('robots', 'noindex, nofollow');
 		parent::display($tpl);

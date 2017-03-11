@@ -31,7 +31,8 @@ class JFormFieldProjectList extends JFormField {
 			$query = $db->getQuery(true);
 			$query
 			->select(array('p.id', 'p.title'))
-			->from($db->quoteName('#__nok_pm_projects','p'));
+			->from($db->quoteName('#__nok_pm_projects','p'))
+			->order('p.title');
 			$db->setQuery($query);
 			$results = $db->loadRowList();
 			foreach($results as $result) {
