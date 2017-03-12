@@ -13,7 +13,7 @@
 
 		<field addfieldpath="/administrator/components/com_categories/models/fields" name="catid"
 			type="categoryedit" label="COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL"
-			description="COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_DESC" required="false" default="" />
+			description="COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_DESC" required="false" extension="com_nokprjmgnt" />
 
 		<field name="priority" type="integer" label="COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_LABEL"
 			description="COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_DESC" required="true" first="1" last="5" step="1" default="1" />

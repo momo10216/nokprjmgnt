@@ -10,45 +10,60 @@
 */
 defined('_JEXEC') or die; // no direct access
 $details = false;
-if ($this->paramsMenuEntry->get('detail_enable') != "0") {
+$uriEdit = new JURI(JURI::Root().'/index.php');
+$uriEdit->setVar('layout','form');
+$uriEdit->setVar('Itemid','');
+$uriEdit->setVar('view','project');
+$uriEdit->setVar('option','com_nokprjmgnt');
+$uriDelete = new JURI(JURI::Root().'/index.php');
+$uriDelete->setVar('layout','delete');
+$uriDelete->setVar('Itemid','');
+$uriDelete->setVar('view','project');
+$uriDelete->setVar('option','com_nokprjmgnt');
+if ($this->paramsMenuEntry->get('detail_enable') != '0') {
 	$details = true;
-	$curi = JFactory::getURI();
-	$uri = JURI::getInstance( $curi->toString() );
-	$uri->setVar("layout","detail");
-	$uri->setVar("tmpl","component");
-	$uri->setVar("Itemid","");
-	$uri->setVar("view","project");
-	$uri->setVar('option','com_nokprjmgnt');
+	$uriDetail = new JURI(JURI::Root().'/index.php');
+	$uriDetail->setVar('layout','detail');
+	$uriDetail->setVar('Itemid','');
+	$uriDetail->setVar('view','project');
+	$uriDetail->setVar('option','com_nokprjmgnt');
 }
 // Get columns
 $cols = array();
 for ($i=1;$i<=20;$i++) {
-	$field = "column_".$i;
+	$field = 'column_'.$i;
 	$cols[] = $this->paramsMenuEntry->get($field);
 }
 $colcount = count($cols);
 // Display
-$border="border-style:solid; border-width:1px";
-$width="";
-if ($this->paramsMenuEntry->get('width') != "0") {
-	$width="width=\"".$this->paramsMenuEntry->get( 'width' )."\" ";
+$border='border-style:solid; border-width:1px';
+$width='';
+if ($this->paramsMenuEntry->get('width') != '0') {
+	$width='width="'.$this->paramsMenuEntry->get('width').'" ';
 }
-if ($this->paramsMenuEntry->get( "table_center") == "1") echo "<center>\n";
-if ($this->paramsMenuEntry->get( "border_type") != "") {
-	echo "<table ".$width."border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"".$border."\">\n";
+if ($this->paramsMenuEntry->get('table_center') == '1') echo "<center>\n";
+if ($this->paramsMenuEntry->get('border_type') != '') {
+	echo '<table '.$width.'border="0" cellspacing="0" cellpadding="0" style="'.$border.'">'."\n";
 } else {
-	echo "<table ".$width."border=\"0\" style=\"border-style:none; border-width:0px\">\n";
+	echo '<table '.$width.'border="0" style="border-style:none; border-width:0px">'."\n";
 }
-if ($this->paramsMenuEntry->get('show_header', '1') == '1') {
-	$header = $this->getModel()->getHeader($cols);
-	echo "<tr>";
-	foreach($header as $strSingle) {
-		if ($strSingle != "") {
-			echo "<th>".$strSingle."</th>";
+$header = $this->getModel()->getHeader($cols);
+echo '<tr>';
+foreach($header as $strSingle) {
+	if ($strSingle != '') {
+		echo '<th align="left">';
+		if ($this->paramsMenuEntry->get('show_header', '1') == '1') {
+			echo $strSingle;
 		}
+		echo '</th>';
 	}
-	echo "</tr>\n";
 }
+echo '<th align="left">';
+if ($this->componentCanDo->get('core.create')) {
+	echo '<a style="text-decoration: none;" href="'.$uriEdit->toString().'"><span class="icon-new"></span></a>';
+}
+echo '</th>';
+echo '</tr>'."\n";
 $detailColumn = $this->paramsMenuEntry->get('detail_column_link');
 //echo "<pre>".$detailColumn."</pre>";
 if ($this->items) {
@@ -64,11 +79,11 @@ if ($this->items) {
 			break;
 	}
 	foreach($this->items as $item) {
+		$itemCanDo = JHelperContent::getActions('com_nokprjmgnt','project',$item->id);
 		$row = (array) $item;
 		echo "<tr>\n";
 		if ($details) {
-			$id = $item->id;
-			$uri->setVar('id',$id);
+			$uriDetail->setVar('id',$item->id);
 		}
 		for($j=0;$j<$colcount;$j++) {
 			$field = $cols[$j];
@@ -76,13 +91,25 @@ if ($this->items) {
 				$data = $row[$field];
 				echo "<td".$borderStyle.">";
 				if ($details && (($detailColumn == "") || ($detailColumn == $field))) {
-					echo "<a href=\"".$uri->toString()."\">".$data."</a>";
+					echo "<a href=\"".$uriDetail->toString()."\">".$data."</a>";
 				} else {
 					echo $data;
 				}
 				echo "</td>";
 			}
 		}
+		echo '<td>';
+		if ($itemCanDo->get('core.edit')) {
+			$uriEdit->setVar('id',$item->id);
+			echo '<a style="text-decoration: none;" href="'.$uriEdit->toString().'"><span class="icon-edit"></span></a>';
+		}
+		echo '</td>';
+		echo '<td>';
+		if ($itemCanDo->get('core.delete')) {
+			$uriDelete->setVar('id',$item->id);
+			echo '<a style="text-decoration: none;" href="'.$uriDelete->toString().'"><span class="icon-trash"></span></a>';
+		}
+		echo '</td>';
 		echo "</tr>\n";
 	}
 }

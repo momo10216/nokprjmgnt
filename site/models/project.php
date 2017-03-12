@@ -17,16 +17,16 @@ jimport('joomla.application.component.modelitem');
 jimport('joomla.event.dispatcher');
 // Include dependancy of the component helper
 jimport('joomla.application.component.helper');
-class NoKPrjMgntModelProjects extends JModelList {
+class NoKPrjMgntModelProject extends JModelForm {
 	/**
 	 * @since   1.6
 	 */
 	private $pk = '0';
 	private $useAlias= true;
-	protected $view_item = 'projects';
+	protected $view_item = 'project';
 	protected $_item = null;
 	protected $_membershipItems = null;
-	protected $_context = 'com_nokprjmgnt.projects';
+	protected $_context = 'com_nokprjmgnt.project';
 
 	private function getFields() {
 		$params = JComponentHelper::getParams('com_nokprjmgnt');
@@ -58,97 +58,114 @@ class NoKPrjMgntModelProjects extends JModelList {
 	 *
 	 * @since   1.6
 	 */
-	protected function populateState($ordering = null, $direction = null) {
-		$app = JFactory::getApplication();
+	protected function populateState() {
+		$app = JFactory::getApplication('site');
+		// Load state from the request.
+		$pk = $app->input->getInt('id');
+		$this->setState('project.id', $pk);
+		// Load the parameters.
 		$params = $app->getParams();
 		$this->setState('params', $params);
-		$this->setState('filter.published',1);
+		$user = JFactory::getUser();
+		if ((!$user->authorise('core.edit.state', 'com_nokprjmgnt')) &&  (!$user->authorise('core.edit', 'com_nokprjmgnt'))) {
+			$this->setState('filter.published', 1);
+			$this->setState('filter.archived', 2);
+		}
 	}
 
 	/**
-	 * Method to build an SQL query to load the list data.
+	 * Method to get the contact form.
+	 * The base form is loaded from XML and then an event is fired
 	 *
-	 * @return  string    An SQL query
+	 * @param   array    $data      An optional array of data for the form to interrogate.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 * 
+	 * @return  JForm  A JForm object on success, false on failure
 	 * @since   1.6
 	 */
-	protected function getListQuery() {
-		$user = JFactory::getUser();
-		// Create a new query object.           
-		$db = JFactory::getDBO();
-		$query = $db->getQuery(true);
-		// Select some fields from the hello table
-		$allFields = $this->getFields();
-		$fields = array();
-		foreach (array_keys($allFields) as $key) {
-			if (isset($allFields[$key]) && !empty($allFields[$key])) {
-				$field = $allFields[$key];
-				array_push($fields,$field[1].' AS '.$key);
-			}
+	public function getForm($data = array(), $loadData = true) {
+		// Get the form.
+		$form = $this->loadForm('com_nokprjmgnt.project', 'project', array('control' => 'jform', 'load_data' => true));
+		if (empty($form)) {
+			return false;
 		}
-		$query->select($fields)
-			->from($db->quoteName('#__nok_pm_projects','p'))
-			->join('LEFT', $db->quoteName('#__categories', 'c').' ON ('.$db->quoteName('p.catid').'='.$db->quoteName('c.id').')');
-		// Get configurations
-		$this->paramsComponent = $this->state->get('params');
-		$app = JFactory::getApplication();
-		$currentMenu = $app->getMenu()->getActive();
-		if (is_object( $currentMenu )) {
-			$this->paramsMenuEntry = $currentMenu->params;
-		} else {
-			return $query;
+/*
+		$pk = $this->getState('project.id');
+		if (empty($pk)) $pk = $this->pk;
+		$params = $this->getState('params');
+		$project = $this->_item[$pk];
+		if (is_object($project)) {
+			$params->merge($project->params);
 		}
-		// Filter by search in name.
-		$where = array();
-		$statuslist = $this->paramsMenuEntry->get('status');
-		if (count($statuslist) > 0) {
-			array_push($where,$db->quoteName('p.status').' IN ('.implode(',',$db->quote($statuslist)).')');
+*/
+		return $form;
+	}
+
+	protected function loadFormData() {
+		$data = (array) JFactory::getApplication()->getUserState('com_nokprjmgnt.project.data', array());
+		$this->preprocessData('com_nokprjmgnt.project', $data);
+		if (empty($data)) {
+			$data = $this->getItem();
 		}
-		array_push($where, $db->quoteName('p.access').' IN ('.implode(',',$user->getAuthorisedViewLevels()).')');
-		$catid = $this->paramsMenuEntry->get('catid');
-		if ($catid != '0') {
-			array_push($where,$db->quoteName('p.catid').' = '.$db->quote($catid));
+		return $data;
+	}
+
+	/**
+	 * Gets a contact
+	 *
+	 * @param   integer  $pk  Id for the contact
+	 *
+	 * @return mixed Object or null
+	 */
+	public function &getItem($pk = null) {
+		if (empty($pk)) $pk = $this->getState('project.id');
+		if (empty($pk)) $pk = $this->pk;
+		if ($this->_item === null) {
+			$this->_item = array();
 		}
-		if (count($where) > 0) {
-			$query->where(implode(' AND ',$where));
-		}
-		// Add the list ordering clause.
-		$sort = array();
-		for ($i=1;$i<=4;$i++) {
-			$fieldKeyCol = 'sort_column_'.$i;
-			$fieldKeyDir = 'sort_direction_'.$i;
-			$key = $this->paramsMenuEntry->get($fieldKeyCol);
-			if (!empty($key)) {
-				if (isset($allFields[$key]) && !empty($allFields[$key])) {
-					$fieldname = $allFields[$key][1];
-					array_push($sort, $fieldname.' '.$this->paramsMenuEntry->get($fieldKeyDir));
+		if (!isset($this->_item[$pk])) {
+			try {
+				$db = $this->getDbo();
+				$query = $db->getQuery(true);
+				// Select some fields from the hello table
+				$fields = array();
+				$allFields = $this->getFields();
+				foreach ($allFields as $key => $field) {
+					if ($this->useAlias) {
+						array_push($fields,$field[1]." AS ".$key);
+					} else {
+						array_push($fields,$field[1]);
+					}
 				}
+				$query->select($fields)
+					->from($db->quoteName('#__nok_pm_projects','p'))
+					->join('LEFT', $db->quoteName('#__categories', 'c').' ON ('.$db->quoteName('p.catid').'='.$db->quoteName('c.id').')')
+					->where('p.id = ' . (int) $pk);
+				$db->setQuery($query);
+				$data = $db->loadObject();
+				$this->_item[$pk] = $data;
+			} catch (Exception $e) {
+				$this->setError($e);
+				$this->_item[$pk] = false;
 			}
 		}
-		if (count($sort) > 0) {
-			$query->order(implode(', ',$sort));
-		}
-//echo $query;
-		return $query;
+		return $this->_item[$pk];
 	}
 
 	public function getHeader($cols) {
 		$fields = array();
 		$allFields = $this->getFields();
 		foreach ($cols as $col) {
-			if (isset($allFields[$col])) {
-				$field = $allFields[$col];
-				array_push($fields,$field[0]);
-			} else {
-				array_push($fields,$col);
-			}
+			$field = $allFields[$col];
+			array_push($fields,$field[0]);
 		}
 		return $fields;
 	}
 
-	public function translateFieldsToColumns($searchFields, $removePrefix=true) {
+	public function translateFieldsToColumns($fields, $removePrefix=true) {
 		$result = array();
 		$allFields = $this->getFields();
-		foreach($searchFields as $field) {
+		foreach($fields as $field) {
 			if (isset($allFields[$field]) && !empty($allFields[$field])) {
 				if ($removePrefix) {
 					$resultField = str_replace('`p`.', '' , $allFields[$field][1]);
@@ -161,6 +178,21 @@ class NoKPrjMgntModelProjects extends JModelList {
 			}
 		}
 		return $result;
+	}
+
+	public function setPk($pk) {
+		$this->pk = $pk;
+	}
+
+	public function setUseAlias($useAlias) {
+		$this->useAlias = $useAlias;
+	}
+
+	public function storeData($data, $id='') {
+		$table = $this->getTable();
+		$table->bind($data);
+		$table->id = $id;
+		$table->store();
 	}
 }
 ?>
