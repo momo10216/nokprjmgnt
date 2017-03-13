@@ -26,10 +26,12 @@ class NoKPrjMgntModelProject extends JModelForm {
 	protected $view_item = 'project';
 	protected $_item = null;
 	protected $_membershipItems = null;
+	protected $_model = 'project';
+	protected $_component = 'com_nokprjmgnt';
 	protected $_context = 'com_nokprjmgnt.project';
 
 	private function getFields() {
-		$params = JComponentHelper::getParams('com_nokprjmgnt');
+		$params = JComponentHelper::getParams($this->_component);
 		return array (
 			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`p`.`id`'),
 			"title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`p`.`title`'),
@@ -62,12 +64,12 @@ class NoKPrjMgntModelProject extends JModelForm {
 		$app = JFactory::getApplication('site');
 		// Load state from the request.
 		$pk = $app->input->getInt('id');
-		$this->setState('project.id', $pk);
+		$this->setState($this->_model.'.id', $pk);
 		// Load the parameters.
 		$params = $app->getParams();
 		$this->setState('params', $params);
 		$user = JFactory::getUser();
-		if ((!$user->authorise('core.edit.state', 'com_nokprjmgnt')) &&  (!$user->authorise('core.edit', 'com_nokprjmgnt'))) {
+		if ((!$user->authorise('core.edit.state', $this->_component)) &&  (!$user->authorise('core.edit', $this->_component))) {
 			$this->setState('filter.published', 1);
 			$this->setState('filter.archived', 2);
 		}
@@ -98,7 +100,7 @@ class NoKPrjMgntModelProject extends JModelForm {
 	 */
 	public function getForm($data = array(), $loadData = true) {
 		// Get the form.
-		$form = $this->loadForm('com_nokprjmgnt.project', 'project', array('control' => 'jform', 'load_data' => true));
+		$form = $this->loadForm($this->_context, $this->_model, array('control' => 'jform', 'load_data' => true));
 		if (empty($form)) {
 			return false;
 		}
@@ -115,8 +117,8 @@ class NoKPrjMgntModelProject extends JModelForm {
 	}
 
 	protected function loadFormData() {
-		$data = (array) JFactory::getApplication()->getUserState('com_nokprjmgnt.project.data', array());
-		$this->preprocessData('com_nokprjmgnt.project', $data);
+		$data = (array) JFactory::getApplication()->getUserState($this->_context.'.data', array());
+		$this->preprocessData($this->_context, $data);
 		if (empty($data)) {
 			$data = $this->getItem();
 		}
@@ -131,7 +133,7 @@ class NoKPrjMgntModelProject extends JModelForm {
 	 * @return mixed Object or null
 	 */
 	public function &getItem($pk = null) {
-		if (empty($pk)) $pk = $this->getState('project.id');
+		if (empty($pk)) $pk = $this->getState($this->_model.'.id');
 		if (empty($pk)) $pk = $this->pk;
 		if ($this->_item === null) {
 			$this->_item = array();
@@ -207,14 +209,14 @@ class NoKPrjMgntModelProject extends JModelForm {
 
 		if(!empty($id)) {
 			//Check the user can edit this item
-			$authorised = $user->authorise('core.edit', 'com_nokprjmgnt.project.'.$id) || $authorised = $user->authorise('core.edit.own', 'com_nokprjmgnt.project.'.$id);
-			if($user->authorise('core.edit.state', 'com_nokprjmgnt.project.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
+			$authorised = $user->authorise('core.edit', $this->_context.'.'.$id) || $authorised = $user->authorise('core.edit.own', $this->_context.'.'.$id);
+			if($user->authorise('core.edit.state', $this->_context.'.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
 				$data['state'] = 0;
 			}
 		} else {
 			//Check the user can create new items in this section
-			$authorised = $user->authorise('core.create', 'com_nokprjmgnt');
-			if($user->authorise('core.edit.state', 'com_nokprjmgnt.project.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
+			$authorised = $user->authorise('core.create', $this->_component);
+			if($user->authorise('core.edit.state', $this->_context.'.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
 				$data['state'] = 0;
 			}
 		}
@@ -235,7 +237,7 @@ class NoKPrjMgntModelProject extends JModelForm {
 
 	public function delete($id) {
 		$user = JFactory::getUser();
-		$authorised = $user->authorise('core.delete', 'com_nokprjmgnt.project.'.$id) || $authorised = $user->authorise('core.delete.own', 'com_nokprjmgnt.project.'.$id);
+		$authorised = $user->authorise('core.delete', $this->_context.'.'.$id) || $authorised = $user->authorise('core.delete.own', $this->_component.'.'.$id);
 		if ($authorised !== true) {
 			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
 			return false;

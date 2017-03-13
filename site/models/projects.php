@@ -26,10 +26,12 @@ class NoKPrjMgntModelProjects extends JModelList {
 	protected $view_item = 'projects';
 	protected $_item = null;
 	protected $_membershipItems = null;
+	protected $_model = 'projects';
+	protected $_component = 'com_nokprjmgnt';
 	protected $_context = 'com_nokprjmgnt.projects';
 
 	private function getFields() {
-		$params = JComponentHelper::getParams('com_nokprjmgnt');
+		$params = JComponentHelper::getParams($this->_component);
 		return array (
 			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`p`.`id`'),
 			"title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`p`.`title`'),
