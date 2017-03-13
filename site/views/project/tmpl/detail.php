@@ -18,3 +18,4 @@ defined('_JEXEC') or die; // no direct access
 	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_LABEL").':'.$this->item->duedate; ?>
 </p>
 <?php echo $this->item->description; ?>
+<?php echo $this->loadTemplate('tasks'); ?>

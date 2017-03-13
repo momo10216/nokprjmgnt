@@ -29,6 +29,7 @@ class NoKPrjMgntModelProject extends JModelForm {
 	protected $_model = 'project';
 	protected $_component = 'com_nokprjmgnt';
 	protected $_context = 'com_nokprjmgnt.project';
+	protected $_taskItems = null;
 
 	private function getFields() {
 		$params = JComponentHelper::getParams($this->_component);
@@ -46,6 +47,24 @@ class NoKPrjMgntModelProject extends JModelForm {
 			"custom3" => array($params->get('custom3'),'`p`.`custom3`'),
 			"custom4" => array($params->get('custom4'),'`p`.`custom4`'),
 			"custom5" => array($params->get('custom5'),'`p`.`custom5`'),
+			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`'),
+			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`p`.`createddate`'),
+			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`p`.`modifiedby`'),
+			"modifieddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_LABEL',true),'`p`.`modifieddate`')
+		);
+	}
+
+	private function getTaskFields() {
+		$params = JComponentHelper::getParams($this->_component);
+		return array (
+			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`t`.`id`'),
+			"title" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_TITLE_LABEL',true),'`t`.`title`'),
+			"project_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`t`.`title`'),
+			"description" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_DESCRIPTION_LABEL',true),'`t`.`description`'),
+			"category_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL',true),'`c`.`title`'),
+			"priority" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_PRIORITY_LABEL',true),'`t`.`priority`'),
+			"duedate" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_DUE_DATE_LABEL',true),'`t`.`duedate`'),
+			"status" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL',true),'`t`.`status`'),
 			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`'),
 			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`p`.`createddate`'),
 			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`p`.`modifiedby`'),
@@ -167,9 +186,50 @@ class NoKPrjMgntModelProject extends JModelForm {
 		return $this->_item[$pk];
 	}
 
+	public function getTaskItems($pk = null, $sort='') {
+		$pk = (!empty($pk)) ? $pk : (int) $this->getState('project.id');
+		if (!isset($this->_taskItems[$pk])) {
+			try {
+				$db = $this->getDbo();
+				$query = $db->getQuery(true);
+				// Select some fields from the hello table
+				$fields = array();
+				$allFields = $this->getMembershipFields();
+				foreach ($allFields as $key => $field) {
+					array_push($fields,$field[1]." AS ".$key);
+				}
+				$query->select($fields)
+					->from($db->quoteName('#__nok_pm_tasks','t'))
+					->join('LEFT', $db->quoteName('#__nok_pm_projects', 'c').' ON ('.$db->quoteName('t.project_id').'='.$db->quoteName('p.id').')')
+					->join('LEFT', $db->quoteName('#__categories', 'c').' ON ('.$db->quoteName('p.catid').'='.$db->quoteName('c.id').')')
+					->where('t.project_id = ' . (int) $pk);
+				if (!empty($sort)) {
+					$query->order($sort);
+				}
+				$db->setQuery($query);
+				$data = $db->loadObjectList();
+				$this->_taskItems[$pk] = $data;
+			} catch (Exception $e) {
+				$this->setError($e);
+				$this->_taskItems[$pk] = false;
+			}
+		}
+		return $this->_taskItems[$pk];
+	}
+
 	public function getHeader($cols) {
 		$fields = array();
 		$allFields = $this->getFields();
+		foreach ($cols as $col) {
+			$field = $allFields[$col];
+			array_push($fields,$field[0]);
+		}
+		return $fields;
+	}
+
+	public function getTaskHeader($cols) {
+		$fields = array();
+		$allFields = $this->getTaskFields();
 		foreach ($cols as $col) {
 			$field = $allFields[$col];
 			array_push($fields,$field[0]);
