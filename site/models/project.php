@@ -74,7 +74,20 @@ class NoKPrjMgntModelProject extends JModelForm {
 	}
 
 	/**
-	 * Method to get the contact form.
+	 * Returns a Table object, always creating it.
+	 *
+	 * @param   type      The table type to instantiate
+	 * @param   string    A prefix for the table class name. Optional.
+	 * @param   array     Configuration array for model. Optional.
+	 *
+	 * @return  JTable    A database object
+	 */
+	public function getTable($type = 'Project', $prefix = 'NoKPrjMgntTable', $config = array()) {
+		return JTable::getInstance($type, $prefix, $config);
+	}
+
+	/**
+	 * Method to get the form object.
 	 * The base form is loaded from XML and then an event is fired
 	 *
 	 * @param   array    $data      An optional array of data for the form to interrogate.
@@ -189,10 +202,35 @@ class NoKPrjMgntModelProject extends JModelForm {
 	}
 
 	public function storeData($data, $id='') {
+		$state = (!empty($data['state'])) ? 1 : 0;
+		$user = JFactory::getUser();
+
+		if(!empty($id)) {
+			//Check the user can edit this item
+			$authorised = $user->authorise('core.edit', 'com_nokprjmgnt.project.'.$id) || $authorised = $user->authorise('core.edit.own', 'com_nokprjmgnt.project.'.$id);
+			if($user->authorise('core.edit.state', 'com_nokprjmgnt.project.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
+				$data['state'] = 0;
+			}
+		} else {
+			//Check the user can create new items in this section
+			$authorised = $user->authorise('core.create', 'com_nokprjmgnt');
+			if($user->authorise('core.edit.state', 'com_nokprjmgnt.project.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
+				$data['state'] = 0;
+			}
+		}
+
+		if ($authorised !== true) {
+			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
+			return false;
+		}
+
 		$table = $this->getTable();
-		$table->bind($data);
-		$table->id = $id;
-		$table->store();
+		if ($table->save($data) === true) {
+			return $id;
+		} else {
+			return false;
+		}
+
 	}
 }
 ?>
