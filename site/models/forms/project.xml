@@ -78,5 +78,9 @@
 			format="%Y-%m-%d %H:%M:%S" filter="user_utc"
 			required="false"
 			readonly="true" />
+
+		<field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL"
+			description="JCONFIG_PERMISSIONS_DESC" validate="rules" filter="rules"
+			component="com_nokprjmgnt" section="project" />
 	</fieldset>
 </form>

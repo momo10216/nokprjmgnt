@@ -70,7 +70,7 @@ $uriSave = new JURI($curi->toString());
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		<?php if ($this->canDo->get('core.admin')) : ?>
-			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('JCONFIG_PERMISSIONS_LABEL')); ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_('COM_NOKPRJMGNT_PROJECT_TAB_PERMISSIONS')); ?>
 				<?php echo $this->form->getInput('rules'); ?>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 		<?php endif; ?>
