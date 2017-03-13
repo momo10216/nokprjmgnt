@@ -232,5 +232,16 @@ class NoKPrjMgntModelProject extends JModelForm {
 		}
 
 	}
+
+	public function delete($id) {
+		$user = JFactory::getUser();
+		$authorised = $user->authorise('core.delete', 'com_nokprjmgnt.project.'.$id) || $authorised = $user->authorise('core.delete.own', 'com_nokprjmgnt.project.'.$id);
+		if ($authorised !== true) {
+			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
+			return false;
+		}
+		$table = $this->getTable();
+		return $table->delete($id);
+	}
 }
 ?>
