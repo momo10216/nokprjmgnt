@@ -9,4 +9,6 @@
 * @authorEmail	momo_102@bluemail.ch
 */
 defined('_JEXEC') or die; // no direct access
+$items = $this->getModel('tasks')->getItems();
+
 ?>
