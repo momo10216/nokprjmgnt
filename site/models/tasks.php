@@ -23,6 +23,8 @@ class NoKPrjMgntModelProjects extends JModelList {
 	 */
 	private $pk = '0';
 	private $useAlias= true;
+	private $_where = array();
+	private $_sort = array();
 	protected $view_item = 'tasks';
 	protected $_item = null;
 	protected $_membershipItems = null;
@@ -87,46 +89,58 @@ class NoKPrjMgntModelProjects extends JModelList {
 			->join('LEFT', $db->quoteName('#__categories', 'c').' ON ('.$db->quoteName('p.catid').'='.$db->quoteName('c.id').')')
 			->where('t.project_id = ' . (int) $pk);
 		// Get configurations
+		$where = array();
+		$sort = array();
 		$this->paramsComponent = $this->state->get('params');
 		$app = JFactory::getApplication();
 		$currentMenu = $app->getMenu()->getActive();
 		if (is_object( $currentMenu )) {
+			// Menu filter
 			$this->paramsMenuEntry = $currentMenu->params;
-		} else {
-			return $query;
-		}
-		// Filter by search in name.
-		$where = array();
-		$statuslist = $this->paramsMenuEntry->get('status');
-		if (count($statuslist) > 0) {
-			array_push($where,$db->quoteName('t.status').' IN ('.implode(',',$db->quote($statuslist)).')');
-		}
-		array_push($where, $db->quoteName('p.access').' IN ('.implode(',',$user->getAuthorisedViewLevels()).')');
-		$catid = $this->paramsMenuEntry->get('catid');
-		if ($catid != '0') {
-			array_push($where,$db->quoteName('p.catid').' = '.$db->quote($catid));
-		}
-		if (count($where) > 0) {
-			$query->where(implode(' AND ',$where));
-		}
-		// Add the list ordering clause.
-		$sort = array();
-		for ($i=1;$i<=4;$i++) {
-			$fieldKeyCol = 'sort_column_'.$i;
-			$fieldKeyDir = 'sort_direction_'.$i;
-			$key = $this->paramsMenuEntry->get($fieldKeyCol);
-			if (!empty($key)) {
-				if (isset($allFields[$key]) && !empty($allFields[$key])) {
-					$fieldname = $allFields[$key][1];
-					array_push($sort, $fieldname.' '.$this->paramsMenuEntry->get($fieldKeyDir));
+			$statuslist = $this->paramsMenuEntry->get('status');
+			if (count($statuslist) > 0) {
+				array_push($where,$db->quoteName('t.status').' IN ('.implode(',',$db->quote($statuslist)).')');
+			}
+			$catid = $this->paramsMenuEntry->get('catid');
+			if ($catid != '0') {
+				array_push($where,$db->quoteName('p.catid').' = '.$db->quote($catid));
+			}
+			// Menu sort
+			for ($i=1;$i<=4;$i++) {
+				$fieldKeyCol = 'sort_column_'.$i;
+				$fieldKeyDir = 'sort_direction_'.$i;
+				$key = $this->paramsMenuEntry->get($fieldKeyCol);
+				if (!empty($key)) {
+					if (isset($allFields[$key]) && !empty($allFields[$key])) {
+						$fieldname = $allFields[$key][1];
+						array_push($sort, $fieldname.' '.$this->paramsMenuEntry->get($fieldKeyDir));
+					}
 				}
 			}
 		}
+		$where = array_merge($where, $this->_where);
+		$sort = array_merge($where, $this->_sort);
+		if (!empty($this->projectId)) {
+			array_push($where,$db->quoteName('t.project_id').' = '.$db->quote($this->projectId));
+		}
+		// Use filter
+		if (count($where) > 0) {
+			$query->where(implode(' AND ',$where));
+		}
+		// Use sort
 		if (count($sort) > 0) {
 			$query->order(implode(', ',$sort));
 		}
 //echo $query;
 		return $query;
+	}
+
+	public function getProjectFormItems($projectId) {
+		$db = JFactory::getDBO();
+		$this->_where = array($db->quoteName('t.project_id').' = '.$db->quoteName($projectId));
+		$result = $this->getItems();
+		$this->_where = array();
+		return $result;
 	}
 
 	public function getHeader($cols) {
