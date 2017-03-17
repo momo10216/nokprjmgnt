@@ -110,7 +110,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 			}
 			$projectId = $this->paramsMenuEntry->get('projectId');
 			if (!empty($projectId)) {
-				array_push($where,$db->quoteName('p.id').' = '.$db->quote($$projectId));
+				array_push($where,$db->quoteName('p.id').' = '.$db->quote($projectId));
 			}
 			// Menu sort
 			for ($i=1;$i<=4;$i++) {
@@ -128,9 +128,6 @@ class NoKPrjMgntModelTasks extends JModelList {
 		array_push($where, $db->quoteName('p.access').' IN ('.implode(',',$user->getAuthorisedViewLevels()).')');
 		$where = array_merge($where, $this->_where);
 		$sort = array_merge($sort, $this->_sort);
-		if (!empty($this->projectId)) {
-			array_push($where,$db->quoteName('t.project_id').' = '.$db->quote($this->projectId));
-		}
 		// Use filter
 		if (count($where) > 0) {
 			$query->where(implode(' AND ',$where));
@@ -145,7 +142,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 
 	public function getProjectFormItems($projectId) {
 		$db = JFactory::getDBO();
-		$this->_where = array($db->quoteName('t.project_id').' = '.$db->quoteName($projectId));
+		$this->_where = array($db->quoteName('t.project_id').' = '.$db->quote($projectId));
 		$result = $this->getItems();
 		$this->_where = array();
 		return $result;

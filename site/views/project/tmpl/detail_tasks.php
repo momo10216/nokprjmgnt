@@ -15,10 +15,11 @@ $tasksDetailColumn = 'title';
 $tasksBorderType = 'none';
 $showBorder = false;
 $showHeader = true;
+$details = true;
 
 // Prepare
 $component = 'com_nokprjmgnt';
-$tasksModel = & $this->getModel('Tasks');
+$tasksModel = JControllerLegacy::getInstance('NoKPrjMgnt')->getModel('Tasks');
 $taskItems = $tasksModel->getProjectFormItems($this->item->id);
 $tasksHeader = $tasksModel->getHeader($tasksColumn);
 $uriEdit = new JURI(JURI::Root().'/index.php');
@@ -36,7 +37,7 @@ $uriDetail->setVar('layout','detail');
 $uriDetail->setVar('Itemid','');
 $uriDetail->setVar('view','task');
 $uriDetail->setVar('option',$component);
-$modify = JHelperContent::getActions('com_nokprjmgnt','project',$item->id)->get('core.edit');
+$modify = JHelperContent::getActions('com_nokprjmgnt','project',$this->item->id)->get('core.edit');
 $tasksColumnCount = count($tasksColumn);
 
 // Filter
@@ -76,7 +77,7 @@ echo '</th>';
 echo '</tr>'."\n";
 
 // Items
-if ($this->items) {
+if (is_array($taskItems) && (count($taskItems)>0)) {
 	$deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_TASK_CONFIRM_DELETE");
 	foreach($taskItems as $item) {
 		$row = (array) $item;
@@ -89,7 +90,7 @@ if ($this->items) {
 			if (!empty($field)) {
 				$data = $row[$field];
 				echo '<td stype="'.$borderStyle.'">';
-				if ($details && (($detailColumn == "") || ($detailColumn == $field))) {
+				if ($details && (($tasksDetailColumn == "") || ($tasksDetailColumn == $field))) {
 					echo "<a href=\"".$uriDetail->toString()."\">".$data."</a>";
 				} else {
 					echo $data;
