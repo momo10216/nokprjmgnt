@@ -13,19 +13,19 @@ $details = false;
 $uriEdit = new JURI(JURI::Root().'/index.php');
 $uriEdit->setVar('layout','form');
 $uriEdit->setVar('Itemid','');
-$uriEdit->setVar('view','task');
+$uriEdit->setVar('view','project');
 $uriEdit->setVar('option','com_nokprjmgnt');
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
-$uriDelete->setVar('view','task');
+$uriDelete->setVar('view','project');
 $uriDelete->setVar('option','com_nokprjmgnt');
 if ($this->paramsMenuEntry->get('detail_enable') != '0') {
 	$details = true;
 	$uriDetail = new JURI(JURI::Root().'/index.php');
 	$uriDetail->setVar('layout','detail');
 	$uriDetail->setVar('Itemid','');
-	$uriDetail->setVar('view','task');
+	$uriDetail->setVar('view','project');
 	$uriDetail->setVar('option','com_nokprjmgnt');
 }
 // Get columns
@@ -67,7 +67,7 @@ echo '</tr>'."\n";
 $detailColumn = $this->paramsMenuEntry->get('detail_column_link');
 //echo "<pre>".$detailColumn."</pre>";
 if ($this->items) {
-	$deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_TASK_CONFIRM_DELETE");
+	$deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_PROJECT_CONFIRM_DELETE");
 	switch ($this->paramsMenuEntry->get( "border_type")) {
 		case "row":
 			$borderStyle = " style=\"border-top-style:solid; border-width:1px\"";

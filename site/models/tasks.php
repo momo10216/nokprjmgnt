@@ -17,7 +17,7 @@ jimport('joomla.application.component.modelitem');
 jimport('joomla.event.dispatcher');
 // Include dependancy of the component helper
 jimport('joomla.application.component.helper');
-class NoKPrjMgntModelProjects extends JModelList {
+class NoKPrjMgntModelTasks extends JModelList {
 	/**
 	 * @since   1.6
 	 */
@@ -36,12 +36,14 @@ class NoKPrjMgntModelProjects extends JModelList {
 		return array (
 			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`t`.`id`'),
 			"title" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_TITLE_LABEL',true),'`t`.`title`'),
-			"project_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`t`.`title`'),
+			"project_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`p`.`title`'),
+			"project_access" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_ACCESS_LABEL',true),'`p`.`access`'),
 			"description" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_DESCRIPTION_LABEL',true),'`t`.`description`'),
 			"category_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL',true),'`c`.`title`'),
 			"priority" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_PRIORITY_LABEL',true),'`t`.`priority`'),
 			"duedate" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_DUE_DATE_LABEL',true),'`t`.`duedate`'),
 			"status" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL',true),'`t`.`status`'),
+			"responsible_user_id" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_RESPONSIBLE_LABEL',true),'`t`.`responsible_user_id`'),
 			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`'),
 			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`p`.`createddate`'),
 			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`p`.`modifiedby`'),
@@ -105,6 +107,10 @@ class NoKPrjMgntModelProjects extends JModelList {
 			if ($catid != '0') {
 				array_push($where,$db->quoteName('p.catid').' = '.$db->quote($catid));
 			}
+			$projectId = $this->paramsMenuEntry->get('projectId');
+			if (!empty($projectId)) {
+				array_push($where,$db->quoteName('p.id').' = '.$db->quote($$projectId));
+			}
 			// Menu sort
 			for ($i=1;$i<=4;$i++) {
 				$fieldKeyCol = 'sort_column_'.$i;
@@ -118,6 +124,7 @@ class NoKPrjMgntModelProjects extends JModelList {
 				}
 			}
 		}
+		array_push($where, $db->quoteName('`p`.`access`').' IN ('.implode(',',$user->getAuthorisedViewLevels()).')');
 		$where = array_merge($where, $this->_where);
 		$sort = array_merge($where, $this->_sort);
 		if (!empty($this->projectId)) {

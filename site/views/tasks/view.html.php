@@ -10,8 +10,8 @@
 */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
-class NoKPrjMgntViewProjects extends JViewLegacy {
-	protected $item;
+class NoKPrjMgntViewTasks extends JViewLegacy {
+	protected $items;
 	protected $pageHeading = 'COM_NOKPRJMGNT_PAGE_TITLE_DEFAULT';
 	protected $paramsComponent;
 	protected $paramsMenuEntry;
@@ -25,16 +25,6 @@ class NoKPrjMgntViewProjects extends JViewLegacy {
 		$this->state = $this->get('State');
 		if ($this->getLayout() =='form') {
 			$this->getModel()->setUseAlias(false);
-			$uri = JFactory::getURI();
-			$id = $uri->getVar('id');
-			if (!$id) $id = JRequest::getVar('id');
-			if (!$id) $id = $this->state->get('project.id');
-			if (!$id) {
-				$this->idList = $this->getModel()->getProjectListForCurrentUser();
-			} else {
-				$this->idList = array($id);
-			}
-			if (count($this->idList) == 1) $this->getModel()->setPk($this->idList[0]);
 		}
 		$this->user = JFactory::getUser();
 		$app = JFactory::getApplication();
