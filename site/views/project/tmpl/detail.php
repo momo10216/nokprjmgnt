@@ -29,8 +29,12 @@ $deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_PROJECT_CONFIRM_DELETE");
 	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_LABEL").':'.$this->item->status; ?>
 	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_LABEL").':'.$this->item->priority; ?>
 	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_LABEL").':'.$this->item->duedate; ?>
-	<a style="text-decoration: none;" href="<?php echo $uriEdit->toString(); ?>"><span class="icon-edit"></span></a>
-	<a style="text-decoration: none;" href="<?php echo $uriDelete->toString(); ?>" onClick="return confirm('<?php echo $deleteConfirmMsg; ?>');"><span class="icon-trash"></span></a>
+	<?php if ($this->canDo->get('core.edit')): ?>
+		<a style="text-decoration: none;" href="<?php echo $uriEdit->toString(); ?>"><span class="icon-edit"></span></a>
+	<?php endif; ?>
+	<?php if ($this->canDo->get('core.delete')): ?>
+		<a style="text-decoration: none;" href="<?php echo $uriDelete->toString(); ?>" onClick="return confirm('<?php echo $deleteConfirmMsg; ?>');"><span class="icon-trash"></span></a>
+	<?php endif; ?>
 </p>
 <?php echo $this->item->description; ?>
 <?php echo $this->loadTemplate('tasks'); ?>

@@ -20,7 +20,6 @@ class NoKPrjMgntViewProject extends JViewLegacy {
 	protected $canDo;
 
 	function display($tpl = null) {
-		$this->canDo = JHelperContent::getActions('com_nokprjmgnt');
 		// Init variables
 		$this->state = $this->get('State');
 		$this->user = JFactory::getUser();
