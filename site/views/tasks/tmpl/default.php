@@ -13,19 +13,19 @@ $details = false;
 $uriEdit = new JURI(JURI::Root().'/index.php');
 $uriEdit->setVar('layout','form');
 $uriEdit->setVar('Itemid','');
-$uriEdit->setVar('view','project');
+$uriEdit->setVar('view','task');
 $uriEdit->setVar('option','com_nokprjmgnt');
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
-$uriDelete->setVar('view','project');
+$uriDelete->setVar('view','task');
 $uriDelete->setVar('option','com_nokprjmgnt');
 if ($this->paramsMenuEntry->get('detail_enable') != '0') {
 	$details = true;
 	$uriDetail = new JURI(JURI::Root().'/index.php');
 	$uriDetail->setVar('layout','detail');
 	$uriDetail->setVar('Itemid','');
-	$uriDetail->setVar('view','project');
+	$uriDetail->setVar('view','task');
 	$uriDetail->setVar('option','com_nokprjmgnt');
 }
 // Get columns

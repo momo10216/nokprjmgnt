@@ -27,6 +27,7 @@ $uriEdit->setVar('layout','form');
 $uriEdit->setVar('Itemid','');
 $uriEdit->setVar('view','task');
 $uriEdit->setVar('option',$component);
+$uriEdit->setVar('project_id',$this->item->id);
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');

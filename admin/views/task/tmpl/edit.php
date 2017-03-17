@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
+$projectId = JFactory::getURI()->getVar('project_id','');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_nokprjmgnt&layout=edit&id=' . (int) $this->item->id); ?>"
     method="post" name="adminForm" id="adminForm">
@@ -34,7 +35,6 @@ JHtml::_('behavior.tooltip');
 						<?php echo $this->form->renderField('description'); ?>
 					</div>
 					<div class="span6">
-						<?php echo $this->form->renderField('project_id'); ?>
 						<?php echo $this->form->renderField('priority'); ?>
 						<?php echo $this->form->renderField('duedate'); ?>
 						<?php echo $this->form->renderField('status'); ?>
