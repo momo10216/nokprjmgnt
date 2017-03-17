@@ -23,6 +23,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 	 */
 	private $pk = '0';
 	private $useAlias= true;
+	private $_userList = array();
 	private $_where = array();
 	private $_sort = array();
 	protected $view_item = 'tasks';
@@ -44,6 +45,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 			"duedate" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_DUE_DATE_LABEL',true),'`t`.`duedate`'),
 			"status" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL',true),'`t`.`status`'),
 			"responsible_user_id" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_RESPONSIBLE_LABEL',true),'`t`.`responsible_user_id`'),
+			"assign_user_ids" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_ASSIGN_LABEL',true),'`t`.`assign_user_ids`'),
 			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`'),
 			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`p`.`createddate`'),
 			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`p`.`modifiedby`'),
@@ -87,9 +89,8 @@ class NoKPrjMgntModelTasks extends JModelList {
 		}
 		$query->select($fields)
 			->from($db->quoteName('#__nok_pm_tasks','t'))
-			->join('LEFT', $db->quoteName('#__nok_pm_projects', 'c').' ON ('.$db->quoteName('t.project_id').'='.$db->quoteName('p.id').')')
-			->join('LEFT', $db->quoteName('#__categories', 'c').' ON ('.$db->quoteName('p.catid').'='.$db->quoteName('c.id').')')
-			->where('t.project_id = ' . (int) $pk);
+			->join('LEFT', $db->quoteName('#__nok_pm_projects', 'p').' ON ('.$db->quoteName('t.project_id').'='.$db->quoteName('p.id').')')
+			->join('LEFT', $db->quoteName('#__categories', 'c').' ON ('.$db->quoteName('p.catid').'='.$db->quoteName('c.id').')');
 		// Get configurations
 		$where = array();
 		$sort = array();
@@ -100,7 +101,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 			// Menu filter
 			$this->paramsMenuEntry = $currentMenu->params;
 			$statuslist = $this->paramsMenuEntry->get('status');
-			if (count($statuslist) > 0) {
+			if ((count($statuslist) > 0) && ((count($statuslist) > 1) || !empty($statuslist[0]))) {
 				array_push($where,$db->quoteName('t.status').' IN ('.implode(',',$db->quote($statuslist)).')');
 			}
 			$catid = $this->paramsMenuEntry->get('catid');
@@ -124,9 +125,9 @@ class NoKPrjMgntModelTasks extends JModelList {
 				}
 			}
 		}
-		array_push($where, $db->quoteName('`p`.`access`').' IN ('.implode(',',$user->getAuthorisedViewLevels()).')');
+		array_push($where, $db->quoteName('p.access').' IN ('.implode(',',$user->getAuthorisedViewLevels()).')');
 		$where = array_merge($where, $this->_where);
-		$sort = array_merge($where, $this->_sort);
+		$sort = array_merge($sort, $this->_sort);
 		if (!empty($this->projectId)) {
 			array_push($where,$db->quoteName('t.project_id').' = '.$db->quote($this->projectId));
 		}
@@ -180,6 +181,34 @@ class NoKPrjMgntModelTasks extends JModelList {
 			}
 		}
 		return $result;
+	}
+
+	public function getConvertUserIdsToNames($text) {
+		if (count($this->_userList) < 1) {
+			$db = JFactory::getDBO();
+			$query = $db->getQuery(true);
+			$query
+				->select(array('u.id', 'u.name'))
+				->from($db->quoteName('#__users','u'));
+			$db->setQuery($query);
+			$results = $db->loadRowList();
+			foreach($results as $result) {
+				$this->_userList[$result[0]] = $result[1];
+			}
+			$this->_userList['0'] = '';
+		}
+		$userIds = explode(',',$text);
+		$userNames = array();
+		foreach($userIds as $userId) {
+			if (!empty($userId)) {
+				if (isset($this->_userList[$userId])) {
+					array_push($userNames,$this->_userList[$userId]);
+				} else {
+					array_push($userNames,$userId);
+				}
+			}
+		}
+		return implode(',',$userNames);
 	}
 }
 ?>

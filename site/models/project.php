@@ -136,6 +136,15 @@ class NoKPrjMgntModelProject extends JModelForm {
 	public function &getItem($pk = null) {
 		if (empty($pk)) $pk = $this->getState($this->_model.'.id');
 		if (empty($pk)) $pk = $this->pk;
+		if (empty($pk)) {
+			$app = JFactory::getApplication();
+			$currentMenu = $app->getMenu()->getActive();
+			if (is_object($currentMenu)) {
+				// Menu filter
+				$this->paramsMenuEntry = $currentMenu->params;
+				$pk = $this->paramsMenuEntry->get('id');
+			}
+		}
 		if ($this->_item === null) {
 			$this->_item = array();
 		}

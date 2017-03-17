@@ -90,6 +90,9 @@ if ($this->items) {
 			$field = $cols[$j];
 			if (!empty($field)) {
 				$data = $row[$field];
+				if (($field == 'responsible_user_id') || ($field == 'assign_user_ids')) {
+					$data = $this->getModel()->getConvertUserIdsToNames($data);
+				}
 				echo "<td".$borderStyle.">";
 				if ($details && (($detailColumn == "") || ($detailColumn == $field))) {
 					echo "<a href=\"".$uriDetail->toString()."\">".$data."</a>";

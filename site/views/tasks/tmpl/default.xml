@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_NOKPRJMGNT_PROJECTS_VIEW_LIST_LAYOUT_NAME">
-		<message><![CDATA[COM_NOKPRJMGNT_PROJECTS_VIEW_LIST_LAYOUT_DESC]]></message>
+	<layout title="COM_NOKPRJMGNT_TASKS_VIEW_LIST_LAYOUT_NAME">
+		<message><![CDATA[COM_NOKPRJMGNT_TASKS_VIEW_LIST_LAYOUT_DESC]]></message>
 	</layout>
 	<fields name="request">
 		<fieldset name="request" label="COM_NOKPRJMGNT_REQUEST_OPTIONS_FIELDSET_LABEL">
@@ -10,13 +10,14 @@
 				<option value="html">HTML</option>
 				<!-- <option value="pdf">PDF</option> -->
 			</field>
+			<field name="id" type="projectlist" label="COM_NOKPRJMGNT_PROJECT_LABEL" description="COM_NOKPRJMGNT_PROJECT_DESC" />
 		</fieldset>
 	</fields>
 	<fields name="params" addfieldpath="/administrator/components/com_nokprjmgnt/models/fields">
 		<!-- Basic options. -->
 		<fieldset name="basic" label="COM_NOKPRJMGNT_BASIC_OPTIONS_FIELDSET_LABEL">
-			<field name="status" type="configselection" label="COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_LABEL"
-				description="COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_DESC" paramname="project_status"
+			<field name="status" type="configselection" label="COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL"
+				description="COM_NOKPRJMGNT_TASK_FIELD_STATUS_DESC" paramname="task_status"
 				hide_none="true" multiple="true" />
 			<field name="catid" type="category" extension="com_nokprjmgnt" class="inputbox" default=""
 				label="COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL"
@@ -25,51 +26,51 @@
 			</field>
 			<field name="@spacer" type="spacer" default="" label="" description="" />
 			<field name="show_header" type="radio" default="1"
-				label="COM_NOKPRJMGNT_PROJECTS_SHOW_HEADER_LABEL"
-				description="COM_NOKPRJMGNT_PROJECTS_SHOW_HEADER_DESC">
+				label="COM_NOKPRJMGNT_TASKS_SHOW_HEADER_LABEL"
+				description="COM_NOKPRJMGNT_TASKS_SHOW_HEADER_DESC">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field name="column_1" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_1_LABEL" description="COM_NOKPRJMGNT_COLUMN_1_DESC" />
-			<field name="column_2" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_2_LABEL" description="COM_NOKPRJMGNT_COLUMN_2_DESC" />
-			<field name="column_3" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_3_LABEL" description="COM_NOKPRJMGNT_COLUMN_3_DESC" />
-			<field name="column_4" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_4_LABEL" description="COM_NOKPRJMGNT_COLUMN_4_DESC" />
-			<field name="column_5" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_5_LABEL" description="COM_NOKPRJMGNT_COLUMN_5_DESC" />
-			<field name="column_6" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_6_LABEL" description="COM_NOKPRJMGNT_COLUMN_6_DESC" />
-			<field name="column_7" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_7_LABEL" description="COM_NOKPRJMGNT_COLUMN_7_DESC" />
-			<field name="column_8" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_8_LABEL" description="COM_NOKPRJMGNT_COLUMN_8_DESC" />
-			<field name="column_9" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_9_LABEL" description="COM_NOKPRJMGNT_COLUMN_9_DESC" />
-			<field name="column_10" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_10_LABEL" description="COM_NOKPRJMGNT_COLUMN_10_DESC" />
-			<field name="column_11" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_11_LABEL" description="COM_NOKPRJMGNT_COLUMN_11_DESC" />
-			<field name="column_12" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_12_LABEL" description="COM_NOKPRJMGNT_COLUMN_12_DESC" />
-			<field name="column_13" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_13_LABEL" description="COM_NOKPRJMGNT_COLUMN_13_DESC" />
-			<field name="column_14" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_14_LABEL" description="COM_NOKPRJMGNT_COLUMN_14_DESC" />
-			<field name="column_15" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_15_LABEL" description="COM_NOKPRJMGNT_COLUMN_15_DESC" />
-			<field name="column_16" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_16_LABEL" description="COM_NOKPRJMGNT_COLUMN_16_DESC" />
-			<field name="column_17" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_17_LABEL" description="COM_NOKPRJMGNT_COLUMN_17_DESC" />
-			<field name="column_18" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_18_LABEL" description="COM_NOKPRJMGNT_COLUMN_18_DESC" />
-			<field name="column_19" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_19_LABEL" description="COM_NOKPRJMGNT_COLUMN_19_DESC" />
-			<field name="column_20" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_20_LABEL" description="COM_NOKPRJMGNT_COLUMN_20_DESC" />
+			<field name="column_1" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_1_LABEL" description="COM_NOKPRJMGNT_COLUMN_1_DESC" />
+			<field name="column_2" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_2_LABEL" description="COM_NOKPRJMGNT_COLUMN_2_DESC" />
+			<field name="column_3" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_3_LABEL" description="COM_NOKPRJMGNT_COLUMN_3_DESC" />
+			<field name="column_4" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_4_LABEL" description="COM_NOKPRJMGNT_COLUMN_4_DESC" />
+			<field name="column_5" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_5_LABEL" description="COM_NOKPRJMGNT_COLUMN_5_DESC" />
+			<field name="column_6" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_6_LABEL" description="COM_NOKPRJMGNT_COLUMN_6_DESC" />
+			<field name="column_7" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_7_LABEL" description="COM_NOKPRJMGNT_COLUMN_7_DESC" />
+			<field name="column_8" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_8_LABEL" description="COM_NOKPRJMGNT_COLUMN_8_DESC" />
+			<field name="column_9" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_9_LABEL" description="COM_NOKPRJMGNT_COLUMN_9_DESC" />
+			<field name="column_10" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_10_LABEL" description="COM_NOKPRJMGNT_COLUMN_10_DESC" />
+			<field name="column_11" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_11_LABEL" description="COM_NOKPRJMGNT_COLUMN_11_DESC" />
+			<field name="column_12" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_12_LABEL" description="COM_NOKPRJMGNT_COLUMN_12_DESC" />
+			<field name="column_13" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_13_LABEL" description="COM_NOKPRJMGNT_COLUMN_13_DESC" />
+			<field name="column_14" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_14_LABEL" description="COM_NOKPRJMGNT_COLUMN_14_DESC" />
+			<field name="column_15" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_15_LABEL" description="COM_NOKPRJMGNT_COLUMN_15_DESC" />
+			<field name="column_16" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_16_LABEL" description="COM_NOKPRJMGNT_COLUMN_16_DESC" />
+			<field name="column_17" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_17_LABEL" description="COM_NOKPRJMGNT_COLUMN_17_DESC" />
+			<field name="column_18" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_18_LABEL" description="COM_NOKPRJMGNT_COLUMN_18_DESC" />
+			<field name="column_19" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_19_LABEL" description="COM_NOKPRJMGNT_COLUMN_19_DESC" />
+			<field name="column_20" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_COLUMN_20_LABEL" description="COM_NOKPRJMGNT_COLUMN_20_DESC" />
 		</fieldset>
 
 		<!-- Advanced options. -->
 		<fieldset name="advanced" label="COM_NOKPRJMGNT_ADVANCED_OPTIONS_FIELDSET_LABEL">
-			<field name="sort_column_1" type="pmprojectcolumn" columntype="view" default="titel" label="COM_NOKPRJMGNT_SORT_COLUMN_1_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_1_DESC"/>
+			<field name="sort_column_1" type="pmtaskcolumn" columntype="view" default="titel" label="COM_NOKPRJMGNT_SORT_COLUMN_1_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_1_DESC"/>
 			<field name="sort_direction_1" type="radio" default="ASC" label="COM_NOKPRJMGNT_SORT_DIRECTION_1_LABEL" description="COM_NOKPRJMGNT_SORT_DIRECTION_1_DESC">
 				<option value="ASC">Ascending</option>
 				<option value="DESC">Descending</option>
 			</field>
-			<field name="sort_column_2" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_2_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_2_DESC"/>
+			<field name="sort_column_2" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_2_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_2_DESC"/>
 			<field name="sort_direction_2" type="radio" default="ASC" label="COM_NOKPRJMGNT_SORT_DIRECTION_2_LABEL" description="COM_NOKPRJMGNT_SORT_DIRECTION_2_DESC">
 				<option value="ASC">Ascending</option>
 				<option value="DESC">Descending</option>
 			</field>
-			<field name="sort_column_3" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_3_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_3_DESC"/>
+			<field name="sort_column_3" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_3_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_3_DESC"/>
 			<field name="sort_direction_3" type="radio" default="ASC" label="COM_NOKPRJMGNT_SORT_DIRECTION_3_LABEL" description="COM_NOKPRJMGNT_SORT_DIRECTION_3_DESC">
 				<option value="ASC">Ascending</option>
 				<option value="DESC">Descending</option>
 			</field>
-			<field name="sort_column_4" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_4_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_4_DESC"/>
+			<field name="sort_column_4" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_4_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_4_DESC"/>
 			<field name="sort_direction_4" type="radio" default="ASC" label="COM_NOKPRJMGNT_SORT_DIRECTION_4_LABEL" description="COM_NOKPRJMGNT_SORT_DIRECTION_4_DESC">
 				<option value="ASC">Ascending</option>
 				<option value="DESC">Descending</option>
@@ -99,7 +100,7 @@
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>
-			<field name="detail_column_link" type="pmprojectcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_DETAIL_LINK_COLUMN_LABEL" description="COM_NOKPRJMGNT_DETAIL_LINK_COLUMN_DESC"/>
+			<field name="detail_column_link" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_DETAIL_LINK_COLUMN_LABEL" description="COM_NOKPRJMGNT_DETAIL_LINK_COLUMN_DESC"/>
  			<field name="@spacer" type="spacer" default="" label="" description="" />
 			<field name="csv_encoding" type="combo" default="UTF-8" label="COM_NOKPRJMGNT_CSV_ENCODING_LABEL" description="COM_NOKPRJMGNT_CSV_ENCODING_DESC">
 				<option value="ASCII">ASCII</option>

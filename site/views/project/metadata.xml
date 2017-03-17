@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<view title="COM_NOKPRJMGNT_PROJECTS_VIEW_NAME">
-		<message><![CDATA[COM_NOKPRJMGNT_PROJECTS_VIEW_DESC]]></message>
+	<view title="COM_NOKPRJMGNT_PROJECT_VIEW_NAME">
+		<message><![CDATA[COM_NOKPRJMGNT_PROJECT_VIEW_DESC]]></message>
 	</view>
 </metadata>

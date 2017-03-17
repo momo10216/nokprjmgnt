@@ -102,7 +102,7 @@ class NoKPrjMgntModelProjects extends JModelList {
 		// Filter by search in name.
 		$where = array();
 		$statuslist = $this->paramsMenuEntry->get('status');
-		if (count($statuslist) > 0) {
+		if ((count($statuslist) > 0) && ((count($statuslist) > 1) || !empty($statuslist[0]))) {
 			array_push($where,$db->quoteName('p.status').' IN ('.implode(',',$db->quote($statuslist)).')');
 		}
 		array_push($where, $db->quoteName('p.access').' IN ('.implode(',',$user->getAuthorisedViewLevels()).')');
