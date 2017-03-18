@@ -120,6 +120,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 				if (!empty($key)) {
 					if (isset($allFields[$key]) && !empty($allFields[$key])) {
 						$fieldname = $allFields[$key][1];
+						if ($key == 'duedate') { $fieldname = 'IF(IFNULL('.$fieldname.",'0000-00-00 00:00:00')='0000-00-00 00:00:00','2999-12-31 00:00:00',".$fieldname.")"; }
 						array_push($sort, $fieldname.' '.$this->paramsMenuEntry->get($fieldKeyDir));
 					}
 				}
