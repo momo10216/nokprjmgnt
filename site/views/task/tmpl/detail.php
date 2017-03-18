@@ -12,13 +12,13 @@ defined('_JEXEC') or die; // no direct access
 $uriEdit = new JURI(JURI::Root().'/index.php');
 $uriEdit->setVar('layout','form');
 $uriEdit->setVar('Itemid','');
-$uriEdit->setVar('view','project');
+$uriEdit->setVar('view','task');
 $uriEdit->setVar('option','com_nokprjmgnt');
 $uriEdit->setVar('id',$this->item->id);
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
-$uriDelete->setVar('view','project');
+$uriDelete->setVar('view','task');
 $uriDelete->setVar('option','com_nokprjmgnt');
 $uriDelete->setVar('id',$this->item->id);
 $deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_TASK_CONFIRM_DELETE");
