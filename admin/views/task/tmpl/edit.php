@@ -35,6 +35,7 @@ $projectId = JFactory::getURI()->getVar('project_id','');
 						<?php echo $this->form->renderField('description'); ?>
 					</div>
 					<div class="span6">
+						<?php echo $this->form->renderField('project_id'); ?>
 						<?php echo $this->form->renderField('priority'); ?>
 						<?php echo $this->form->renderField('duedate'); ?>
 						<?php echo $this->form->renderField('status'); ?>

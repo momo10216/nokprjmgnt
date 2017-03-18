@@ -11,6 +11,7 @@
 defined('_JEXEC') or die; // no direct access
 $curi = JFactory::getURI();
 $uriSave = new JURI($curi->toString());
+$projectId = JFactory::getURI()->getVar('project_id');
 ?>
 
 <form action="<?php echo $uriSave->toString(); ?>" method="post" name="adminForm" id="adminForm">
@@ -38,7 +39,7 @@ $uriSave = new JURI($curi->toString());
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="row-fluid form-horizontal-desktop">
-					<?php echo $this->form->renderField('project_id'); ?>
+					<?php if (empty($projectId)) { echo $this->form->renderField('project_id'); } ?>
 					<?php echo $this->form->renderField('priority'); ?>
 					<?php echo $this->form->renderField('duedate'); ?>
 					<?php echo $this->form->renderField('status'); ?>
@@ -48,7 +49,7 @@ $uriSave = new JURI($curi->toString());
 			</div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'custom', JText::_('COM_NOKPRJMGNT_PROJECT_TAB_CUSTOM_AND_RECORDINFO', true)); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'custom', JText::_('COM_NOKPRJMGNT_TASK_TAB_RECORDINFO', true)); ?>
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="row-fluid form-horizontal-desktop">

@@ -21,7 +21,7 @@ $uriDelete->setVar('Itemid','');
 $uriDelete->setVar('view','project');
 $uriDelete->setVar('option','com_nokprjmgnt');
 $uriDelete->setVar('id',$this->item->id);
-$deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_PROJECT_CONFIRM_DELETE");
+$deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_TASK_CONFIRM_DELETE");
 $uriProject = new JURI(JURI::Root().'/index.php');
 $uriProject->setVar('layout','detail');
 $uriProject->setVar('Itemid','');

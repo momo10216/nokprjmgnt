@@ -148,6 +148,18 @@ class NoKPrjMgntModelTasks extends JModelList {
 		return $result;
 	}
 
+	public function getUserItems() {
+		$db = JFactory::getDBO();
+		$user = JFactory::getUser();
+		$userId = $user->get('id');
+		$where = $db->quoteName('t.responsible_user_id').' = '.$db->quote($userId);
+		$where .= "OR CONCAT(',',`t`.`assign_user_ids`,',') LIKE '%,".$userId.",%'";
+		$this->_where = array($where);
+		$result = $this->getItems();
+		$this->_where = array();
+		return $result;
+	}
+
 	public function getHeader($cols) {
 		$fields = array();
 		$allFields = $this->getFields();

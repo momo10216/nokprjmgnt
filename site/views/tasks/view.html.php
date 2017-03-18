@@ -29,7 +29,12 @@ class NoKPrjMgntViewTasks extends JViewLegacy {
 		$this->user = JFactory::getUser();
 		$app = JFactory::getApplication();
 		$this->document = JFactory::getDocument();
-		$this->items = $this->get('Items');
+		if ($this->getLayout() == 'userlist'){
+			$this->items = $this->getModel()->getUserItems();
+			$this->setLayout('default');
+		} else {
+			$this->items = $this->get('Items');
+		}
 		$this->form = $this->get('Form');
 		$this->paramsComponent = $this->state->get('params');
 		$menu = $app->getMenu();
