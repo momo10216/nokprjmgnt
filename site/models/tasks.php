@@ -97,7 +97,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 		$this->paramsComponent = $this->state->get('params');
 		$app = JFactory::getApplication();
 		$currentMenu = $app->getMenu()->getActive();
-		if (is_object( $currentMenu )) {
+		if (is_object($currentMenu)) {
 			// Menu filter
 			$this->paramsMenuEntry = $currentMenu->params;
 			$statuslist = $this->paramsMenuEntry->get('status');
@@ -152,8 +152,8 @@ class NoKPrjMgntModelTasks extends JModelList {
 		$db = JFactory::getDBO();
 		$user = JFactory::getUser();
 		$userId = $user->get('id');
-		$where = $db->quoteName('t.responsible_user_id').' = '.$db->quote($userId);
-		$where .= "OR CONCAT(',',`t`.`assign_user_ids`,',') LIKE '%,".$userId.",%'";
+		$where = '('.$db->quoteName('t.responsible_user_id').' = '.$db->quote($userId);
+		$where .= "OR CONCAT(',',`t`.`assign_user_ids`,',') LIKE '%,".$userId.",%')";
 		$this->_where = array($where);
 		$result = $this->getItems();
 		$this->_where = array();
