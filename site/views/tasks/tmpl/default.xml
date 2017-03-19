@@ -16,7 +16,7 @@
 		<!-- Basic options. -->
 		<fieldset name="basic" label="COM_NOKPRJMGNT_BASIC_OPTIONS_FIELDSET_LABEL">
 			<field name="project_id" type="projectlist" label="COM_NOKPRJMGNT_PROJECT_LABEL"
-				description="COM_NOKPRJMGNT_PROJECT_DESC" />
+				description="COM_NOKPRJMGNT_PROJECT_DESC" hide_none="false" />
 			<field name="status" type="configselection" label="COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL"
 				description="COM_NOKPRJMGNT_TASK_FIELD_STATUS_DESC" paramname="task_status"
 				hide_none="true" multiple="true" />
@@ -27,8 +27,8 @@
 			</field>
 			<field name="@spacer" type="spacer" default="" label="" description="" />
 			<field name="show_header" type="radio" default="1"
-				label="COM_NOKPRJMGNT_TASKS_SHOW_HEADER_LABEL"
-				description="COM_NOKPRJMGNT_TASKS_SHOW_HEADER_DESC">
+				label="COM_NOKPRJMGNT_SHOW_HEADER_LABEL"
+				description="COM_NOKPRJMGNT_SHOW_HEADER_DESC">
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
 			</field>

@@ -22,6 +22,7 @@ $component = 'com_nokprjmgnt';
 $tasksModel = JControllerLegacy::getInstance('NoKPrjMgnt')->getModel('Tasks');
 $taskItems = $tasksModel->getProjectFormItems($this->item->id);
 $tasksHeader = $tasksModel->getHeader($tasksColumn);
+$tasksAlign = $tasksModel->getAlign($tasksColumn);
 $uriEdit = new JURI(JURI::Root().'/index.php');
 $uriEdit->setVar('layout','form');
 $uriEdit->setVar('Itemid','');
@@ -61,11 +62,15 @@ if ($tasksBorderType == 'none') {
 	echo '<table border="0" cellspacing="0" cellpadding="0" style="'.$borderStyle.'">'."\n";
 }
 echo '<tr>';
-foreach($tasksHeader as $strSingle) {
-	if ($strSingle != '') {
-		echo '<th align="left">';
+foreach ($tasksColumn as $col) {
+	if ($tasksHeader[$col] != '') {
+		echo '<th';
+		if (isset($tasksAlign[$col]) && !empty($tasksAlign[$col])) {
+			echo ' align="'.$tasksAlign[$col].'"';
+		}
+		echo '>';
 		if ($showHeader) {
-			echo $strSingle;
+			echo $tasksHeader[$col];
 		}
 		echo '</th>';
 	}
@@ -92,7 +97,11 @@ if (is_array($taskItems) && (count($taskItems)>0)) {
 				$data = $row[$field];
 				$data = str_replace('0000-00-00 00:00:00','',$data);
 				$data = str_replace(' 00:00:00','',$data);
-				echo '<td stype="'.$borderStyle.'">';
+				echo '<td';
+				if (isset($tasksAlign[$field]) && !empty($tasksAlign[$field])) {
+					echo ' align="'.$tasksAlign[$field].'"';
+				}
+				echo '>';
 				if ($details && (($tasksDetailColumn == "") || ($tasksDetailColumn == $field))) {
 					echo "<a href=\"".$uriDetail->toString()."\">".$data."</a>";
 				} else {

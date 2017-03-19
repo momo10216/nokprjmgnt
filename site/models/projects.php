@@ -33,23 +33,23 @@ class NoKPrjMgntModelProjects extends JModelList {
 	private function getFields() {
 		$params = JComponentHelper::getParams($this->_component);
 		return array (
-			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`p`.`id`'),
-			"title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`p`.`title`'),
-			"description" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_DESCRIPTION_LABEL',true),'`p`.`description`'),
-			"category_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL',true),'`c`.`title`'),
-			"priority" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_LABEL',true),'`p`.`priority`'),
-			"duedate" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_LABEL',true),'`p`.`duedate`'),
-			"status" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_LABEL',true),'`p`.`status`'),
-			"access" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_ACCESS_LABEL',true),'`p`.`access`'),
-			"custom1" => array($params->get('custom1'),'`p`.`custom1`'),
-			"custom2" => array($params->get('custom2'),'`p`.`custom2`'),
-			"custom3" => array($params->get('custom3'),'`p`.`custom3`'),
-			"custom4" => array($params->get('custom4'),'`p`.`custom4`'),
-			"custom5" => array($params->get('custom5'),'`p`.`custom5`'),
-			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`'),
-			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`p`.`createddate`'),
-			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`p`.`modifiedby`'),
-			"modifieddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_LABEL',true),'`p`.`modifieddate`')
+			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`p`.`id`','right'),
+			"title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`p`.`title`','left'),
+			"description" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_DESCRIPTION_LABEL',true),'`p`.`description`',''),
+			"category_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL',true),'`c`.`title`','left'),
+			"priority" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_LABEL',true),'`p`.`priority`','right'),
+			"duedate" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_LABEL',true),'`p`.`duedate`','left'),
+			"status" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_LABEL',true),'`p`.`status`','left'),
+			"access" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_ACCESS_LABEL',true),'`p`.`access`','left'),
+			"custom1" => array($params->get('custom1'),'`p`.`custom1`','left'),
+			"custom2" => array($params->get('custom2'),'`p`.`custom2`','left'),
+			"custom3" => array($params->get('custom3'),'`p`.`custom3`','left'),
+			"custom4" => array($params->get('custom4'),'`p`.`custom4`','left'),
+			"custom5" => array($params->get('custom5'),'`p`.`custom5`','left'),
+			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`','left'),
+			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`p`.`createddate`','left'),
+			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`p`.`modifiedby`','left'),
+			"modifieddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_LABEL',true),'`p`.`modifieddate`','left')
 		);
 	}
 
@@ -139,9 +139,21 @@ class NoKPrjMgntModelProjects extends JModelList {
 		foreach ($cols as $col) {
 			if (isset($allFields[$col])) {
 				$field = $allFields[$col];
-				array_push($fields,$field[0]);
+				$fields[$col] = $field[0];
 			} else {
-				array_push($fields,$col);
+				$fields[$col] = $col;
+			}
+		}
+		return $fields;
+	}
+
+	public function getAlign($cols) {
+		$fields = array();
+		$allFields = $this->getFields();
+		foreach ($cols as $col) {
+			if (isset($allFields[$col])) {
+				$field = $allFields[$col];
+				$fields[$col] = $field[2];
 			}
 		}
 		return $fields;

@@ -20,12 +20,14 @@ class JFormFieldUserList extends JFormField {
 	protected $type = 'userlist';
  
 	public function getInput() {
-		if (!isset($this->element["hide_none"]) || ($this->element["hide_none"] != "true")) {
-			$fields[""] = JText::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname));
-		}
+		$fields = array();
 		$multiple = '';
 		if (isset($this->element["multiple"]) && ($this->element['multiple'] == 'true')) {
 			$multiple = 'multiple ';
+		} else {
+			if (!isset($this->element["hide_none"]) || ($this->element["hide_none"] != "true")) {
+				$fields[""] = JText::alt('COM_NOKPRJMGNT_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname));
+			}
 		}
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -43,7 +45,7 @@ class JFormFieldUserList extends JFormField {
 		} else {
 			$values = array($this->value);
 			foreach($values as $value) {
-				if (!array_key_exists($value, $fields)) {
+				if (!array_key_exists($value, $fields) && (empty($multiple) || !empty($value))) {
 					$fields[$value] = $value;
 				}
 			}

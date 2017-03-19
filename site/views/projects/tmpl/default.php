@@ -48,12 +48,17 @@ if ($this->paramsMenuEntry->get('border_type') != '') {
 	echo '<table '.$width.'border="0" cellspacing="0" cellpadding="'.$this->paramsMenuEntry->get('cellpadding').'" style="border-style:none; border-width:0px">'."\n";
 }
 $header = $this->getModel()->getHeader($cols);
+$aligns = $this->getModel()->getAlign($cols);
 echo '<tr>';
-foreach($header as $strSingle) {
-	if ($strSingle != '') {
-		echo '<th align="left">';
+foreach ($cols as $col) {
+	if ($header[$col] != '') {
+		echo '<th';
+		if (isset($aligns[$col]) && !empty($aligns[$col])) {
+			echo ' align="'.$aligns[$col].'"';
+		}
+		echo '>';
 		if ($this->paramsMenuEntry->get('show_header', '1') == '1') {
-			echo $strSingle;
+			echo $header[$col];
 		}
 		echo '</th>';
 	}
@@ -92,7 +97,11 @@ if ($this->items) {
 				$data = $row[$field];
 				$data = str_replace('0000-00-00 00:00:00','',$data);
 				$data = str_replace(' 00:00:00','',$data);
-				echo '<td'.$borderStyle.'>';
+				echo '<td';
+				if (isset($aligns[$field]) && !empty($aligns[$field])) {
+					echo ' align="'.$aligns[$field].'"';
+				}
+				echo $borderStyle.'>';
 				if ($details && (($detailColumn == "") || ($detailColumn == $field))) {
 					echo "<a href=\"".$uriDetail->toString()."\">".$data."</a>";
 				} else {

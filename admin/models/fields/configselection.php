@@ -25,12 +25,13 @@ class JFormFieldConfigSelection extends JFormField {
 			$selectionText = $params->get($this->element["paramname"]);
 			$selectionRows = explode(";",$selectionText);
 			$fields = array();
-			if (isset($this->element["hide_none"]) && ($this->element["hide_none"] != "true")) {
-				$fields[""] = JText::alt('JOPTION_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname));
-			}
 			$multiple = '';
 			if (isset($this->element["multiple"]) && ($this->element['multiple'] == 'true')) {
 				$multiple = 'multiple ';
+			} else {
+				if (isset($this->element["hide_none"]) && ($this->element["hide_none"] != "true")) {
+					$fields[""] = JText::alt('COM_NOKPRJMGNT_DO_NOT_USE', preg_replace('/[^a-zA-Z0-9_\-]/', '_', $this->fieldname));
+				}
 			}
 			foreach($selectionRows as $selectionRow) {
 				$values = explode("=",$selectionRow,2);
@@ -44,7 +45,7 @@ class JFormFieldConfigSelection extends JFormField {
 				$values = $this->value;
 			} else {
 				$values = array($this->value);
-				if (!array_key_exists($this->value, $fields)) {
+				if (!array_key_exists($value, $fields) && (empty($multiple) || !empty($value))) {
 					$fields[$this->value] = $this->value;
 				}
 			}
