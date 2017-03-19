@@ -23,7 +23,8 @@
 		<field name="status" type="configselection" paramname="task_status" label="COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL"
 			description="COM_NOKPRJMGNT_TASK_FIELD_STATUS_DESC" default="" required="true" />
 
-		<field name="responsible_user_id" type="user" label="COM_NOKPRJMGNT_TASK_FIELD_RESPONSIBLE_LABEL"
+		<field addfieldpath="/administrator/components/com_nokprjmgnt/models/fields" name="responsible_user_id"
+			type="userlist" label="COM_NOKPRJMGNT_TASK_FIELD_RESPONSIBLE_LABEL"
 			description="COM_NOKPRJMGNT_TASK_FIELD_RESPONSIBLE_DESC" size="1" default="" />
 
 		<field addfieldpath="/administrator/components/com_nokprjmgnt/models/fields" name="assign_user_ids"
