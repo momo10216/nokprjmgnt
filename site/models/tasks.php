@@ -108,9 +108,9 @@ class NoKPrjMgntModelTasks extends JModelList {
 			if ($catid != '0') {
 				array_push($where,$db->quoteName('p.catid').' = '.$db->quote($catid));
 			}
-			$projectId = $this->paramsMenuEntry->get('projectId');
+			$projectId = $this->paramsMenuEntry->get('project_id');
 			if (!empty($projectId)) {
-				array_push($where,$db->quoteName('p.id').' = '.$db->quote($projectId));
+				array_push($where,$db->quoteName('t.project_id').' = '.$db->quote($projectId));
 			}
 			// Menu sort
 			for ($i=1;$i<=4;$i++) {

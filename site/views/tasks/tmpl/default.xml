@@ -10,12 +10,13 @@
 				<option value="html">HTML</option>
 				<!-- <option value="pdf">PDF</option> -->
 			</field>
-			<field name="id" type="projectlist" label="COM_NOKPRJMGNT_PROJECT_LABEL" description="COM_NOKPRJMGNT_PROJECT_DESC" />
 		</fieldset>
 	</fields>
 	<fields name="params" addfieldpath="/administrator/components/com_nokprjmgnt/models/fields">
 		<!-- Basic options. -->
 		<fieldset name="basic" label="COM_NOKPRJMGNT_BASIC_OPTIONS_FIELDSET_LABEL">
+			<field name="project_id" type="projectlist" label="COM_NOKPRJMGNT_PROJECT_LABEL"
+				description="COM_NOKPRJMGNT_PROJECT_DESC" />
 			<field name="status" type="configselection" label="COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL"
 				description="COM_NOKPRJMGNT_TASK_FIELD_STATUS_DESC" paramname="task_status"
 				hide_none="true" multiple="true" />
