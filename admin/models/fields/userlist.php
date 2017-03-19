@@ -31,7 +31,8 @@ class JFormFieldUserList extends JFormField {
 		$query = $db->getQuery(true);
 		$query
 		->select(array('u.id', 'u.name'))
-		->from($db->quoteName('#__users','u'));
+		->from($db->quoteName('#__users','u'))
+		->order($db->quoteName('u.name'));
 		$db->setQuery($query);
 		$results = $db->loadRowList();
 		foreach($results as $result) {
