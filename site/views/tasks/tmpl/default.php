@@ -90,6 +90,8 @@ if ($this->items) {
 			$field = $cols[$j];
 			if (!empty($field)) {
 				$data = $row[$field];
+				$data = str_replace('0000-00-00 00:00:00','',$data);
+				$data = str_replace(' 00:00:00','',$data);
 				if (($field == 'responsible_user_id') || ($field == 'assign_user_ids')) {
 					$data = $this->getModel()->getConvertUserIdsToNames($data);
 				}
@@ -102,13 +104,13 @@ if ($this->items) {
 				echo "</td>";
 			}
 		}
-		echo '<td>';
+		echo "<td".$borderStyle.">";
 		if ($itemCanDo->get('core.edit')) {
 			$uriEdit->setVar('id',$item->id);
 			echo '<a style="text-decoration: none;" href="'.$uriEdit->toString().'"><span class="icon-edit"></span></a>';
 		}
 		echo '</td>';
-		echo '<td>';
+		echo "<td".$borderStyle.">";
 		if ($itemCanDo->get('core.delete')) {
 			$uriDelete->setVar('id',$item->id);
 			echo '<a style="text-decoration: none;" href="'.$uriDelete->toString().'" onClick="return confirm(\''.$deleteConfirmMsg.'\');"><span class="icon-trash"></span></a>';

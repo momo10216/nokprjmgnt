@@ -90,6 +90,8 @@ if (is_array($taskItems) && (count($taskItems)>0)) {
 			$field = $tasksColumn[$j];
 			if (!empty($field)) {
 				$data = $row[$field];
+				$data = str_replace('0000-00-00 00:00:00','',$data);
+				$data = str_replace(' 00:00:00','',$data);
 				echo '<td stype="'.$borderStyle.'">';
 				if ($details && (($tasksDetailColumn == "") || ($tasksDetailColumn == $field))) {
 					echo "<a href=\"".$uriDetail->toString()."\">".$data."</a>";
@@ -99,13 +101,13 @@ if (is_array($taskItems) && (count($taskItems)>0)) {
 				echo "</td>";
 			}
 		}
-		echo '<td>';
+		echo '<td stype="'.$borderStyle.'">';
 		if ($modify) {
 			$uriEdit->setVar('id',$item->id);
 			echo '<a style="text-decoration: none;" href="'.$uriEdit->toString().'"><span class="icon-edit"></span></a>';
 		}
 		echo '</td>';
-		echo '<td>';
+		echo '<td stype="'.$borderStyle.'">';
 		if ($modify) {
 			$uriDelete->setVar('id',$item->id);
 			echo '<a style="text-decoration: none;" href="'.$uriDelete->toString().'" onClick="return confirm(\''.$deleteConfirmMsg.'\');"><span class="icon-trash"></span></a>';
