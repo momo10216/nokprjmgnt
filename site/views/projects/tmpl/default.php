@@ -90,7 +90,9 @@ if ($this->items) {
 			$field = $cols[$j];
 			if (!empty($field)) {
 				$data = $row[$field];
-				echo "<td".$borderStyle.">";
+				$data = str_replace('0000-00-00 00:00:00','',$data);
+				$data = str_replace(' 00:00:00','',$data);
+				echo '<td'.$borderStyle.'>';
 				if ($details && (($detailColumn == "") || ($detailColumn == $field))) {
 					echo "<a href=\"".$uriDetail->toString()."\">".$data."</a>";
 				} else {
@@ -99,13 +101,13 @@ if ($this->items) {
 				echo "</td>";
 			}
 		}
-		echo '<td>';
+		echo '<td'.$borderStyle.'>';
 		if ($itemCanDo->get('core.edit')) {
 			$uriEdit->setVar('id',$item->id);
 			echo '<a style="text-decoration: none;" href="'.$uriEdit->toString().'"><span class="icon-edit"></span></a>';
 		}
 		echo '</td>';
-		echo '<td>';
+		echo '<td'.$borderStyle.'>';
 		if ($itemCanDo->get('core.delete')) {
 			$uriDelete->setVar('id',$item->id);
 			echo '<a style="text-decoration: none;" href="'.$uriDelete->toString().'" onClick="return confirm(\''.$deleteConfirmMsg.'\');"><span class="icon-trash"></span></a>';
