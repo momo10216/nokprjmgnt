@@ -43,9 +43,9 @@ if ($this->paramsMenuEntry->get('width') != '0') {
 }
 if ($this->paramsMenuEntry->get('table_center') == '1') echo "<center>\n";
 if ($this->paramsMenuEntry->get('border_type') != '') {
-	echo '<table '.$width.'border="0" cellspacing="0" cellpadding="0" style="'.$border.'">'."\n";
+	echo '<table '.$width.'border="0" cellspacing="'.$this->paramsMenuEntry->get('cellpadding').'" cellpadding="0" style="'.$border.'">'."\n";
 } else {
-	echo '<table '.$width.'border="0" style="border-style:none; border-width:0px">'."\n";
+	echo '<table '.$width.'border="0" cellspacing="0" cellpadding="'.$this->paramsMenuEntry->get('cellpadding').'" style="border-style:none; border-width:0px">'."\n";
 }
 $header = $this->getModel()->getHeader($cols);
 echo '<tr>';

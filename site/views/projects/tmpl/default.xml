@@ -94,6 +94,8 @@
 				<option value="row">Row</option>
 				<option value="grid">Grid</option>
 			</field>
+			<field name="cellpadding" type="integer" label="COM_NOKPRJMGNT_CELLPADDING_LABEL"
+				description="COM_NOKPRJMGNT_CELLPADDING_DESC" required="true" first="0" last="10" step="1" default="0" />
 			<field name="@spacer" type="spacer" default="" label="" description="" />
 			<field name="detail_enable" type="radio" default="0" label="COM_NOKPRJMGNT_ENABLE_DETAILS_LABEL" description="COM_NOKPRJMGNT_ENABLE_DETAILS_DESC">
 				<option value="0">JNO</option>
