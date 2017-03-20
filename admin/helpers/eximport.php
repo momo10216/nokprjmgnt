@@ -34,28 +34,28 @@ class ExImportHelper {
 		$xml = new SimpleXMLElement($xmltext); 
 	}
 
-
 	private static function _exportList(&$xmlNode, $list, $parentRow=array()) {
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		foreach($list as $modelName => $exportProp) {
-			$xmlList = $xmlNode->addChild($exportProp[0]);
+			list($listName, $entryName, $tableName, $entryId, $parentId, $childs) = $exportProp;
+			$xmlList = $xmlNode->addChild($listName);
 			$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
 			$query
 				->select(array('*'))
-				->from($db->quoteName($exportProp[2]));
+				->from($db->quoteName($tableName));
 			if (!empty($parentRow)) {
-				$query->where($db->quoteName($exportProp[4]).' = '.$db->quote($parentRow[$exportProp[3]]));
+				$query->where($db->quoteName($parentId).' = '.$db->quote($parentRow[$entryId]));
 			}
 			$db->setQuery($query);
 			$rows = $db->loadAssocList();
 			foreach($rows as $row) {
-				$xmlEntry = $xmlList->addChild($exportProp[1]);
+				$xmlEntry = $xmlList->addChild($entryName);
 				foreach($row as $field => $value) {
 					$xmlEntry->addAttribute($field,$value);
 				}
-				if (isset($exportProp[5]) && is_array($exportProp[5]) && (count($exportProp[5]) >0)) {
-					self::_exportList($xmlEntry,$exportProp[5],$row);
+				if (isset($childs) && is_array($childs) && (count($childs)>0)) {
+					self::_exportList($xmlEntry,$childs,$row);
 				}
 			}
 		}
