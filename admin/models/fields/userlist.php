@@ -45,8 +45,8 @@ class JFormFieldUserList extends JFormField {
 		} else {
 			$values = array($this->value);
 			foreach($values as $value) {
-				if (!array_key_exists($value, $fields) && (empty($multiple) || !empty($value))) {
-					$fields[$value] = $value;
+				if (!array_key_exists($this->value, $fields) && (empty($multiple) || !empty($this->value))) {
+					$fields[$this->value] = $this->value;
 				}
 			}
 		}

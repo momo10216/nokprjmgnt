@@ -45,7 +45,7 @@ class JFormFieldTaskList extends JFormField {
 				$values = $this->value;
 			} else {
 				$values = array($this->value);
-				if (!array_key_exists($value, $fields) && (empty($multiple) || !empty($value))) {
+				if (!array_key_exists($this->value, $fields) && (empty($multiple) || !empty($this->value))) {
 					$fields[$this->value] = $this->value;
 				}
 			}
