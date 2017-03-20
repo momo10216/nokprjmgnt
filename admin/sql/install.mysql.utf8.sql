@@ -35,5 +35,6 @@ CREATE TABLE `#__nok_pm_tasks` (
   `modifiedby` varchar(50) NOT NULL default '',
   `modifieddate` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
-  KEY `idx_project_id` (`project_id`)
+  KEY `idx_project_id` (`project_id`),
+  CONSTRAINT tasks_ibfk_1 FOREIGN KEY (project_id) REFERENCES #__nok_pm_projects (project_id) ON DELETE CASCADE
 )  DEFAULT CHARSET=utf8;

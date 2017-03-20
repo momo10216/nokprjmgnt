@@ -1,0 +1,5 @@
+- Export / Import (XML)
+- Cascaded Delete
+- Return Url
+- Customize task list in project view
+- Add comments to tasks
