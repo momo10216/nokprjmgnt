@@ -18,8 +18,8 @@ defined('_JEXEC') or die('Restricted access');
  
 class ExImportHelper {
 	private static $_modelStructure = array(
-		'Projects' => array('Projects', 'Project', '#__nok_pm_projects', '', '', array(
-			'Tasks' => array('Tasks', 'Task', '#__nok_pm_tasks', 'id', 'project_id', array())
+		'Projects' => array('Projects', 'Project', '#__nok_pm_projects', '', '', 'title', array(
+			'Tasks' => array('Tasks', 'Task', '#__nok_pm_tasks', 'id', 'project_id', 'title', array())
 		))
 	);
 	private static $_component = 'NoKPrjMgnt';
@@ -31,14 +31,15 @@ class ExImportHelper {
 	}
 
 	public static function import($xmltext) {
-		$xml = new SimpleXMLElement($xmltext); 
+		$xmlRoot = new SimpleXMLElement($xmltext);
+		self::_importList($xmlRoot,self::$_modelStructure);
 	}
 
 	private static function _exportList(&$xmlNode, $list, $parentRow=array()) {
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		foreach($list as $modelName => $exportProp) {
-			list($listName, $entryName, $tableName, $entryId, $parentId, $childs) = $exportProp;
+			list($listName, $entryName, $tableName, $entryId, $parentId, $uniqueKey, $childs) = $exportProp;
 			$xmlList = $xmlNode->addChild($listName);
 			$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
 			$query
@@ -72,6 +73,26 @@ class ExImportHelper {
 		// Close the application.
 		$app = JFactory::getApplication();
 		$app->close();
+	}
+
+	private static function _importList(&$xmlNode, $list, $parentRow=array()) {
+		foreach ($xmlNode->children() as $listChild) {
+			list($modelName,$importProp) = self::_getModelEntryByListName($list,$listChild->getName());
+			if (!empty($modelName) && (count($importProp)>0)) {
+				foreach ($listChild->children() as $entryChild) {
+				}
+			}
+		}
+	}
+
+	private static function _getModelEntryByListName($list, $name) {
+		foreach($list as $modelName => $importProp) {
+			list($listName, $entryName, $tableName, $entryId, $parentId, $uniqueKey, $childs) = $importProp;
+			if ($listName == $name) {
+				return list($modelName,$importProp);
+			}
+		}
+		return list('',array());
 	}
 }
 ?>
