@@ -11,7 +11,7 @@
 
 defined('_JEXEC') or die;
 
-class NoKToDoControllerTodos extends JControllerAdmin {
+class NoKPrjMgntControllerTasks extends JControllerAdmin {
 	public function getModel($name = 'Task', $prefix = 'NoKPrjMgntModel', $config = array('ignore_request' => true)) {
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;

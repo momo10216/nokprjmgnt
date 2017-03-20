@@ -54,7 +54,7 @@ class NoKPrjMgntModelProjects extends JModelList {
 	 * @return      string  An SQL query
 	 */
 	protected function getListQuery() {
-		// Create a new query object.           
+		// Create a new query object.
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		// Select some fields from the hello table

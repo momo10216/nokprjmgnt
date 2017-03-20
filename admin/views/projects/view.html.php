@@ -69,7 +69,7 @@ class NoKPrjMgntViewProjects extends JViewLegacy {
 		JToolBarHelper::custom('projects.export', 'export.png', 'export_f2.png', JText::_('JTOOLBAR_EXPORT'), false);
 		// Add a import button
 		if ($user->authorise('core.create', 'COM_NOKPRJMGNT')) {
-			JToolBarHelper::custom('todos.import', 'import.png', 'import_f2.png', JText::_('JTOOLBAR_IMPORT'), false);
+			JToolBarHelper::custom('projects.import', 'import.png', 'import_f2.png', JText::_('JTOOLBAR_IMPORT'), false);
 		}
 		if ($user->authorise('core.admin', 'COM_NOKPRJMGNT')) {
 			JToolbarHelper::preferences('com_nokprjmgnt');
@@ -81,7 +81,7 @@ class NoKPrjMgntViewProjects extends JViewLegacy {
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 		JToolbarHelper::title(JText::_('COM_NOKPRJMGNT_PROJECTS_TITLE'), 'stack todo');
-		JToolBarHelper::custom('todos.import_cancel', 'cancel.png', 'cancel_f2.png', JText::_('JTOOLBAR_CLOSE'), false);
+		JToolBarHelper::custom('projects.import_cancel', 'cancel.png', 'cancel_f2.png', JText::_('JTOOLBAR_CLOSE'), false);
 	}
 
 	/**
