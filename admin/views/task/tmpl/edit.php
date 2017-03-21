@@ -12,6 +12,7 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
+JHtml::_('formbehavior.chosen', 'select');
 $projectId = JFactory::getURI()->getVar('project_id','');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_nokprjmgnt&layout=edit&id=' . (int) $this->item->id); ?>"

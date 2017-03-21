@@ -12,6 +12,7 @@ defined('_JEXEC') or die; // no direct access
 $curi = JFactory::getURI();
 $uriSave = new JURI($curi->toString());
 $projectId = JFactory::getURI()->getVar('project_id');
+JHtml::_('formbehavior.chosen', 'select');
 ?>
 
 <form action="<?php echo $uriSave->toString(); ?>" method="post" name="adminForm" id="adminForm">
