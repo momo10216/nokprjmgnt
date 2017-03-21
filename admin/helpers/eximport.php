@@ -51,7 +51,7 @@ class ExImportHelper {
 					}
 				}
 				if (isset($childs) && is_array($childs) && (count($childs)>0)) {
-					self::_exportList($xmlEntry,$childs,$row['id']);
+					self::_exportList($xmlEntry,$childs,$row[$model->getExImportPrimaryKey()]);
 				}
 			}
 		}
@@ -70,11 +70,16 @@ class ExImportHelper {
 		$app->close();
 	}
 
-	private static function _importList(&$xmlNode, $list, $parentRow=array()) {
+	private static function _importList(&$xmlNode, $list, $parentId='') {
 		foreach ($xmlNode->children() as $listChild) {
-			list($modelName,$importProp) = self::_getModelEntryByListName($list,$listChild->getName());
+			list($listName, $entryName, $childs) = $exportProp;
 			if (!empty($modelName) && (count($importProp)>0)) {
+				$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
 				foreach ($listChild->children() as $entryChild) {
+					$model->importRow($entryChild->attributes(),$parentId);
+					if (isset($childs) && is_array($childs) && (count($childs)>0)) {
+						self::_importList($entryChild,$childs,$row[$model->getExImportPrimaryKey()]);
+					}
 				}
 			}
 		}

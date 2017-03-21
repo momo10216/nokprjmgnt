@@ -19,6 +19,9 @@ jimport('joomla.application.component.modellist');
  * ClubManagementList Model
  */
 class NoKPrjMgntModelProjects extends JModelList {
+	private $tableName = '#__nok_pm_projects';
+	private $tableAlias = 'p';
+	
 	public function __construct($config = array()) {
 		if (!isset($config['filter_fields']) || empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
@@ -109,16 +112,13 @@ class NoKPrjMgntModelProjects extends JModelList {
 	}
 
 	public function getExportData($parentId='') {
-		// Definition
-		$tableName = '#__nok_pm_projects';
-		$tableAlias = 'p';
 		// Create a new query object.
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		// Set table
-		$query->from($db->quoteName($tableName,$tableAlias));
+		$query->from($db->quoteName($this->tableName,$this->tableAlias));
 		// Select fields to be exported
-		$fields = array($tableAlias.'.*');
+		$fields = array($this->tableAlias.'.*');
 		foreach ($this->getExImportForeignKeys() as $fkKey => $fkProperty) {
 			list($table, $talias, $pk, $uniqueFields) = $fkProperty;
 			foreach ($uniqueFields as $uniqueField => $newFieldName) {
@@ -128,11 +128,14 @@ class NoKPrjMgntModelProjects extends JModelList {
 					array_push($fields, $talias.'.'.$uniqueField.' AS '.$newFieldName);
 				}
 			}
-			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName($tableAlias.'.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
+			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName($this->tableAlias.'.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
 		}
 		$query->select($fields);
 		$db->setQuery($query);
 		return $db->loadAssocList();
+	}
+	
+	public function importRow($data, $parentId='') {
 	}
 }
 ?>

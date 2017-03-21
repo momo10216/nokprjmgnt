@@ -19,6 +19,8 @@ jimport('joomla.application.component.modellist');
  * ClubManagementList Model
  */
 class NoKPrjMgntModelTasks extends JModelList {
+	private $tableName = '#__nok_pm_tasks';
+	private $tableAlias = 't';
 	private $_userId2Login = array();
 	private $_userLogin2Id = array();
 
@@ -62,7 +64,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 		// Select some fields from the hello table
 		$query
 			->select(array('t.id', 't.title', 't.priority', 't.duedate', 't.status', 'p.title AS project'))
-			->from($db->quoteName('#__nok_pm_tasks','t'))
+			->from($db->quoteName($this->tableName,$this->tableAlias))
 			->join('LEFT', $db->quoteName('#__nok_pm_projects', 'p').' ON ('.$db->quoteName('t.project_id').'='.$db->quoteName('p.id').')');
 		// special filtering (houshold, excludeid).
 		$app = JFactory::getApplication();
@@ -106,16 +108,13 @@ class NoKPrjMgntModelTasks extends JModelList {
 	}
 
 	public function getExportData($parentId='') {
-		// Definition
-		$tableName = '#__nok_pm_tasks';
-		$tableAlias = 't';
 		// Create a new query object.
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		// Set table
-		$query->from($db->quoteName($tableName,$tableAlias));
+		$query->from($db->quoteName($this->tableName,$this->tableAlias));
 		// Select fields to be exported
-		$fields = array($tableAlias.'.*');
+		$fields = array($this->tableAlias.'.*');
 		foreach ($this->getExImportForeignKeys() as $fkKey => $fkProperty) {
 			list($table, $talias, $pk, $uniqueFields) = $fkProperty;
 			foreach ($uniqueFields as $uniqueField => $newFieldName) {
@@ -125,7 +124,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 					array_push($fields, $talias.'.'.$uniqueField.' AS '.$newFieldName);
 				}
 			}
-			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName($tableAlias.'.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
+			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName($this->tableAlias.'.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
 		}
 		$query->select($fields);
 		if (!empty($parentId)) {
@@ -139,6 +138,9 @@ class NoKPrjMgntModelTasks extends JModelList {
 			}
 		}
 		return $rows;
+	}
+
+	public function importRow($data, $parentId='') {
 	}
 
 	private function mapUserId2Login($userIds, $delimiter=',') {
