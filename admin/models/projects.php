@@ -96,7 +96,8 @@ class NoKPrjMgntModelProjects extends JModelList {
 
 	public function getExImportForeignKeys() {
 		return array(
-			'access' => array('#__viewlevels','v','id',array('title' => 'access_title'))
+			'access' => array('#__viewlevels','v','id',array('title' => 'access_title')),
+			'catid' => array('#__categories','c','id',array('alias' => 'category_alias'))
 		);
 	}
 
@@ -107,23 +108,31 @@ class NoKPrjMgntModelProjects extends JModelList {
 		);
 	}
 
-	public function getExportQuery($parentId='') {
+	public function getExportData($parentId='') {
+		// Definition
+		$tableName = '#__nok_pm_projects';
+		$tableAlias = 'p';
 		// Create a new query object.
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		// Set table
-		$query->from($db->quoteName('#__nok_pm_projects','p'));
+		$query->from($db->quoteName($tableName,$tableAlias));
 		// Select fields to be exported
-		$fields = array('p.*');
+		$fields = array($tableAlias.'.*');
 		foreach ($this->getExImportForeignKeys() as $fkKey => $fkProperty) {
 			list($table, $talias, $pk, $uniqueFields) = $fkProperty;
 			foreach ($uniqueFields as $uniqueField => $newFieldName) {
-				array_push($fields, $talias.'.'.$uniqueField.' AS '.$newFieldName);
+				if (empty($talias)) {
+					array_push($fields, $uniqueField.' AS '.$newFieldName);
+				} else {
+					array_push($fields, $talias.'.'.$uniqueField.' AS '.$newFieldName);
+				}
 			}
-			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName('p.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
+			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName($tableAlias.'.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
 		}
 		$query->select($fields);
-		return $query;
+		$db->setQuery($query);
+		return $db->loadAssocList();
 	}
 }
 ?>

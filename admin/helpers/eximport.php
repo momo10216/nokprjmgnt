@@ -41,10 +41,8 @@ class ExImportHelper {
 			list($listName, $entryName, $childs) = $exportProp;
 			$xmlList = $xmlNode->addChild($listName);
 			$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
-			$query = $model->getExportQuery($parentId);
+			$rows = $model->getExportData($parentId);
 			$excludeFields = $model->getExportExcludeFields();
-			$db->setQuery($query);
-			$rows = $db->loadAssocList();
 			foreach($rows as $row) {
 				$xmlEntry = $xmlList->addChild($entryName);
 				foreach($row as $field => $value) {

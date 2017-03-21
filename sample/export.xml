@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NoKPrjMgnt>
+	<Projects>
+		<Project title="Test Public" description="&lt;p&gt;Test&lt;/p&gt;" priority="1" duedate="2017-03-11 00:00:00" status="Open" asset_id="4651" custom1="" custom2="" custom3="" custom4="" custom5="" createdby="Norbert Kümin" createddate="2017-03-11 20:37:06" modifiedby="Norbert Kümin" modifieddate="2017-03-11 20:39:54" access_title="Public" category_alias="keine">
+			<Tasks>
+				<Task title="Public 1" description="&lt;p&gt;Test Public 1 &lt;/p&gt;" priority="1" duedate="2017-03-17 00:00:00" status="Progressing" assign_user_ids="" createdby="Norbert Kümin" createddate="2017-03-17 10:22:24" modifiedby="Norbert Kümin" modifieddate="2017-03-17 10:22:24" responsible_user_login=""/>
+				<Task title="Public 2" description="&lt;p&gt;Test Public 2&lt;/p&gt;" priority="2" duedate="2017-03-17 00:00:00" status="Cancelled" assign_user_ids="" createdby="Norbert Kümin" createddate="2017-03-17 10:22:57" modifiedby="Norbert Kümin" modifieddate="2017-03-17 10:22:57" responsible_user_login=""/>
+				<Task title="Public 3" description="&lt;p&gt;Test&lt;/p&gt;" priority="3" duedate="2017-03-18 00:00:00" status="Progressing" assign_user_ids="" createdby="Norbert Kümin" createddate="2017-03-18 16:02:20" modifiedby="Norbert Kümin" modifieddate="2017-03-18 16:02:20" responsible_user_login=""/>
+			</Tasks>
+		</Project>
+		<Project title="Test Special" description="" priority="1" duedate="2017-03-11 00:00:00" status="Open" asset_id="4652" custom1="" custom2="" custom3="" custom4="" custom5="" createdby="Norbert Kümin" createddate="2017-03-11 20:38:09" modifiedby="Norbert Kümin" modifieddate="2017-03-11 20:40:26" access_title="Special" category_alias="keine">
+			<Tasks>
+				<Task title="Special 1" description="&lt;p&gt;Test Special 1&lt;/p&gt;" priority="1" duedate="2017-03-17 00:00:00" status="Finished" assign_user_ids="" createdby="Norbert Kümin" createddate="2017-03-17 10:23:22" modifiedby="Norbert Kümin" modifieddate="2017-03-17 10:23:22" responsible_user_login=""/>
+				<Task title="Special 2" description="&lt;p&gt;Test Special 2&lt;/p&gt;" priority="2" duedate="2017-03-17 00:00:00" status="Open" assign_user_ids="" createdby="Norbert Kümin" createddate="2017-03-17 10:23:44" modifiedby="Norbert Kümin" modifieddate="2017-03-17 10:23:44" responsible_user_login=""/>
+			</Tasks>
+		</Project>
+		<Project title="Test Privat" description="&lt;p&gt;Test&lt;/p&gt;" priority="1" duedate="2017-03-11 00:00:00" status="Open" asset_id="4654" custom1="" custom2="" custom3="" custom4="" custom5="" createdby="Norbert Kümin" createddate="2017-03-11 20:39:15" modifiedby="Norbert Kümin" modifieddate="2017-03-11 20:41:08" access_title="Privat" category_alias="keine">
+			<Tasks>
+				<Task title="Privat 1" description="&lt;p&gt;Test Privat 1&lt;/p&gt;" priority="1" duedate="2017-03-17 00:00:00" status="Open" assign_user_ids="severina,noebe" createdby="Norbert Kümin" createddate="2017-03-17 10:21:22" modifiedby="Norbert Kümin" modifieddate="2017-03-17 10:44:52" responsible_user_login="norbert"/>
+				<Task title="Privat 2" description="&lt;p&gt;Test Privat 2&lt;/p&gt;" priority="2" duedate="2017-03-17 00:00:00" status="Open" assign_user_ids="norbert,severina" createdby="Norbert Kümin" createddate="2017-03-17 10:22:00" modifiedby="Norbert Kümin" modifieddate="2017-03-18 16:00:17" responsible_user_login=""/>
+				<Task title="Privat 3" description="&lt;p&gt;Test&lt;/p&gt;" priority="3" duedate="2017-03-17 00:00:00" status="Progressing" assign_user_ids="" createdby="Norbert Kümin" createddate="2017-03-11 20:39:15" modifiedby="Norbert Kümin" modifieddate="2017-03-17 23:30:05" responsible_user_login=""/>
+			</Tasks>
+		</Project>
+	</Projects>
+</NoKPrjMgnt>

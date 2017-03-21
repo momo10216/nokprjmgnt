@@ -19,6 +19,9 @@ jimport('joomla.application.component.modellist');
  * ClubManagementList Model
  */
 class NoKPrjMgntModelTasks extends JModelList {
+	private $_userId2Login = array();
+	private $_userLogin2Id = array();
+
 	public function __construct($config = array()) {
 		if (!isset($config['filter_fields']) || empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
@@ -91,7 +94,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 
 	public function getExImportForeignKeys() {
 		return array(
-			'responsible_user_id' => array('#__users','u','id',array('username' => 'responsible_user_login'))
+			'responsible_user_id' => array('#__users','u1','id',array('username' => 'responsible_user_login'))
 		);
 	}
 
@@ -102,27 +105,75 @@ class NoKPrjMgntModelTasks extends JModelList {
 		);
 	}
 
-	public function getExportQuery($parentId='') {
+	public function getExportData($parentId='') {
+		// Definition
+		$tableName = '#__nok_pm_tasks';
+		$tableAlias = 't';
 		// Create a new query object.
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		// Set table
-		$query->from($db->quoteName('#__nok_pm_tasks','t'));
+		$query->from($db->quoteName($tableName,$tableAlias));
 		// Select fields to be exported
-		$fields = array('t.*');
+		$fields = array($tableAlias.'.*');
 		foreach ($this->getExImportForeignKeys() as $fkKey => $fkProperty) {
 			list($table, $talias, $pk, $uniqueFields) = $fkProperty;
 			foreach ($uniqueFields as $uniqueField => $newFieldName) {
-				array_push($fields, $talias.'.'.$uniqueField.' AS '.$newFieldName);
+				if (empty($talias)) {
+					array_push($fields, $uniqueField.' AS '.$newFieldName);
+				} else {
+					array_push($fields, $talias.'.'.$uniqueField.' AS '.$newFieldName);
+				}
 			}
-			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName('t.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
+			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName($tableAlias.'.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
 		}
 		$query->select($fields);
 		if (!empty($parentId)) {
-			$query->where($db->quoteName('project_id').' = '.$db->quote($parentId));
+			$query->where($db->quoteName($tableAlias.'.project_id').' = '.$db->quote($parentId));
 		}
-echo $query;
-		return $query;
+		$db->setQuery($query);
+		$rows = $db->loadAssocList();
+		foreach(array_keys($rows) as $key) {
+			if (!empty($rows[$key]['assign_user_ids'])) {
+				$rows[$key]['assign_user_ids'] = $this->mapUserId2Login($rows[$key]['assign_user_ids']);
+			}
+		}
+		return $rows;
+	}
+
+	private function mapUserId2Login($userIds, $delimiter=',') {
+		$this->loadUserData();
+		$userIdList = explode($delimiter,$userIds);
+		$userLoginList = array();
+		foreach($userIdList as $userId) {
+			array_push($userLoginList,$this->_userId2Login[$userId]);
+		}
+		return implode($delimiter,$userLoginList);
+	}
+
+	private function mapUserLogin2Id($userLogins, $delimiter=',') {
+		$this->loadUserData();
+		$userLoginList = explode($delimiter,$userIds);
+		$userIdList = array();
+		foreach($userLoginList as $userLogin) {
+			array_push($userIdList,$this->_userLogin2Id[$userLogin]);
+		}
+		return implode($delimiter,$userIdList);
+	}
+
+	private function loadUserData() {
+		if ((count($this->_userId2Login) < 1) || (count($this->_userLogin2Id) < 1)) {
+			$db = JFactory::getDBO();
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName(array('u.id','u.username')))
+				->from($db->quoteName('#__users','u'));
+			$db->setQuery($query);
+			$rows = $db->loadAssocList();
+			foreach ($rows as $row) {
+				$this->_userId2Login[$row['id']] = $row['username'];
+				$this->_userLogin2Id[$row['username']] = $row['id'];
+			}
+		}
 	}
 }
 ?>
