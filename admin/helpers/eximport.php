@@ -18,8 +18,8 @@ defined('_JEXEC') or die('Restricted access');
  
 class ExImportHelper {
 	private static $_modelStructure = array(
-		'Projects' => array('Projects', 'Project', '#__nok_pm_projects', '', '', 'title', array(
-			'Tasks' => array('Tasks', 'Task', '#__nok_pm_tasks', 'id', 'project_id', 'title', array())
+		'Projects' => array('Projects', 'Project', array(
+			'Tasks' => array('Tasks', 'Task', array())
 		))
 	);
 	private static $_component = 'NoKPrjMgnt';
@@ -35,28 +35,25 @@ class ExImportHelper {
 		self::_importList($xmlRoot,self::$_modelStructure);
 	}
 
-	private static function _exportList(&$xmlNode, $list, $parentRow=array()) {
+	private static function _exportList(&$xmlNode, $list, $parentId='') {
 		$db = JFactory::getDBO();
-		$query = $db->getQuery(true);
 		foreach($list as $modelName => $exportProp) {
-			list($listName, $entryName, $tableName, $entryId, $parentId, $uniqueKey, $childs) = $exportProp;
+			list($listName, $entryName, $childs) = $exportProp;
 			$xmlList = $xmlNode->addChild($listName);
 			$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
-			$query
-				->select(array('*'))
-				->from($db->quoteName($tableName));
-			if (!empty($parentRow)) {
-				$query->where($db->quoteName($parentId).' = '.$db->quote($parentRow[$entryId]));
-			}
+			$query = $model->getExportQuery($parentId);
+			$excludeFields = $model->getExportExcludeFields();
 			$db->setQuery($query);
 			$rows = $db->loadAssocList();
 			foreach($rows as $row) {
 				$xmlEntry = $xmlList->addChild($entryName);
 				foreach($row as $field => $value) {
-					$xmlEntry->addAttribute($field,$value);
+					if (array_search($field,$excludeFields) === false) {
+						$xmlEntry->addAttribute($field,$value);
+					}
 				}
 				if (isset($childs) && is_array($childs) && (count($childs)>0)) {
-					self::_exportList($xmlEntry,$childs,$row);
+					self::_exportList($xmlEntry,$childs,$row['id']);
 				}
 			}
 		}
@@ -87,12 +84,16 @@ class ExImportHelper {
 
 	private static function _getModelEntryByListName($list, $name) {
 		foreach($list as $modelName => $importProp) {
-			list($listName, $entryName, $tableName, $entryId, $parentId, $uniqueKey, $childs) = $importProp;
+			list($listName,$entryName,$childs) = $importProp;
 			if ($listName == $name) {
-				return list($modelName,$importProp);
+				return array($modelName,$importProp);
+			}
+			if (isset($childs) && is_array($childs) && (count($childs)>0)) {
+				list($resultModel, $resultImportProp) = self::_getModelEntryByListName($child,$name);
+				if (!empty($resultModel)) { return array($resultModel, $resultImportProp); }
 			}
 		}
-		return list('',array());
+		return array('',array());
 	}
 }
 ?>

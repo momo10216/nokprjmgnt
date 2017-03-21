@@ -89,5 +89,41 @@ class NoKPrjMgntModelProjects extends JModelList {
 		$query->order(implode(", ",$orderEntry));
 		return $query;
 	}
+
+	public function getExImportPrimaryKey() {
+		return 'id';
+	}
+
+	public function getExImportForeignKeys() {
+		return array(
+			'access' => array('#__viewlevels','v','id',array('title' => 'access_title'))
+		);
+	}
+
+	public function getExportExcludeFields() {
+		return array_merge(
+			array('id'),
+			array_keys($this->getExImportForeignKeys())
+		);
+	}
+
+	public function getExportQuery($parentId='') {
+		// Create a new query object.
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		// Set table
+		$query->from($db->quoteName('#__nok_pm_projects','p'));
+		// Select fields to be exported
+		$fields = array('p.*');
+		foreach ($this->getExImportForeignKeys() as $fkKey => $fkProperty) {
+			list($table, $talias, $pk, $uniqueFields) = $fkProperty;
+			foreach ($uniqueFields as $uniqueField => $newFieldName) {
+				array_push($fields, $talias.'.'.$uniqueField.' AS '.$newFieldName);
+			}
+			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName('p.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
+		}
+		$query->select($fields);
+		return $query;
+	}
 }
 ?>

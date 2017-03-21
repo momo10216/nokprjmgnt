@@ -84,5 +84,45 @@ class NoKPrjMgntModelTasks extends JModelList {
 		$query->order(implode(", ",$orderEntry));
 		return $query;
 	}
+
+	public function getExImportPrimaryKey() {
+		return 'id';
+	}
+
+	public function getExImportForeignKeys() {
+		return array(
+			'responsible_user_id' => array('#__users','u','id',array('username' => 'responsible_user_login'))
+		);
+	}
+
+	public function getExportExcludeFields() {
+		return array_merge(
+			array('id', 'project_id'),
+			array_keys($this->getExImportForeignKeys())
+		);
+	}
+
+	public function getExportQuery($parentId='') {
+		// Create a new query object.
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		// Set table
+		$query->from($db->quoteName('#__nok_pm_tasks','t'));
+		// Select fields to be exported
+		$fields = array('t.*');
+		foreach ($this->getExImportForeignKeys() as $fkKey => $fkProperty) {
+			list($table, $talias, $pk, $uniqueFields) = $fkProperty;
+			foreach ($uniqueFields as $uniqueField => $newFieldName) {
+				array_push($fields, $talias.'.'.$uniqueField.' AS '.$newFieldName);
+			}
+			$query->join('LEFT', $db->quoteName($table,$talias).' ON ('.$db->quoteName('t.'.$fkKey).'='.$db->quoteName($talias.'.'.$pk).')');
+		}
+		$query->select($fields);
+		if (!empty($parentId)) {
+			$query->where($db->quoteName('project_id').' = '.$db->quote($parentId));
+		}
+echo $query;
+		return $query;
+	}
 }
 ?>
