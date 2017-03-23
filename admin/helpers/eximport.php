@@ -78,11 +78,11 @@ echo $xmltext;
 				list($listName, $entryName, $parentIdFieldName, $childs) = $importProp;
 				$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
 				foreach ($listChild->children() as $entryChild) {
-					$rowData = $entryChild->attributes();
+					$rowData = current($entryChild->attributes());
 					if (!empty($parentIdFieldName) && !empty($parentId)) { $rowData[$parentIdFieldName] = $parentId; }
-					self::_importRow($model, $rowData,$parentId);
+					$rowData[$model->getExImportPrimaryKey()] = self::_importRow($model,$rowData,$parentId);
 					if (isset($childs) && is_array($childs) && (count($childs)>0)) {
-						self::_importList($entryChild,$childs,$row[$model->getExImportPrimaryKey()]);
+						self::_importList($entryChild,$childs,$rowData[$model->getExImportPrimaryKey()]);
 					}
 				}
 			}
@@ -95,6 +95,9 @@ echo $xmltext;
 		$parentIdField = $model->getExImportParentFieldName();
 		if (!empty($parentId) && !empty($parentIdField)) {
 			$rowData[$parentIdField] = $parentId;
+		}
+		if (method_exists($model,'importPreSave')) {
+			$rowData = $model->importPreSave($rowData);
 		}
 		$id = self::_findRecordWithKeyFields($model, $rowData);
 		$query = $db->getQuery(true);
@@ -123,6 +126,10 @@ echo $xmltext;
 		}
 		$db->setQuery($query);
 		$db->query();
+		if (empty($id)) {
+			$id = $db->insertid();;
+		}
+		return $id;
 	}
 
 	private static function _getModelEntryByListName($list, $name) {
@@ -163,7 +170,7 @@ echo $xmltext;
 	private static function _resolveForeignKeys($model, $row) {
 		$foreign_keys = $model->getExImportForeignKeys();
 		$db = JFactory::getDBO();
-		foreach ($foreign_keys as $targetfield => $foreignKeyData) {
+		foreach ($foreign_keys as $targetField => $foreignKeyData) {
 			list($tableName, $tableAlias, $foreignPrimaryKey, $conditions) = $foreignKeyData;
 			$where = array();
 			foreach ($conditions as $tableField => $dataField) {
@@ -183,7 +190,7 @@ echo $xmltext;
 			$db->setQuery($query);
 			$results = $db->loadRowList();
 			if ($results) {
-				$row[$targetfield] = $results[0][0];
+				$row[$targetField] = $results[0][0];
 			}
 		}
 		return $row;

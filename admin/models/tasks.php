@@ -152,7 +152,9 @@ class NoKPrjMgntModelTasks extends JModelList {
 		return $rows;
 	}
 
-	public function importRow($data, $parentId='') {
+	public function importPreSave($data) {
+		$data['assign_user_ids'] = $this->mapUserLogin2Id($data['assign_user_ids']);
+		return $data;
 	}
 
 	private function mapUserId2Login($userIds, $delimiter=',') {
@@ -167,10 +169,12 @@ class NoKPrjMgntModelTasks extends JModelList {
 
 	private function mapUserLogin2Id($userLogins, $delimiter=',') {
 		$this->loadUserData();
-		$userLoginList = explode($delimiter,$userIds);
+		$userLoginList = explode($delimiter,$userLogins);
 		$userIdList = array();
 		foreach($userLoginList as $userLogin) {
-			array_push($userIdList,$this->_userLogin2Id[$userLogin]);
+			if (isset($this->_userLogin2Id[$userLogin])) {
+				array_push($userIdList,$this->_userLogin2Id[$userLogin]);
+			}
 		}
 		return implode($delimiter,$userIdList);
 	}
