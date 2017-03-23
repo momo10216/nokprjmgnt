@@ -90,8 +90,20 @@ class NoKPrjMgntModelTasks extends JModelList {
 		return $query;
 	}
 
+	public function getExImportTableName() {
+		return $this->tableName;
+	}
+
 	public function getExImportPrimaryKey() {
 		return 'id';
+	}
+
+	public function getExImportParentFieldName() {
+		return 'project_id';
+	}
+
+	public function getExImportUniqueKeyFields() {
+		return array('project_id','title');
 	}
 
 	public function getExImportForeignKeys() {
@@ -102,7 +114,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 
 	public function getExportExcludeFields() {
 		return array_merge(
-			array('id', 'project_id'),
+			array($this->getExImportPrimaryKey()),
 			array_keys($this->getExImportForeignKeys())
 		);
 	}

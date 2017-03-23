@@ -1,5 +1,7 @@
 - Export / Import (XML)
 - Cascaded Delete
 - Return Url
+- Multilingual status
 - Customize task list in project view
 - Add comments to tasks
+- Slider in task (% done)

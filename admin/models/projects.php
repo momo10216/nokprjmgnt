@@ -93,8 +93,20 @@ class NoKPrjMgntModelProjects extends JModelList {
 		return $query;
 	}
 
+	public function getExImportTableName() {
+		return $this->tableName;
+	}
+
 	public function getExImportPrimaryKey() {
 		return 'id';
+	}
+
+	public function getExImportParentFieldName() {
+		return '';
+	}
+
+	public function getExImportUniqueKeyFields() {
+		return array('title');
 	}
 
 	public function getExImportForeignKeys() {
@@ -106,7 +118,7 @@ class NoKPrjMgntModelProjects extends JModelList {
 
 	public function getExportExcludeFields() {
 		return array_merge(
-			array('id'),
+			array($this->getExImportPrimaryKey()),
 			array_keys($this->getExImportForeignKeys())
 		);
 	}
@@ -133,9 +145,6 @@ class NoKPrjMgntModelProjects extends JModelList {
 		$query->select($fields);
 		$db->setQuery($query);
 		return $db->loadAssocList();
-	}
-	
-	public function importRow($data, $parentId='') {
 	}
 }
 ?>

@@ -18,8 +18,8 @@ defined('_JEXEC') or die('Restricted access');
  
 class ExImportHelper {
 	private static $_modelStructure = array(
-		'Projects' => array('Projects', 'Project', array(
-			'Tasks' => array('Tasks', 'Task', array())
+		'Projects' => array('Projects', 'Project', '', array(
+			'Tasks' => array('Tasks', 'Task', 'project_id', array())
 		))
 	);
 	private static $_component = 'NoKPrjMgnt';
@@ -31,6 +31,7 @@ class ExImportHelper {
 	}
 
 	public static function import($xmltext) {
+echo $xmltext;
 		$xmlRoot = new SimpleXMLElement($xmltext);
 		self::_importList($xmlRoot,self::$_modelStructure);
 	}
@@ -38,7 +39,7 @@ class ExImportHelper {
 	private static function _exportList(&$xmlNode, $list, $parentId='') {
 		$db = JFactory::getDBO();
 		foreach($list as $modelName => $exportProp) {
-			list($listName, $entryName, $childs) = $exportProp;
+			list($listName, $entryName, $parentIdFieldName, $childs) = $exportProp;
 			$xmlList = $xmlNode->addChild($listName);
 			$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
 			$rows = $model->getExportData($parentId);
@@ -72,17 +73,56 @@ class ExImportHelper {
 
 	private static function _importList(&$xmlNode, $list, $parentId='') {
 		foreach ($xmlNode->children() as $listChild) {
-			list($listName, $entryName, $childs) = $exportProp;
+			list($modelName, $importProp) = self::_getModelEntryByListName($list, $listChild->getName());
 			if (!empty($modelName) && (count($importProp)>0)) {
+				list($listName, $entryName, $parentIdFieldName, $childs) = $importProp;
 				$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
 				foreach ($listChild->children() as $entryChild) {
-					$model->importRow($entryChild->attributes(),$parentId);
+					$rowData = $entryChild->attributes();
+					if (!empty($parentIdFieldName) && !empty($parentId)) { $rowData[$parentIdFieldName] = $parentId; }
+					self::_importRow($model, $rowData,$parentId);
 					if (isset($childs) && is_array($childs) && (count($childs)>0)) {
 						self::_importList($entryChild,$childs,$row[$model->getExImportPrimaryKey()]);
 					}
 				}
 			}
 		}
+	}
+
+	private static function _importRow($model, $rowData, $parentId='') {
+		$db = JFactory::getDBO();
+		$rowData = self::_resolveForeignKeys($model, $rowData);
+		$parentIdField = $model->getExImportParentFieldName();
+		if (!empty($parentId) && !empty($parentIdField)) {
+			$rowData[$parentIdField] = $parentId;
+		}
+		$id = self::_findRecordWithKeyFields($model, $rowData);
+		$query = $db->getQuery(true);
+		if ($id) {
+			// Update
+			$fields = array();
+			foreach($rowData as $key => $value) {
+				array_push($fields, $db->quoteName($known_fields[$key])."=".$db->quote($value));
+			}
+			$query
+				->update($db->quoteName($model->getExImportTableName()))
+				->set($fields)
+				->where($db->quoteName($model->getExImportPrimaryKey()).'='.$id);
+		} else {
+			// Insert
+			$fields = array();
+			$values = array();
+			foreach($rowData as $key => $value) {
+				array_push($fields, $db->quoteName($key));
+				array_push($values, $db->quote($value));
+			}
+			$query
+				->insert($db->quoteName($model->getExImportTableName()))
+				->columns($fields)
+				->values(implode(',',$values));
+		}
+		$db->setQuery($query);
+		$db->query();
 	}
 
 	private static function _getModelEntryByListName($list, $name) {
@@ -97,6 +137,56 @@ class ExImportHelper {
 			}
 		}
 		return array('',array());
+	}
+
+	private static function _findRecordWithKeyFields($model, $row) {
+		$db = JFactory::getDBO();
+		$keyFields = $model->getExImportUniqueKeyFields();
+		$expressions = array();
+		foreach ($keyFields as $keyField) {
+			array_push($expressions,$db->quoteName($keyField)."=".$db->quote($row[$keyField]));
+		}
+		$query = $db->getQuery(true);
+		$where = implode(" AND ",$expressions);
+		$query
+			->select($db->quoteName($model->getExImportPrimaryKey()))
+			->from($db->quoteName($model->getExImportTableName()))
+			->where($where);
+		$db->setQuery($query);
+		$results = $db->loadRowList();
+		if ($results) {
+			return $results[0][0];
+		}
+		return false;
+	}
+
+	private static function _resolveForeignKeys($model, $row) {
+		$foreign_keys = $model->getExImportForeignKeys();
+		$db = JFactory::getDBO();
+		foreach ($foreign_keys as $targetfield => $foreignKeyData) {
+			list($tableName, $tableAlias, $foreignPrimaryKey, $conditions) = $foreignKeyData;
+			$where = array();
+			foreach ($conditions as $tableField => $dataField) {
+				if (empty($row[$dataField])) {
+					array_push($where, "(".$db->quoteName($tableAlias.".".$tableField)." IS NULL OR ".
+						$db->quoteName($tableAlias.".".$tableField)."='0000-00-00' OR ".
+						$db->quoteName($tableAlias.".".$tableField)."='')");
+				} else {
+					array_push($where, $db->quoteName($tableAlias.".".$tableField)."=".$db->quote($row[$dataField]));
+				}
+				unset($row[$dataField]);
+			}
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName($tableAlias.".".$foreignPrimaryKey))
+				->from($db->quoteName($tableName,$tableAlias))
+				->where(implode(" AND ",$where));
+			$db->setQuery($query);
+			$results = $db->loadRowList();
+			if ($results) {
+				$row[$targetfield] = $results[0][0];
+			}
+		}
+		return $row;
 	}
 }
 ?>

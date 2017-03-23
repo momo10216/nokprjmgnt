@@ -38,7 +38,7 @@ class NoKPrjMgntControllerProjects extends JControllerAdmin {
 			unlink($file['tmp_name']);
 		}
 		JLoader::register('ExImportHelper', __DIR__.'/../helpers/eximport.php', true);
-		$data  = CvsHelper::import($content);
+		$data  = ExImportHelper::import($content);
 		$this->setRedirect(JRoute::_('index.php?option='.$this->option, false));
 	}
 
