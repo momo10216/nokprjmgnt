@@ -1,4 +1,27 @@
-- Export / Import (XML)
+- Import
+	Assets:
+		Table: #__assets
+		Row: 
+			id=4655
+			parent_id=1
+			lft=7109
+			rgt=7114
+			level=1
+			name=com_nokprjmgnt
+			title=COM_NOKPRJMGNT
+			rules={}
+		Row: 
+			id=4662
+			parent_id=4655
+			lft=7114
+			rgt=7115
+			level=2
+			name=com_nokprjmgnt.project.14
+			title=Registered
+			rules={"core.edit":{"2":1},"core.edit.own":{"2":1}} 2=Registered (viewlevels)
+		json_decode($json, true)
+		json_encode(array)
+
 - Cascaded Delete
 - Return Url
 - Multilingual status

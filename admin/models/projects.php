@@ -21,6 +21,9 @@ jimport('joomla.application.component.modellist');
 class NoKPrjMgntModelProjects extends JModelList {
 	private $tableName = '#__nok_pm_projects';
 	private $tableAlias = 'p';
+	private $_viewlevelId2Title = array();
+	private $_viewlevelTitle2Id = array();
+	private $_assetRule = '';
 	
 	public function __construct($config = array()) {
 		if (!isset($config['filter_fields']) || empty($config['filter_fields'])) {
@@ -144,7 +147,85 @@ class NoKPrjMgntModelProjects extends JModelList {
 		}
 		$query->select($fields);
 		$db->setQuery($query);
-		return $db->loadAssocList();
+		$rows = $db->loadAssocList();
+			}
+		}
+		return $rows;
+	}
+
+	public function importPreSave($row) {
+		$this->_assetRules = $row['asset_rules'];
+		unset($row['asset_rules']);
+		return $row;
+	}
+
+	public function importPostSave($id, $row) {
+		$this->_setAssetRulesByName('com_nokprjmgnt.project.'.$id, $this->_mapVewlevelsId2Title($this->_assetRules));
+	}
+
+	private function _mapVewlevelsId2Title($json) {
+		$this->_loadViewData();
+		$rules = json_decode($json,true);
+		foreach($rules as $key => $rule) {
+			$newRule = array();
+			foreach($rule as $viewlevelId => $value) {
+				$newRule[$this->_viewlevelId2Title[$viewlevelId]] = $value;
+			}
+			$rules[$key] = $newRule;
+		}
+		return json_encode($rules);
+	}
+
+	private function _mapVewlevelsTitle2Id($json) {
+		$this->_loadViewData();
+		$rules = json_decode($json,true);
+		foreach($rules as $key => $rule) {
+			$newRule = array();
+			foreach($rule as $viewlevelTitle => $value) {
+				$newRule[$this->_viewlevelTitle2Id[$viewlevelTitle]] = $value;
+			}
+			$rules[$key] = $newRule;
+		}
+		return json_encode($rules);
+	}
+
+	private function _getAssetRulesById($id) {
+			$db = JFactory::getDBO();
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName(array('a.rules')))
+				->from($db->quoteName('#__assets','a'))
+				->where($db->quoteName('a.id').'='.$db->quote($id));
+			$db->setQuery($query);
+			$result = $db->loadAssocList();
+			if ($result) { return $result[0][0]; }
+			return false;
+	}
+	
+	private function _setAssetRulesByName($name, $json) {
+			$db = JFactory::getDBO();
+			$query = $db->getQuery(true);
+			$query
+				->update($db->quoteName('#__assets','a'))
+				->set($db->quoteName('a.rules').'='.$db->quote($json))
+				->where($db->quoteName('a.name').'='.$db->quote($name));
+
+			$db->setQuery($query);
+			$db->query();
+	}
+
+	private function _loadViewData() {
+		if ((count($this->_viewlevelId2Title) < 1) || (count($this->_viewlevelTitle2Id) < 1)) {
+			$db = JFactory::getDBO();
+			$query = $db->getQuery(true);
+			$query->select($db->quoteName(array('v.id','v.title')))
+				->from($db->quoteName('#__viewlevels','v'));
+			$db->setQuery($query);
+			$rows = $db->loadAssocList();
+			foreach ($rows as $row) {
+				$this->_viewlevelId2Title[$row['id']] = $row['title'];
+				$this->_viewlevelTitle2Id[$row['title']] = $row['id'];
+			}
+		}
 	}
 }
 ?>

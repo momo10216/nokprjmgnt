@@ -129,6 +129,13 @@ echo $xmltext;
 		if (empty($id)) {
 			$id = $db->insertid();;
 		}
+		// Generate asset entry
+		$table = JTable::getInstance($model->getExImportTableName(), 'Table', array('dbo' => $db));
+		$table->load($data->id);
+		$table->store();
+		if (method_exists($model,'importPostSave')) {
+			$model->importPostSave($rowData,$id);
+		}
 		return $id;
 	}
 
