@@ -148,6 +148,11 @@ class NoKPrjMgntModelProjects extends JModelList {
 		$query->select($fields);
 		$db->setQuery($query);
 		$rows = $db->loadAssocList();
+		foreach($rows as $key => $row) {
+			if (!empty($row['asset_id'])) {
+				$json = $this->_getAssetRulesById($row['asset_id']);
+				$row['asset_rules'] = $this->_mapVewlevelsId2Title($json);
+				unset($row['asset_id']);
 			}
 		}
 		return $rows;
