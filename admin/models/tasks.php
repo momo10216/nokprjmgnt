@@ -140,7 +140,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 		}
 		$query->select($fields);
 		if (!empty($parentId)) {
-			$query->where($db->quoteName($tableAlias.'.project_id').' = '.$db->quote($parentId));
+			$query->where($db->quoteName($this->tableAlias.'.project_id').' = '.$db->quote($parentId));
 		}
 		$db->setQuery($query);
 		$rows = $db->loadAssocList();
