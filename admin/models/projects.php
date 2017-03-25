@@ -21,9 +21,10 @@ jimport('joomla.application.component.modellist');
 class NoKPrjMgntModelProjects extends JModelList {
 	private $tableName = '#__nok_pm_projects';
 	private $tableAlias = 'p';
-	private $_viewlevelId2Title = array();
-	private $_viewlevelTitle2Id = array();
+	private $_groupId2Title = array();
+	private $_groupTitle2Id = array();
 	private $_assetRule = '';
+	private $_componentAssetId = '';
 	
 	public function __construct($config = array()) {
 		if (!isset($config['filter_fields']) || empty($config['filter_fields'])) {
@@ -150,9 +151,11 @@ class NoKPrjMgntModelProjects extends JModelList {
 		$rows = $db->loadAssocList();
 		foreach($rows as $key => $row) {
 			if (!empty($row['asset_id'])) {
-				$json = $this->_getAssetRulesById($row['asset_id']);
-				$row['asset_rules'] = $this->_mapVewlevelsId2Title($json);
+				$assetRow = $this->_getAssetRowByName('com_nokprjmgnt.project.'.$row['id']);
+				$json = $assetRow['rules'];
+				$row['asset_rules'] = $this->_mapGroupId2Title($json);
 				unset($row['asset_id']);
+				$rows[$key] = $row;
 			}
 		}
 		return $rows;
@@ -164,71 +167,92 @@ class NoKPrjMgntModelProjects extends JModelList {
 		return $row;
 	}
 
-	public function importPostSave($id, $row) {
-		$this->_setAssetRulesByName('com_nokprjmgnt.project.'.$id, $this->_mapVewlevelsId2Title($this->_assetRules));
-	}
-
-	private function _mapVewlevelsId2Title($json) {
-		$this->_loadViewData();
-		$rules = json_decode($json,true);
-		foreach($rules as $key => $rule) {
-			$newRule = array();
-			foreach($rule as $viewlevelId => $value) {
-				$newRule[$this->_viewlevelId2Title[$viewlevelId]] = $value;
-			}
-			$rules[$key] = $newRule;
+	public function importPostSave($row, $id) {
+		if (empty($this->_componentAssetId)) {
+			$assetRow = $this->_getAssetRowByName('com_nokprjmgnt');
+			$this->_componentAssetId = $assetRow['id'];
 		}
-		return json_encode($rules);
+		$this->_setAssetRulesById($row['asset_id'],$this->_componentAssetId,'com_nokprjmgnt.project.'.$id, $row['title'], $this->_mapGroupTitle2Id($this->_assetRules));
 	}
 
-	private function _mapVewlevelsTitle2Id($json) {
-		$this->_loadViewData();
-		$rules = json_decode($json,true);
-		foreach($rules as $key => $rule) {
-			$newRule = array();
-			foreach($rule as $viewlevelTitle => $value) {
-				$newRule[$this->_viewlevelTitle2Id[$viewlevelTitle]] = $value;
+	private function _mapGroupId2Title($json) {
+		if (!empty($json)) {
+			$this->_loadGroupData();
+			$rules = json_decode($json,true);
+			if (!empty($rules)) {
+				foreach($rules as $key => $rule) {
+					$newRule = array();
+					foreach($rule as $groupId => $value) {
+						if(isset($this->_groupId2Title[$groupId])) {
+							$newRule[$this->_groupId2Title[$groupId]] = $value;
+						}
+					}
+					$rules[$key] = $newRule;
+				}
+				return json_encode($rules);
 			}
-			$rules[$key] = $newRule;
 		}
-		return json_encode($rules);
+		return '';
 	}
 
-	private function _getAssetRulesById($id) {
+	private function _mapGroupTitle2Id($json) {
+		if (!empty($json)) {
+			$this->_loadGroupData();
+			$rules = json_decode($json,true);
+			if (!empty($rules)) {
+				foreach($rules as $key => $rule) {
+					$newRule = array();
+					foreach($rule as $viewlevelTitle => $value) {
+						$newRule[$this->_groupTitle2Id[$viewlevelTitle]] = $value;
+					}
+					$rules[$key] = $newRule;
+				}
+				return json_encode($rules);
+			}
+		}
+		return '';
+	}
+
+	private function _getAssetRowByName($name) {
 			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select($db->quoteName(array('a.rules')))
+			$query->select('a.*')
 				->from($db->quoteName('#__assets','a'))
-				->where($db->quoteName('a.id').'='.$db->quote($id));
+				->where($db->quoteName('a.name').'='.$db->quote($name));
 			$db->setQuery($query);
 			$result = $db->loadAssocList();
-			if ($result) { return $result[0][0]; }
+			if ($result) { return $result[0]; }
 			return false;
 	}
 	
-	private function _setAssetRulesByName($name, $json) {
-			$db = JFactory::getDBO();
-			$query = $db->getQuery(true);
-			$query
-				->update($db->quoteName('#__assets','a'))
-				->set($db->quoteName('a.rules').'='.$db->quote($json))
-				->where($db->quoteName('a.name').'='.$db->quote($name));
-
-			$db->setQuery($query);
-			$db->query();
+	private function _setAssetRulesById($assetId, $parentAssetId, $name, $title, $json) {
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$fields = array(
+			$db->quoteName('a.parent_id').'='.$db->quote($parentAssetId),
+			$db->quoteName('a.name').'='.$db->quote($name),
+			$db->quoteName('a.title').'='.$db->quote($title),
+			$db->quoteName('a.rules').'='.$db->quote($json)
+		);
+		$query
+			->update($db->quoteName('#__assets','a'))
+			->set($fields)
+			->where($db->quoteName('a.id').'='.$db->quote($assetId));
+		$db->setQuery($query);
+		$db->query();
 	}
 
-	private function _loadViewData() {
-		if ((count($this->_viewlevelId2Title) < 1) || (count($this->_viewlevelTitle2Id) < 1)) {
+	private function _loadGroupData() {
+		if ((count($this->_groupId2Title) < 1) || (count($this->_groupTitle2Id) < 1)) {
 			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
-			$query->select($db->quoteName(array('v.id','v.title')))
-				->from($db->quoteName('#__viewlevels','v'));
+			$query->select($db->quoteName(array('g.id','g.title')))
+				->from($db->quoteName('#__usergroups','g'));
 			$db->setQuery($query);
 			$rows = $db->loadAssocList();
 			foreach ($rows as $row) {
-				$this->_viewlevelId2Title[$row['id']] = $row['title'];
-				$this->_viewlevelTitle2Id[$row['title']] = $row['id'];
+				$this->_groupId2Title[$row['id']] = $row['title'];
+				$this->_groupTitle2Id[$row['title']] = $row['id'];
 			}
 		}
 	}
