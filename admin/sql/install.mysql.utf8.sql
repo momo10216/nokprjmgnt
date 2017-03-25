@@ -20,7 +20,7 @@ CREATE TABLE `#__nok_pm_projects` (
   PRIMARY KEY  (`id`),
   CONSTRAINT UC_Projects UNIQUE (`title`),
   UNIQUE (`id`)
-)  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `#__nok_pm_tasks` (
   `id` integer NOT NULL auto_increment,
@@ -37,8 +37,7 @@ CREATE TABLE `#__nok_pm_tasks` (
   `modifiedby` varchar(50) NOT NULL default '',
   `modifieddate` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
-  KEY `idx_project_id` (`project_id`),
+  FOREIGN KEY (`project_id`) REFERENCES `#__nok_pm_projects` (`id`) ON DELETE CASCADE,
   UNIQUE (`id`),
-  CONSTRAINT UC_Tasks UNIQUE (`project_id`,`title`),
-  CONSTRAINT tasks_ibfk_1 FOREIGN KEY (project_id) REFERENCES #__nok_pm_projects (project_id) ON DELETE CASCADE
-)  DEFAULT CHARSET=utf8;
+  CONSTRAINT UC_Tasks UNIQUE (`project_id`,`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
