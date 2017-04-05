@@ -10,11 +10,13 @@
 */
 defined('_JEXEC') or die; // no direct access
 $details = false;
+$projectId = $this->paramsMenuEntry->get('project_id');
 $uriEdit = new JURI(JURI::Root().'/index.php');
 $uriEdit->setVar('layout','form');
 $uriEdit->setVar('Itemid','');
 $uriEdit->setVar('view','task');
 $uriEdit->setVar('option','com_nokprjmgnt');
+$uriEdit->setVar('project_id',$projectId);
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
@@ -64,7 +66,7 @@ foreach ($cols as $col) {
 	}
 }
 echo '<th align="left">';
-if ($this->componentCanDo->get('core.create')) {
+if ($this->componentCanDo->get('core.create') && !empty($projectId)) {
 	echo '<a style="text-decoration: none;" href="'.$uriEdit->toString().'"><span class="icon-new"></span></a>';
 }
 echo '</th>';
