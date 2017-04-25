@@ -40,6 +40,7 @@ $projectId = JFactory::getURI()->getVar('project_id','');
 						<?php echo $this->form->renderField('priority'); ?>
 						<?php echo $this->form->renderField('duedate'); ?>
 						<?php echo $this->form->renderField('status'); ?>
+						<?php echo $this->form->renderField('progress'); ?>
 						<?php echo $this->form->renderField('responsible_user_id'); ?>
 						<?php echo $this->form->renderField('assign_user_ids'); ?>
 					</div>

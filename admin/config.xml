@@ -25,6 +25,15 @@
 			type="configselection" paramname="task_status" default="" multiple="true"
 			label="COM_NOKPRJMGNT_CONFIGFIELD_TASK_FINISHED_STATUS_LABEL"
 			description="COM_NOKPRJMGNT_CONFIGFIELD_TASK_FINISHED_STATUS_DESC"/>
+		<field name="progress_width" type="text" default="100px"
+			label="COM_NOKPRJMGNT_CONFIGFIELD_TASK_PROGRESS_WIDTH_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_TASK_PROGRESS_WIDTH_DESC"/>
+		<field name="progress_height" type="text" default=""
+			label="COM_NOKPRJMGNT_CONFIGFIELD_TASK_PROGRESS_HEIGHT_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_TASK_PROGRESS_HEIGHT_DESC"/>
+		<field name="progress_color" type="color" default="#0000A0"
+			label="COM_NOKPRJMGNT_CONFIGFIELD_TASK_PROGRESS_COLOR_LABEL"
+			description="COM_NOKPRJMGNT_CONFIGFIELD_TASK_PROGRESS_COLOR_DESC"/>
 	</fieldset>
 	<fieldset name="customfields"
 		  label="COM_NOKPRJMGNT_CONFIGSET_CUSTOM_LABEL"

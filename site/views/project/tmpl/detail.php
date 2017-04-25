@@ -36,5 +36,15 @@ $deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_PROJECT_CONFIRM_DELETE");
 		<a style="text-decoration: none;" href="<?php echo $uriDelete->toString(); ?>" onClick="return confirm('<?php echo $deleteConfirmMsg; ?>');"><span class="icon-trash"></span></a>
 	<?php endif; ?>
 </p>
+<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'description')); ?>
+<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'description', JText::_('COM_NOKPRJMGNT_PROJECT_TAB_DESCRIPTION', true)); ?>
 <?php echo $this->item->description; ?>
+<?php echo JHtml::_('bootstrap.endTab'); ?>
+<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'tasks', JText::_('COM_NOKPRJMGNT_PROJECT_TAB_TASKS', true)); ?>
 <?php echo $this->loadTemplate('tasks'); ?>
+<?php echo JHtml::_('bootstrap.endTab'); ?>
+<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'comments', JText::_('COM_NOKPRJMGNT_PROJECT_TAB_COMMENTS', true)); ?>
+<?php //echo $this->loadTemplate('comments'); ?>
+<?php echo JHtml::_('bootstrap.endTab'); ?>
+<?php echo JHtml::_('bootstrap.endTabSet'); ?>
+

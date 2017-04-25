@@ -18,8 +18,8 @@ defined('_JEXEC') or die('Restricted access');
  
 class ExImportHelper {
 	private static $_modelStructure = array(
-		'Projects' => array('Projects', 'Project', '', array(
-			'Tasks' => array('Tasks', 'Task', 'project_id', array())
+		'Projects' => array('Projects', 'Project', 'Project', '', array(
+			'Tasks' => array('Tasks', 'Task', 'Task', 'project_id', array())
 		))
 	);
 	private static $_component = 'NoKPrjMgnt';
@@ -31,7 +31,6 @@ class ExImportHelper {
 	}
 
 	public static function import($xmltext) {
-echo $xmltext;
 		$xmlRoot = new SimpleXMLElement($xmltext);
 		self::_importList($xmlRoot,self::$_modelStructure);
 	}
@@ -39,7 +38,7 @@ echo $xmltext;
 	private static function _exportList(&$xmlNode, $list, $parentId='') {
 		$db = JFactory::getDBO();
 		foreach($list as $modelName => $exportProp) {
-			list($listName, $entryName, $parentIdFieldName, $childs) = $exportProp;
+			list($listName, $entryName, $singleModelName, $parentIdFieldName, $childs) = $exportProp;
 			$xmlList = $xmlNode->addChild($listName);
 			$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
 			$rows = $model->getExportData($parentId);
@@ -72,15 +71,16 @@ echo $xmltext;
 	}
 
 	private static function _importList(&$xmlNode, $list, $parentId='') {
+		//JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
 		foreach ($xmlNode->children() as $listChild) {
 			list($modelName, $importProp) = self::_getModelEntryByListName($list, $listChild->getName());
 			if (!empty($modelName) && (count($importProp)>0)) {
-				list($listName, $entryName, $parentIdFieldName, $childs) = $importProp;
+				list($listName, $entryName, $singleModelName, $parentIdFieldName, $childs) = $importProp;
 				$model = JControllerLegacy::getInstance(self::$_component)->getModel($modelName);
 				foreach ($listChild->children() as $entryChild) {
 					$rowData = current($entryChild->attributes());
 					if (!empty($parentIdFieldName) && !empty($parentId)) { $rowData[$parentIdFieldName] = $parentId; }
-					$rowData[$model->getExImportPrimaryKey()] = self::_importRow($model,$rowData,$parentId);
+					$rowData[$model->getExImportPrimaryKey()] = self::_importRow($model,$rowData,$singleModelName,$parentId);
 					if (isset($childs) && is_array($childs) && (count($childs)>0)) {
 						self::_importList($entryChild,$childs,$rowData[$model->getExImportPrimaryKey()]);
 					}
@@ -89,10 +89,12 @@ echo $xmltext;
 		}
 	}
 
-	private static function _importRow($model, $rowData, $parentId='') {
+	private static function _importRow($model, $rowData, $singleModelName, $parentId='') {
 		$db = JFactory::getDBO();
 		$rowData = self::_resolveForeignKeys($model, $rowData);
 		$parentIdField = $model->getExImportParentFieldName();
+		$singleModel = JControllerLegacy::getInstance(self::$_component)->getModel($singleModelName);
+		$singleTable = $singleModel->getTable();
 		if (!empty($parentId) && !empty($parentIdField)) {
 			$rowData[$parentIdField] = $parentId;
 		}
@@ -102,39 +104,16 @@ echo $xmltext;
 		$id = self::_findRecordWithKeyFields($model, $rowData);
 		$query = $db->getQuery(true);
 		if ($id) {
-			// Update
-			$fields = array();
-			foreach($rowData as $key => $value) {
-				array_push($fields, $db->quoteName($known_fields[$key])."=".$db->quote($value));
-			}
-			$query
-				->update($db->quoteName($model->getExImportTableName()))
-				->set($fields)
-				->where($db->quoteName($model->getExImportPrimaryKey()).'='.$id);
-		} else {
-			// Insert
-			$fields = array();
-			$values = array();
-			foreach($rowData as $key => $value) {
-				array_push($fields, $db->quoteName($key));
-				array_push($values, $db->quote($value));
-			}
-			$query
-				->insert($db->quoteName($model->getExImportTableName()))
-				->columns($fields)
-				->values(implode(',',$values));
+			$rowData[$model->getExImportPrimaryKey()] = $id;
 		}
-		$db->setQuery($query);
-		$db->query();
-		if (empty($id)) {
-			$id = $db->insertid();;
+		$singleTable->bind($rowData);
+		$singleTable->store();
+		$newRow = (array) $singleTable;
+		if (!$id) {
+			$id = $newRow[$model->getExImportPrimaryKey()];
 		}
-		// Generate asset entry
-		$table = JTable::getInstance($model->getExImportTableName(), 'Table', array('dbo' => $db));
-		$table->load($data->id);
-		$table->store();
 		if (method_exists($model,'importPostSave')) {
-			$model->importPostSave($rowData,$id);
+			$model->importPostSave($newRow,$id);
 		}
 		return $id;
 	}

@@ -2,7 +2,7 @@
 /**
 * @version	$Id$
 * @package	Joomla
-* @subpackage	NoK-ToDo
+* @subpackage	NoK-PrjMgnt
 * @copyright	Copyright (c) 2017 Norbert Kümin. All rights reserved.
 * @license	http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE
 * @author	Norbert Kuemin

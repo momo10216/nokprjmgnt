@@ -29,6 +29,7 @@ class JFormFieldPmTaskColumn extends JFormField {
 			"title" => JText::_('COM_NOKPRJMGNT_TASK_FIELD_TITLE_LABEL'),
 			"description" => JText::_('COM_NOKPRJMGNT_TASK_FIELD_DESCRIPTION_LABEL'),
 			"priority" => JText::_('COM_NOKPRJMGNT_TASK_FIELD_PRIORITY_LABEL'),
+			"progress" => JText::_('COM_NOKPRJMGNT_TASK_FIELD_PROGRESS_LABEL'),
 			"duedate" => JText::_('COM_NOKPRJMGNT_TASK_FIELD_DUE_DATE_LABEL'),
 			"status" => JText::_('COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL'),
 			"responsible_user_id" => JText::_('COM_NOKPRJMGNT_TASK_FIELD_RESPONSIBLE_LABEL'),

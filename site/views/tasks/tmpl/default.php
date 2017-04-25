@@ -10,11 +10,13 @@
 */
 defined('_JEXEC') or die; // no direct access
 $details = false;
+$projectId = $this->paramsMenuEntry->get('project_id');
 $uriEdit = new JURI(JURI::Root().'/index.php');
 $uriEdit->setVar('layout','form');
 $uriEdit->setVar('Itemid','');
 $uriEdit->setVar('view','task');
 $uriEdit->setVar('option','com_nokprjmgnt');
+$uriEdit->setVar('project_id',$projectId);
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
@@ -35,6 +37,26 @@ for ($i=1;$i<=20;$i++) {
 	$cols[] = $this->paramsMenuEntry->get($field);
 }
 $colcount = count($cols);
+
+// Style
+$pbWidth = $this->paramsComponent->get('progress_width');
+if (empty($pbWidth)) { $pbWidth = '100px'; }
+$pbHeight = $this->paramsComponent->get('progress_height');
+if (empty($pbHeight)) { $pbHeight = '10px'; }
+$pbColor = $this->paramsComponent->get('progress_color');
+?>
+<style type="text/css" media="screen">
+.pb-border {
+	border: 1px solid #ccc !important;
+}
+
+.pb-bar {
+	height: <?php echo $pbHeight; ?>;
+	background-color: <?php echo $pbColor; ?>;
+}
+</style>
+<?php
+
 // Display
 $border='border-style:solid; border-width:1px';
 $width='';
@@ -64,7 +86,7 @@ foreach ($cols as $col) {
 	}
 }
 echo '<th align="left">';
-if ($this->componentCanDo->get('core.create')) {
+if ($this->componentCanDo->get('core.create') && !empty($projectId)) {
 	echo '<a style="text-decoration: none;" href="'.$uriEdit->toString().'"><span class="icon-new"></span></a>';
 }
 echo '</th>';
@@ -99,6 +121,10 @@ if ($this->items) {
 				$data = str_replace(' 00:00:00','',$data);
 				if (($field == 'responsible_user_id') || ($field == 'assign_user_ids')) {
 					$data = $this->getModel()->getConvertUserIdsToNames($data);
+				}
+				if ($field == 'progress') {
+					if ($data == '') { $data = '0'; }
+					$data = '<div class="pb-border"><div class="pb-bar" style="width:'.$data.'%;">'.$data.'%</div></div>';
 				}
 				echo '<td';
 				if (isset($aligns[$field]) && !empty($aligns[$field])) {

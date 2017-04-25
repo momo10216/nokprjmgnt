@@ -17,7 +17,7 @@ jimport('joomla.application.component.modelitem');
 jimport('joomla.event.dispatcher');
 // Include dependancy of the component helper
 jimport('joomla.application.component.helper');
-class NoKPrjMgntModelTasks extends JModelList {
+class NoKPrjMgntModelComments extends JModelList {
 	/**
 	 * @since   1.6
 	 */
@@ -29,24 +29,16 @@ class NoKPrjMgntModelTasks extends JModelList {
 	protected $view_item = 'tasks';
 	protected $_item = null;
 	protected $_membershipItems = null;
-	protected $_model = 'tasks';
+	protected $_model = 'comments';
 	protected $_component = 'com_nokprjmgnt';
-	protected $_context = 'com_nokprjmgnt.tasks';
+	protected $_context = 'com_nokprjmgnt.comments';
 
 	private function getFields() {
 		return array (
 			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`t`.`id`','right'),
-			"title" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_TITLE_LABEL',true),'`t`.`title`','left'),
-			"project_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`p`.`title`','left'),
-			"project_access" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_ACCESS_LABEL',true),'`p`.`access`','left'),
+			"foreign_model" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`t`.`id`','right'),
+			"foreign_id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`t`.`id`','right'),
 			"description" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_DESCRIPTION_LABEL',true),'`t`.`description`',''),
-			"category_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL',true),'`c`.`title`','left'),
-			"priority" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_PRIORITY_LABEL',true),'`t`.`priority`','right'),
-			"progress" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_PROGRESS_LABEL',true),'`t`.`progress`','left'),
-			"duedate" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_DUE_DATE_LABEL',true),'`t`.`duedate`','left'),
-			"status" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL',true),'`t`.`status`','left'),
-			"responsible_user_id" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_RESPONSIBLE_LABEL',true),'`t`.`responsible_user_id`','left'),
-			"assign_user_ids" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_ASSIGN_LABEL',true),'`t`.`assign_user_ids`','left'),
 			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`','left'),
 			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`p`.`createddate`','left'),
 			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`p`.`modifiedby`','left'),
