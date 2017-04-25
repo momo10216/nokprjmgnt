@@ -43,6 +43,7 @@ CREATE TABLE `#__nok_pm_tasks` (
   `modifieddate` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   FOREIGN KEY (`project_id`) REFERENCES `#__nok_pm_projects` (`id`) ON DELETE CASCADE,
+<<<<<<< HEAD
   UNIQUE (`id`),
   CONSTRAINT UC_Tasks UNIQUE (`project_id`,`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -60,3 +61,8 @@ CREATE TABLE `#__nok_pm_comments` (
   UNIQUE (`foreign_model`,`foreign_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+=======
+  UNIQUE (`id`),
+  CONSTRAINT UC_Tasks UNIQUE (`project_id`,`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+>>>>>>> origin/master
