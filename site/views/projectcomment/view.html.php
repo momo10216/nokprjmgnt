@@ -10,30 +10,27 @@
 */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die;
-class NoKPrjMgntViewComments extends JViewLegacy {
-	protected $items;
+class NoKPrjMgntViewProjectComment extends JViewLegacy {
+	protected $item;
 	protected $pageHeading = 'COM_NOKPRJMGNT_PAGE_TITLE_DEFAULT';
 	protected $paramsComponent;
 	protected $paramsMenuEntry;
 	protected $user;
 	protected $viewAccessLevels;
-	protected $componentCanDo;
+	protected $canDo;
 
 	function display($tpl = null) {
-		$this->componentCanDo = JHelperContent::getActions('com_nokprjmgnt');
 		// Init variables
 		$this->state = $this->get('State');
-		if ($this->getLayout() =='form') {
-			$this->getModel()->setUseAlias(false);
-		}
 		$this->user = JFactory::getUser();
 		$app = JFactory::getApplication();
 		$this->document = JFactory::getDocument();
-		if ($this->getLayout() == 'userlist'){
-			$this->items = $this->getModel()->getUserItems();
-			$this->setLayout('default');
-		} else {
-			$this->items = $this->get('Items');
+		$id = JFactory::getURI()->getVar('id');
+		if (!empty($id)) {
+			$this->item = $this->getModel()->getItem($id);
+			$this->canDo = JHelperContent::getActions('com_nokprjmgnt','project',$this->item->project_id);
+		} else{
+			$this->canDo = JHelperContent::getActions('com_nokprjmgnt');
 		}
 		$this->form = $this->get('Form');
 		$this->paramsComponent = $this->state->get('params');

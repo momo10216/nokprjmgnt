@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_NOKPRJMGNT_TASK_VIEW_EDIT_LAYOUT_TITLE">
+		<message>
+			<![CDATA[COM_NOKPRJMGNT_TASK_VIEW_EDIT_LAYOUT_DESC]]>
+		</message>
+	</layout>
+	<fields name="params" addfieldpath="/administrator/components/com_clubmanagement/models/fields">
+		<fieldset name="request" label="COM_NOKPRJMGNT_REQUEST_OPTIONS_FIELDSET_LABEL" addfieldpath="/administrator/components/com_nokprjmgnt/models/fields">
+			<field name="id" type="tasklist" label="COM_NOKPRJMGNT_TASK_LABEL" description="COM_NOKPRJMGNT_TASK_DESC"/>
+		</fieldset>
+	</fields>
+</metadata>
