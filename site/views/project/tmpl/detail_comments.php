@@ -68,6 +68,7 @@ if (is_array($commentItems) && (count($commentItems)>0)) {
 	}
 }
 if ($add) {
+	$uriEdit->setVar('id','');
 	echo '<a style="text-decoration: none;" href="'.$uriEdit->toString().'"><span class="icon-new"></span></a>';
 }
 ?>
