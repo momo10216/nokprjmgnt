@@ -190,6 +190,10 @@ class NoKPrjMgntModelProjectComment extends JModelForm {
 		$state = (!empty($data['state'])) ? 1 : 0;
 		$user = JFactory::getUser();
 
+		if(!isset($data['published']) || empty($data['published'])) {
+			$data['published'] = '1';
+		}
+
 		if(empty($projectId)) {
 			$projectId = $data['project_id'];
 		}

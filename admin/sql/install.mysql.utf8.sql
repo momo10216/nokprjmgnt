@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS `#__nok_pm_comments`;
+DROP TABLE IF EXISTS `#__nok_pm_project_comments`;
+DROP TABLE IF EXISTS `#__nok_pm_task_comments`;
 DROP TABLE IF EXISTS `#__nok_pm_tasks`;
 DROP TABLE IF EXISTS `#__nok_pm_projects`;
 
@@ -43,26 +44,37 @@ CREATE TABLE `#__nok_pm_tasks` (
   `modifieddate` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
   FOREIGN KEY (`project_id`) REFERENCES `#__nok_pm_projects` (`id`) ON DELETE CASCADE,
-<<<<<<< HEAD
   UNIQUE (`id`),
   CONSTRAINT UC_Tasks UNIQUE (`project_id`,`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `#__nok_pm_comments` (
+CREATE TABLE `#__nok_pm_project_comments` (
   `id` integer NOT NULL auto_increment,
-  `foreign_id` integer NOT NULL,
-  `foreign_model` varchar(255) NOT NULL,
+  `project_id` integer NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text default NULL,
+  `published` tinyint(3) NOT NULL DEFAULT 0,
   `createdby` varchar(50) NULL default NULL,
   `createddate` datetime NULL default '0000-00-00 00:00:00',
   `modifiedby` varchar(50) NOT NULL default '',
   `modifieddate` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
-  UNIQUE (`id`),
-  UNIQUE (`foreign_model`,`foreign_id`)
+  FOREIGN KEY (`project_id`) REFERENCES `#__nok_pm_projects` (`id`) ON DELETE CASCADE,
+  UNIQUE (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-=======
-  UNIQUE (`id`),
-  CONSTRAINT UC_Tasks UNIQUE (`project_id`,`title`)
+CREATE TABLE `#__nok_pm_task_comments` (
+  `id` integer NOT NULL auto_increment,
+  `task_id` integer NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text default NULL,
+  `published` tinyint(3) NOT NULL DEFAULT 0,
+  `createdby` varchar(50) NULL default NULL,
+  `createddate` datetime NULL default '0000-00-00 00:00:00',
+  `modifiedby` varchar(50) NOT NULL default '',
+  `modifieddate` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  FOREIGN KEY (`task_id`) REFERENCES `#__nok_pm_tasks` (`id`) ON DELETE CASCADE,
+  UNIQUE (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
->>>>>>> origin/master
+

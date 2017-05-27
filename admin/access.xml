@@ -22,4 +22,11 @@
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_NOKPRJMGNT_PROJECT_ACCESS_EDITSTATE_DESC" />
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="COM_NOKPRJMGNT_PROJECT_ACCESS_EDITOWN_DESC" />
 	</section>
+	<section name="comment">
+		<action name="core.delete" title="JACTION_DELETE" description="COM_NOKPRJMGNT_PROJECT_ACCESS_DELETE_DESC" />
+		<action name="core.delete.own" title="JACTION_EDITOWN" description="COM_NOKPRJMGNT_PROJECT_ACCESS_DELETEOWN_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="COM_NOKPRJMGNT_PROJECT_ACCESS_EDIT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="COM_NOKPRJMGNT_PROJECT_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="COM_NOKPRJMGNT_PROJECT_ACCESS_EDITOWN_DESC" />
+	</section>
 </access>
