@@ -28,6 +28,7 @@ class NoKPrjMgntModelProjectComments extends JModelList {
 		if (!isset($config['filter_fields']) || empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'c.id',
+				'project_id', 'c.project_id',
 				'published', 'c.published',
 				'title', 'c.title',
 				'project', 'p.title',

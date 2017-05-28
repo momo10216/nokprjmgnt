@@ -42,7 +42,7 @@ class NoKPrjMgntViewProjectComments extends JViewLegacy {
 	}
 
 	protected function addToolbarList($allowNew = true, $allowEdit = true) {
-		$canDo = JHelperContent::getActions('com_nokprjmgnt','project',$item->project_id);
+		$canDo = JHelperContent::getActions('com_nokprjmgnt', 'project', $this->state->get('filter.project_id'));
 		$user  = JFactory::getUser();
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
@@ -68,9 +68,9 @@ class NoKPrjMgntViewProjectComments extends JViewLegacy {
 	 */
 	protected function getSortFields() {
 		return array (
-			'project' => JText::_('COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_PROJECT_LABEL'),
-			'c.title' => JText::_('COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_TITLE_LABEL'),
-			'c.createdate' => JText::_('COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_CREATE_DATE_LABEL')
+			'project' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_PROJECT_LABEL'),
+			'c.title' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL'),
+			'c.createdate' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_CREATED_DATE_LABEL')
 		);
 	}
 }

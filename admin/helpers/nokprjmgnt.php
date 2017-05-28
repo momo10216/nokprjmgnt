@@ -19,9 +19,19 @@ class NoKPrjMgntHelper extends JHelperContent {
 			$vName == 'projects'
 		);
 		JHtmlSidebar::addEntry(
+			JText::_('COM_NOKPRJMGNT_MENU_PROJECT_COMMENTS'),
+			'index.php?option=com_nokprjmgnt&view=projectcomments',
+			$vName == 'projectcomments'
+		);
+		JHtmlSidebar::addEntry(
 			JText::_('COM_NOKPRJMGNT_MENU_TASKS'),
 			'index.php?option=com_nokprjmgnt&view=tasks',
 			$vName == 'tasks'
+		);
+		JHtmlSidebar::addEntry(
+			JText::_('COM_NOKPRJMGNT_MENU_TASK_COMMENTS'),
+			'index.php?option=com_nokprjmgnt&view=taskcomments',
+			$vName == 'taskcomments'
 		);
 		JHtmlSidebar::addEntry(
 			JText::_('COM_NOKPRJMGNT_MENU_CATEGORIES'),
