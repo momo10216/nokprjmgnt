@@ -39,6 +39,7 @@ $uriDetail->setVar('layout','detail');
 $uriDetail->setVar('Itemid','');
 $uriDetail->setVar('view','task');
 $uriDetail->setVar('option',$component);
+$uriDetail->setVar('project_id',$this->item->id);
 $modify = JHelperContent::getActions('com_nokprjmgnt','project',$this->item->id)->get('core.edit');
 $tasksColumnCount = count($tasksColumn);
 

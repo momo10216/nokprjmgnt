@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 class NoKPrjMgntControllerTaskComments extends JControllerAdmin {
-	public function getModel($name = 'TAskComment', $prefix = 'NoKPrjMgntModel', $config = array('ignore_request' => true)) {
+	public function getModel($name = 'TaskComment', $prefix = 'NoKPrjMgntModel', $config = array('ignore_request' => true)) {
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
 	}

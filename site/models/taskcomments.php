@@ -29,21 +29,23 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 	protected $view_item = 'tasks';
 	protected $_item = null;
 	protected $_membershipItems = null;
-	protected $_model = 'comments';
+	protected $_model = 'taskcomments';
 	protected $_component = 'com_nokprjmgnt';
-	protected $_context = 'com_nokprjmgnt.comments';
+	protected $_context = 'com_nokprjmgnt.taskcomments';
 
 	private function getFields() {
 		return array (
-			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`t`.`id`','right'),
-			"project_id" => array(JText::_('COM_NOKPRJMGNT_TASK_COMMENT_FIELD_PROJECT_LABEL',true),'`t`.`id`','right'),
-			"task_id" => array(JText::_('COM_NOKPRJMGNT_TASK_COMMENT_FIELD_TASK_LABEL',true),'`t`.`id`','right'),
-			"title" => array(JText::_('COM_NOKPRJMGNT_TASK_COMMENT_FIELD_TITLE_LABEL',true),'`t`.`description`',''),
-			"description" => array(JText::_('COM_NOKPRJMGNT_TASK_COMMENT_FIELD_DESCRIPTION_LABEL',true),'`t`.`description`',''),
-			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`','left'),
-			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`p`.`createddate`','left'),
-			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`p`.`modifiedby`','left'),
-			"modifieddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_LABEL',true),'`p`.`modifieddate`','left')
+			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`c`.`id`','right'),
+			"project_id" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_PROJECT_ID_LABEL',true),'`t`.`project_id`','right'),
+			"project" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_PROJECT_LABEL',true),'`p`.`title`','left'),
+			"task_id" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_TASK_ID_LABEL',true),'`c`.`task_id`','right'),
+			"task" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_TASK_LABEL',true),'`t`.`title`','left'),
+			"title" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL',true),'`c`.`title`','left'),
+			"description" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_DESCRIPTION_LABEL',true),'`c`.`description`',''),
+			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`c`.`createdby`','left'),
+			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`c`.`createddate`','left'),
+			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`c`.`modifiedby`','left'),
+			"modifieddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_LABEL',true),'`c`.`modifieddate`','left')
 		);
 	}
 
@@ -82,11 +84,11 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 			}
 		}
 		$query->select($fields)
-			->from($db->quoteName('#__nok_pm_task_comments','c'))
-			->join('LEFT', $db->quoteName('#__nok_pm_tasks', 't').' ON ('.$db->quoteName('c.task_id').'='.$db->quoteName('t.id').')');
+			->from($db->quoteName('#__nok_pm_project_comments','c'))
+			->join('LEFT', $db->quoteName('#__nok_pm_tasks', 't').' ON ('.$db->quoteName('c.task_id').'='.$db->quoteName('t.id').')')
 			->join('LEFT', $db->quoteName('#__nok_pm_projects', 'p').' ON ('.$db->quoteName('t.project_id').'='.$db->quoteName('p.id').')');
 		// Get configurations
-		$where = array();
+		$where = array("`c`.`published` = '1'");
 		$sort = array();
 		$where = array_merge($where, $this->_where);
 		$sort = array_merge($sort, $this->_sort);
@@ -135,6 +137,7 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 			if (isset($allFields[$field]) && !empty($allFields[$field])) {
 				if ($removePrefix) {
 					$resultField = str_replace('`p`.', '' , $allFields[$field][1]);
+					$resultField = str_replace('`t`.', '' , $resultField);
 					$resultField = str_replace('`c`.', '' , $resultField);
 					$resultField = str_replace('`', '' , $resultField);
 					array_push($result,$resultField);
@@ -144,6 +147,14 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 			}
 		}
 		return $result;
+	}
+
+	public function setSort($sort) {
+		$this->_sort = $sort;
+	}
+
+	public function setWhere($where) {
+		$this->_where = $where;
 	}
 }
 ?>

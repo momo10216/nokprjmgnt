@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field name="id"  type="text" class="readonly" label="JGLOBAL_FIELD_ID_LABEL"
+			description ="JGLOBAL_FIELD_ID_DESC" size="10" default="0" readonly="true" />
+
+		<field name="title" type="text" label="COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL"
+			description="COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_DESC" size="40" required="true" />
+
+		<field name="description" type="editor" label="COM_NOKPRJMGNT_COMMENT_FIELD_DECRIPTION_LABEL"
+			description="COM_NOKPRJMGNT_COMMENT_FIELD_DESCRIPTION_DESC" filter="JComponentHelper::filterText" buttons="true" />
+
+		<field addfieldpath="/administrator/components/com_nokprjmgnt/models/fields" name="task_id"
+			type="tasklist" label="COM_NOKPRJMGNT_COMMENT_FIELD_TASK_LABEL"
+			description="COM_NOKPRJMGNT_COMMENT_FIELD_TASK_DESC" required="true" default="" />
+
+		<field name="published" type="list" label="JSTATUS"
+			description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"
+			filter="intval" size="1" default="1"
+		>
+			<option value="1">
+				JPUBLISHED</option>
+			<option value="0">
+				JUNPUBLISHED</option>
+			<option value="2">
+				JARCHIVED</option>
+			<option value="-2">
+				JTRASHED</option>
+		</field>
+
+		<field name="createdby" type="text" label="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL"
+			description="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_DESC" required="false" readonly="true" />
+
+		<field name="createddate" type="calendar" label="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL"
+			description="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_DESC" size="22" format="%Y-%m-%d %H:%M:%S"
+			filter="user_utc" required="false" readonly="true" />
+
+		<field name="modifiedby" type="text" label="COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL"
+			description="COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_DESC" required="false" readonly="true" />
+
+		<field name="modifieddate" type="calendar" label="COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_LABEL"
+			description="COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDDATE_DESC" size="22" format="%Y-%m-%d %H:%M:%S"
+			filter="user_utc" required="false" readonly="true" />
+	</fieldset>
+</form>

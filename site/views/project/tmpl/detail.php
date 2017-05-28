@@ -47,4 +47,3 @@ $deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_PROJECT_CONFIRM_DELETE");
 <?php echo $this->loadTemplate('comments'); ?>
 <?php echo JHtml::_('bootstrap.endTab'); ?>
 <?php echo JHtml::_('bootstrap.endTabSet'); ?>
-

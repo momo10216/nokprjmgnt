@@ -28,9 +28,11 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 		if (!isset($config['filter_fields']) || empty($config['filter_fields'])) {
 			$config['filter_fields'] = array(
 				'id', 'c.id',
+				'project_id', 't.project_id',
+				'task_id', 'c.task_id',
+				'published', 'c.published',
 				'title', 'c.title',
-				'fmodel', 'c.foreign_model',
-				'fid', 'c.foreign_id',
+				'project', 'p.title',
 				'createddate', 'c.createddate',
 				'createdby', 'c.createdby'
 			);
@@ -62,9 +64,9 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 		$query = $db->getQuery(true);
 		// Select some fields from the hello table
 		$query
-			->select(array('c.id', 'c.title', 'c.createddate', 'c.createdby', 'p.title AS project', 't.title AS task'))
+			->select(array('c.id', 'c.title', 'c.published', 'c.createddate', 'c.createdby', 'c.task_id', 't.project_id', 't.title AS task', 'p.title AS project'))
 			->from($db->quoteName($this->tableName,$this->tableAlias))
-			->join('LEFT', $db->quoteName('#__nok_pm_tasks', 't').' ON ('.$db->quoteName('c.task_id').'='.$db->quoteName('t.id').')')
+			->join('LEFT', $db->quoteName('#__nok_pm_tasks', 't').' ON ('.$db->quoteName('c.task_id').'='.$db->quoteName('t.id').')');
 			->join('LEFT', $db->quoteName('#__nok_pm_projects', 'p').' ON ('.$db->quoteName('t.project_id').'='.$db->quoteName('p.id').')');
 		// special filtering (houshold, excludeid).
 		$app = JFactory::getApplication();
@@ -75,7 +77,7 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 				$query->where('c.id = ' . (int) substr($search, 3));
 			} else {
 				$search = $db->quote('%' . $db->escape($search, true) . '%');
-				$query->where('(c.title LIKE ' . $search . ')');
+				$query->where('(c.title LIKE ' . $search . ' OR t.title LIKE ' . $search . ' OR p.title LIKE ' . $search . ')');
 			}
 		}
 		// Add the list ordering clause.
@@ -99,11 +101,11 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 	}
 
 	public function getExImportParentFieldName() {
-		return 'task_id';
+		return 'project_id';
 	}
 
 	public function getExImportUniqueKeyFields() {
-		return array('task_id','title');
+		return array('project_id','title');
 	}
 
 	public function getExImportForeignKeys() {

@@ -11,7 +11,7 @@
 
 defined('_JEXEC') or die;
 
-class NoKPrjMgntControllerTaskComment extends JControllerForm {
+class NoKPrjMgntControllerTAskComment extends JControllerForm {
 	public $typeAlias = 'com_nokprjmgnt.taskcomment';
 
 	/**

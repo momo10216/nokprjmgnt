@@ -112,6 +112,7 @@ if ($this->items) {
 		echo "<tr>\n";
 		if ($details) {
 			$uriDetail->setVar('id',$item->id);
+			$uriDetail->setVar('project_id',$item->project_id);
 		}
 		for($j=0;$j<$colcount;$j++) {
 			$field = $cols[$j];
