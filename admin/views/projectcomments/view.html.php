@@ -70,7 +70,7 @@ class NoKPrjMgntViewProjectComments extends JViewLegacy {
 		return array (
 			'project' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_PROJECT_LABEL'),
 			'c.title' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL'),
-			'c.createdate' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_CREATED_DATE_LABEL')
+			'c.createdate' => JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL')
 		);
 	}
 }

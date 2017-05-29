@@ -20,18 +20,21 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 		<?php echo JHtml::_('grid.checkall'); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_PROJECT_LABEL', 'p.title', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('searchtools.sort', 'JSTATUS', 'c.published', $listDirn, $listOrder); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_TASK_LABEL', 't.title', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMENT_FIELD_PROJECT_LABEL', 'p.title', $listDirn, $listOrder); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_TITLE_LABEL', 'c.title', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMENT_FIELD_TASK_LABEL', 't.title', $listDirn, $listOrder); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_CREATED_DATE_LABEL', 'c.createddate', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL', 'c.title', $listDirn, $listOrder); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_CREATED_BY_LABEL', 'c.createdby', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL', 'c.createddate', $listDirn, $listOrder); ?>
+	</th>
+	<th>
+		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL', 'c.createdby', $listDirn, $listOrder); ?>
 	</th>
 </tr>

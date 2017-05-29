@@ -69,8 +69,8 @@ JHtml::_('formbehavior.chosen', 'select');
 	<input type="hidden" name="option" value="com_nokprjmgnt" />
 	<input type="hidden" name="task" value="save" />
 	<?php if (isset($this->item)) {
-		echo "\t\t<input type=\"hidden\" name=\"id\" value=\"".$this->item->id."\" />";
-		echo "\t\t<input type=\"hidden\" name=\"task_id\" value=\"".$taskId."\" />";
-	} ?>
+		echo "\t\t<input type=\"hidden\" name=\"jform[id]\" value=\"".$this->item->id."\" />";
+	}
+	echo "\t\t<input type=\"hidden\" name=\"jform[task_id]\" value=\"".$taskId."\" />";?>
 	<?php echo JHtml::_('form.token'); ?>
 </form>

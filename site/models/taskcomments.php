@@ -84,7 +84,7 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 			}
 		}
 		$query->select($fields)
-			->from($db->quoteName('#__nok_pm_project_comments','c'))
+			->from($db->quoteName('#__nok_pm_task_comments','c'))
 			->join('LEFT', $db->quoteName('#__nok_pm_tasks', 't').' ON ('.$db->quoteName('c.task_id').'='.$db->quoteName('t.id').')')
 			->join('LEFT', $db->quoteName('#__nok_pm_projects', 'p').' ON ('.$db->quoteName('t.project_id').'='.$db->quoteName('p.id').')');
 		// Get configurations

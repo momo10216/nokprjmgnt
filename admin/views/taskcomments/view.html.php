@@ -73,10 +73,10 @@ class NoKPrjMgntViewTaskComments extends JViewLegacy {
 	 */
 	protected function getSortFields() {
 		return array (
-			'project' => JText::_('COM_NOKPRJMGNT_TASK_COMMENT_FIELD_PROJECT_LABEL'),
-			'task' => JText::_('COM_NOKPRJMGNT_TASK_COMMENT_FIELD_TASK_LABEL'),
-			'c.title' => JText::_('COM_NOKPRJMGNT_TASK_COMMENT_FIELD_TITLE_LABEL'),
-			'c.createdate' => JText::_('COM_NOKPRJMGNT_TASK_COMMENT_FIELD_CREATE_DATE_LABEL')
+			'project' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_PROJECT_LABEL'),
+			'task' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_TASK_LABEL'),
+			'c.title' => JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL'),
+			'c.createdate' => JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL')
 		);
 	}
 }

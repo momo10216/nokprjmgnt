@@ -200,21 +200,21 @@ class NoKPrjMgntModelTaskComment extends JModelForm {
 
 		if(!empty($id)) {
 			//Check the user can edit this item
-			$authorised = $user->authorise('core.edit', 'com_nokprjmgnt.project.'.$projectId) || $authorised = $user->authorise('core.edit.own', 'com_nokprjmgnt.project.'.$projectId);
-			if($user->authorise('core.edit.state', 'com_nokprjmgnt.project.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
+			$authorised = $user->authorise('core.edit', $this->_component.'.project.'.$projectId) || $authorised = $user->authorise('core.edit.own', $this->_component.'.project.'.$projectId);
+			if($user->authorise('core.edit.state', $this->_component.'.project.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
 				$data['state'] = 0;
 			}
 		} else {
 			//Check the user can create new items in this section
-			$authorised = $user->authorise('core.edit', 'com_nokprjmgnt.project.'.$projectId) || $authorised = $user->authorise('core.edit.own', 'com_nokprjmgnt.project.'.$projectId);
-			if($user->authorise('core.edit.state', 'com_nokprjmgnt.project.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
+			$authorised = $user->authorise('core.edit', $this->_component.'.project.'.$projectId) || $authorised = $user->authorise('core.edit.own', $this->_component.'.project.'.$projectId);
+			if($user->authorise('core.edit.state', $this->_component.'.project.'.$id) !== true && $state == 1){ //The user cannot edit the state of the item.
 				$data['state'] = 0;
 			}
 			unset($data['id']);
 		}
 
 		if ($authorised !== true) {
-//			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
+			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
 			return false;
 		}
 

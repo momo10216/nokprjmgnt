@@ -29,9 +29,9 @@ $listOrder	= $this->escape($this->state->get('list.ordering'));
 		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL', 'c.title', $listDirn, $listOrder); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMENT_FIELD_CREATED_DATE_LABEL', 'c.createddate', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL', 'c.createddate', $listDirn, $listOrder); ?>
 	</th>
 	<th>
-		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMENT_FIELD_CREATED_BY_LABEL', 't.createdby', $listDirn, $listOrder); ?>
+		<?php echo JHtml::_('grid.sort', 'COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL', 't.createdby', $listDirn, $listOrder); ?>
 	</th>
 </tr>

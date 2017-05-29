@@ -66,7 +66,7 @@ class NoKPrjMgntModelTaskComments extends JModelList {
 		$query
 			->select(array('c.id', 'c.title', 'c.published', 'c.createddate', 'c.createdby', 'c.task_id', 't.project_id', 't.title AS task', 'p.title AS project'))
 			->from($db->quoteName($this->tableName,$this->tableAlias))
-			->join('LEFT', $db->quoteName('#__nok_pm_tasks', 't').' ON ('.$db->quoteName('c.task_id').'='.$db->quoteName('t.id').')');
+			->join('LEFT', $db->quoteName('#__nok_pm_tasks', 't').' ON ('.$db->quoteName('c.task_id').'='.$db->quoteName('t.id').')')
 			->join('LEFT', $db->quoteName('#__nok_pm_projects', 'p').' ON ('.$db->quoteName('t.project_id').'='.$db->quoteName('p.id').')');
 		// special filtering (houshold, excludeid).
 		$app = JFactory::getApplication();
