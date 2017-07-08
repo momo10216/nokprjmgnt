@@ -36,6 +36,7 @@ class NoKPrjMgntModelTasks extends JModelList {
 	private function getFields() {
 		return array (
 			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`t`.`id`','right'),
+			"project_id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_PROJECT_ID_LABEL',true),'`t`.`project_id`','right'),
 			"title" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_TITLE_LABEL',true),'`t`.`title`','left'),
 			"project_title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL',true),'`p`.`title`','left'),
 			"project_access" => array(JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_ACCESS_LABEL',true),'`p`.`access`','left'),
