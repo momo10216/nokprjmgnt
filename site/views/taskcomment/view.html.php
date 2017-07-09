@@ -12,7 +12,6 @@
 defined('_JEXEC') or die;
 class NoKPrjMgntViewTaskComment extends JViewLegacy {
 	protected $item;
-	protected $taskItem;
 	protected $pageHeading = 'COM_NOKPRJMGNT_PAGE_TITLE_DEFAULT';
 	protected $paramsComponent;
 	protected $paramsMenuEntry;
@@ -29,8 +28,7 @@ class NoKPrjMgntViewTaskComment extends JViewLegacy {
 		$id = JFactory::getURI()->getVar('id');
 		if (!empty($id)) {
 			$this->item = $this->getModel()->getItem($id);
-			$this->taskItem = $this->getModel('task')->getItem($this->item->task_id);
-			$this->canDo = JHelperContent::getActions('com_nokprjmgnt','project',$this->taskItem->project_id);
+			$this->canDo = JHelperContent::getActions('com_nokprjmgnt','project',JFactory::getURI()->getVar('project_id'));
 		} else{
 			$this->canDo = JHelperContent::getActions('com_nokprjmgnt');
 		}

@@ -19,6 +19,7 @@ $data = JRequest::getVar('jform', array(), 'post', 'array');
 $uri = JFactory::getURI();
 $id = $uri->getVar('id');
 $projectId = $uri->getVar('project_id');
+if (!isset($data['task_id'])) { $data['task_id'] = $uri->getVar('task_id'); }
 if (!$id) {
 	// Now insert the loaded data to the database via a function in the model
 	$status = $model->storeData($data, $projectId);
