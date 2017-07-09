@@ -224,7 +224,6 @@ class NoKPrjMgntModelTaskComment extends JModelForm {
 		} else {
 			return false;
 		}
-
 	}
 
 	public function delete($id) {
