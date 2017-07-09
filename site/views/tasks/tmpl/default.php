@@ -22,6 +22,7 @@ $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
 $uriDelete->setVar('view','task');
 $uriDelete->setVar('option','com_nokprjmgnt');
+$uriDelete->setVar('redirect',JFactory::getURI()->toString());
 if ($this->paramsMenuEntry->get('detail_enable') != '0') {
 	$details = true;
 	$uriDetail = new JURI(JURI::Root().'/index.php');
