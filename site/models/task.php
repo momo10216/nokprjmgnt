@@ -158,7 +158,9 @@ class NoKPrjMgntModelTask extends JModelForm {
 					->where('t.id = ' . (int) $pk);
 				$db->setQuery($query);
 				$data = $db->loadObject();
-				$data->assign_user_ids = explode(',',$data->assign_user_ids);
+				if ($data) {
+					$data->assign_user_ids = explode(',',$data->assign_user_ids);
+				}
 				$this->_item[$pk] = $data;
 			} catch (Exception $e) {
 				$this->setError($e);
@@ -233,7 +235,9 @@ class NoKPrjMgntModelTask extends JModelForm {
 		}
 
 		$data['project_id'] = $projectId;
-		$data['assign_user_ids'] = implode(',',$data['assign_user_ids']);
+		if (isset($data['assign_user_ids']) && is_array($data['assign_user_ids'])) {
+			$data['assign_user_ids'] = implode(',',$data['assign_user_ids']);
+		}
 		$table = $this->getTable();
 		if ($table->save($data) === true) {
 			return $id;
