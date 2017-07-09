@@ -15,11 +15,13 @@ $uriEdit->setVar('layout','form');
 $uriEdit->setVar('Itemid','');
 $uriEdit->setVar('view','project');
 $uriEdit->setVar('option','com_nokprjmgnt');
+$uriEdit->setVar('redirect',urlencode(JFactory::getURI()->toString()));
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
 $uriDelete->setVar('view','project');
 $uriDelete->setVar('option','com_nokprjmgnt');
+$uriDelete->setVar('redirect',urlencode(JFactory::getURI()->toString()));
 if ($this->paramsMenuEntry->get('detail_enable') != '0') {
 	$details = true;
 	$uriDetail = new JURI(JURI::Root().'/index.php');

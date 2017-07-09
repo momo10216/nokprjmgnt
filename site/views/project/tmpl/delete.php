@@ -12,12 +12,16 @@ defined('_JEXEC') or die; // no direct access
 // Initialise variables.
 $uri = JFactory::getURI();
 $id = $uri->getVar('id');
+$redirect = $uri->getVar('redirect');
 $model = $this->getModel();
 // Delete record
 $status = $model->delete($id);
 if ($status !== false) {
-	echo JText::_("COM_NOKPRJMGNT_DATA_DELETED");
+	JFactory::getApplication()->enqueueMessage(JText::_('COM_NOKPRJMGNT_DATA_DELETED'));
 } else {
-	echo JText::_("COM_NOKPRJMGNT_DATA_DELETE_FAILED");
+	JError::raiseError( 4711, JText::_('COM_NOKPRJMGNT_DATA_DELETE_FAILED') );
+}
+if (!empty($redirect)) {
+	JFactory::getApplication()->redirect($redirect);
 }
  ?>

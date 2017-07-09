@@ -18,6 +18,7 @@ $model = $this->getModel();
 $data = JRequest::getVar('jform', array(), 'post', 'array');
 $uri = JFactory::getURI();
 $id = $uri->getVar('id');
+$redirect = $uri->getVar('redirect');
 $projectId = $uri->getVar('project_id');
 if (!isset($data['task_id'])) { $data['task_id'] = $uri->getVar('task_id'); }
 if (!$id) {
@@ -29,8 +30,11 @@ if (!$id) {
 }
 // Check if ok and display appropriate message.  This can also have a redirect if desired.
 if ($status !== false) {
-	echo JText::_("COM_NOKPRJMGNT_DATA_SAVED");
+	JFactory::getApplication()->enqueueMessage(JText::_('COM_NOKPRJMGNT_DATA_SAVED'));
 } else {
-	echo JText::_("COM_NOKPRJMGNT_DATA_NOT_SAVED");
+	JError::raiseError( 4711, JText::_('COM_NOKPRJMGNT_DATA_NOT_SAVED') );
+}
+if (!empty($redirect)) {
+	JFactory::getApplication()->redirect($redirect);
 }
 ?>

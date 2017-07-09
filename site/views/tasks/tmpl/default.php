@@ -17,12 +17,13 @@ $uriEdit->setVar('Itemid','');
 $uriEdit->setVar('view','task');
 $uriEdit->setVar('option','com_nokprjmgnt');
 $uriEdit->setVar('project_id',$projectId);
+$uriEdit->setVar('redirect',urlencode(JFactory::getURI()->toString()));
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
 $uriDelete->setVar('view','task');
 $uriDelete->setVar('option','com_nokprjmgnt');
-$uriDelete->setVar('redirect',JFactory::getURI()->toString());
+$uriDelete->setVar('redirect',urlencode(JFactory::getURI()->toString()));
 if ($this->paramsMenuEntry->get('detail_enable') != '0') {
 	$details = true;
 	$uriDetail = new JURI(JURI::Root().'/index.php');

@@ -31,11 +31,13 @@ $uriEdit->setVar('view',$view);
 $uriEdit->setVar('option',$component);
 $uriEdit->setVar('project_id',$projectId);
 $uriEdit->setVar('task_id',$taskId);
+$uriEdit->setVar('redirect',urlencode(JFactory::getURI()->toString()));
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');
 $uriDelete->setVar('view',$view);
 $uriDelete->setVar('option',$component);
+$uriDelete->setVar('redirect',urlencode(JFactory::getURI()->toString()));
 $add = JHelperContent::getActions('com_nokprjmgnt','project',$projectId)->get('core.edit');
 
 // Items
