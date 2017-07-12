@@ -40,8 +40,6 @@ $uriProject->setVar('id',$this->item->project_id);
 		<a style="text-decoration: none;" href="<?php echo $uriDelete->toString(); ?>" onClick="return confirm('<?php echo $deleteConfirmMsg; ?>');"><span class="icon-trash"></span></a>
 	<?php endif; ?>
 </p>
-<?php echo $this->item->description; ?>
-
 <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'description')); ?>
 <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'description', JText::_('COM_NOKPRJMGNT_TASK_TAB_DESCRIPTION', true)); ?>
 <?php echo $this->item->description; ?>
