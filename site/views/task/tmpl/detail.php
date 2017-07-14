@@ -15,6 +15,7 @@ $uriEdit->setVar('Itemid','');
 $uriEdit->setVar('view','task');
 $uriEdit->setVar('option','com_nokprjmgnt');
 $uriEdit->setVar('id',$this->item->id);
+$uriEdit->setVar('redirect',urlencode(JFactory::getURI()->toString()));
 $uriDelete = new JURI(JURI::Root().'/index.php');
 $uriDelete->setVar('layout','delete');
 $uriDelete->setVar('Itemid','');

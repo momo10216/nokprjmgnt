@@ -31,6 +31,7 @@ if ($this->paramsMenuEntry->get('detail_enable') != '0') {
 	$uriDetail->setVar('Itemid','');
 	$uriDetail->setVar('view','task');
 	$uriDetail->setVar('option','com_nokprjmgnt');
+	$uriDetail->setVar('redirect',urlencode(JFactory::getURI()->toString()));
 }
 // Get columns
 $cols = array();
