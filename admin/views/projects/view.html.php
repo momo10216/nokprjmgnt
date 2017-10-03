@@ -25,7 +25,7 @@ class NoKPrjMgntViewProjects extends JViewLegacy {
 	 * @return void
 	 */
 	function display($tpl = null)  {
-		NoKPrjMgntHelper::addSidebar('projects');
+		NoKPrjMgntHelper::addSubmenu('projects');
 		// Get data from the model
 		$this->items = $this->get('Items');
 		$this->pagination = $this->get('Pagination');

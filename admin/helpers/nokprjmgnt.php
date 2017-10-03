@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 class NoKPrjMgntHelper extends JHelperContent {
-	public static function addSidebar($vName) {
+	public static function addSubmenu($vName) {
 		JHtmlSidebar::addEntry(
 			JText::_('COM_NOKPRJMGNT_MENU_PROJECTS'),
 			'index.php?option=com_nokprjmgnt&view=projects',
