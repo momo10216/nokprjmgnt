@@ -7,7 +7,7 @@
 		<field name="title" type="text" label="COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL"
 			description="COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_DESC" size="40" required="true" />
 
-		<field name="description" type="editor" label="COM_NOKPRJMGNT_COMMENT_FIELD_DECRIPTION_LABEL"
+		<field name="description" type="editor" label="COM_NOKPRJMGNT_COMMENT_FIELD_DESCRIPTION_LABEL"
 			description="COM_NOKPRJMGNT_COMMENT_FIELD_DESCRIPTION_DESC" filter="JComponentHelper::filterText" buttons="true" />
 
 		<field addfieldpath="/administrator/components/com_nokprjmgnt/models/fields" name="task_id"
@@ -18,14 +18,10 @@
 			description="JFIELD_PUBLISHED_DESC" class="chzn-color-state"
 			filter="intval" size="1" default="1"
 		>
-			<option value="1">
-				JPUBLISHED</option>
-			<option value="0">
-				JUNPUBLISHED</option>
-			<option value="2">
-				JARCHIVED</option>
-			<option value="-2">
-				JTRASHED</option>
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
 		</field>
 
 		<field name="createdby" type="text" label="COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL"

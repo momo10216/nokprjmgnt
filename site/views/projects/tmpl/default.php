@@ -77,7 +77,7 @@ echo '</tr>'."\n";
 $detailColumn = $this->paramsMenuEntry->get('detail_column_link');
 //echo "<pre>".$detailColumn."</pre>";
 if ($this->items) {
-	$deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_TASK_CONFIRM_DELETE");
+	$deleteConfirmMsg = JText::_('COM_NOKPRJMGNT_PROJECT_CONFIRM_DELETE');
 	switch ($this->paramsMenuEntry->get( "border_type")) {
 		case "row":
 			$borderStyle = " style=\"border-top-style:solid; border-width:1px\"";

@@ -44,7 +44,7 @@ $add = JHelperContent::getActions('com_nokprjmgnt','project',$projectId)->get('c
 
 // Items
 if (is_array($commentItems) && (count($commentItems)>0)) {
-	$deleteConfirmMsg = JText::_("COM_NOKPRJMGNT_COMMENT_CONFIRM_DELETE");
+	$deleteConfirmMsg = JText::_('COM_NOKPRJMGNT_COMMENT_CONFIRM_DELETE');
 	foreach($commentItems as $item) {
 		$row = (array) $item;
 		echo "<div class=\"comment\">\n";

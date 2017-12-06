@@ -37,10 +37,10 @@ class NoKPrjMgntModelProjectComment extends JModelForm {
 	private function getFields() {
 		return array (
 			"id" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL',true),'`c`.`id`'),
-			"project_id" => array(JText::_('COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_PROJECT_ID_LABEL',true),'`c`.`project_id`'),
-			"project" => array(JText::_('COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_PROJECT_LABEL',true),'`p`.`title`'),
-			"title" => array(JText::_('COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_TITLE_LABEL',true),'`c`.`title`'),
-			"description" => array(JText::_('COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_DESCRIPTION_LABEL',true),'`c`.`description`'),
+			"project_id" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_PROJECT_ID_LABEL',true),'`c`.`project_id`'),
+			"project" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_PROJECT_LABEL',true),'`p`.`title`'),
+			"title" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_TITLE_LABEL',true),'`c`.`title`'),
+			"description" => array(JText::_('COM_NOKPRJMGNT_COMMENT_FIELD_DESCRIPTION_LABEL',true),'`c`.`description`'),
 			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`c`.`createdby`'),
 			"createddate" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDDATE_LABEL',true),'`c`.`createddate`'),
 			"modifiedby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_MODIFIEDBY_LABEL',true),'`c`.`modifiedby`'),

@@ -35,11 +35,11 @@ $uriProject->setVar('id',$this->item->project_id);
 <h1><?php echo JText::_("COM_NOKPRJMGNT_PROJECT_COMMENT_TITLE_LABEL").': '.$this->item->title; ?></h1>
 <p>
 	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL").':<a href="'.$uriProject->toString().'">'.$this->item->project.'</a>'; ?>
-	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_PUBLISHED_LABEL").':'.$this->item->published; ?>
-	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_CREATED_BY_LABEL").':'.$this->item->createdby; ?>
-	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_CREATED_DATE_LABEL").':'.$this->item->createddate; ?>
-	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_MODIFIED_BY_LABEL").':'.$this->item->modifieddby; ?>
-	<?php echo JText::_("COM_NOKPRJMGNT_PROJECT_COMMENT_FIELD_MODIFIED_DATE_LABEL").':'.$this->item->modifieddate; ?>
+	<?php echo JText::_("COM_NOKPRJMGNT_COMMENT_FIELD_PUBLISHED_LABEL").':'.$this->item->published; ?>
+	<?php echo JText::_("COM_NOKPRJMGNT_COMMENT_FIELD_CREATED_BY_LABEL").':'.$this->item->createdby; ?>
+	<?php echo JText::_("COM_NOKPRJMGNT_COMMENT_FIELD_CREATED_DATE_LABEL").':'.$this->item->createddate; ?>
+	<?php echo JText::_("COM_NOKPRJMGNT_COMMENT_FIELD_MODIFIED_BY_LABEL").':'.$this->item->modifieddby; ?>
+	<?php echo JText::_("COM_NOKPRJMGNT_COMMENT_FIELD_MODIFIED_DATE_LABEL").':'.$this->item->modifieddate; ?>
 	<?php if ($this->canDo->get('core.edit')): ?>
 		<a style="text-decoration: none;" href="<?php echo $uriEdit->toString(); ?>"><span class="icon-edit"></span></a>
 		<a style="text-decoration: none;" href="<?php echo $uriDelete->toString(); ?>" onClick="return confirm('<?php echo $deleteConfirmMsg; ?>');"><span class="icon-trash"></span></a>
