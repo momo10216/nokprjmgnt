@@ -27,7 +27,7 @@ class JFormFieldPmProjectColumn extends JFormField {
 			"id" => JText::_('COM_NOKPRJMGNT_COMMON_FIELD_ID_LABEL'),
 			"title" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_TITLE_LABEL'),
 			"description" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_DESCRIPTION_LABEL'),
-			"category_title" => JText::_('COM_NOKPRJMGNT_CATEGORY_FIELD_TITLE_LABEL'),
+			"category_title" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_CATEGORY_LABEL'),
 			"priority" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_PRIORITY_LABEL'),
 			"duedate" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_DUE_DATE_LABEL'),
 			"status" => JText::_('COM_NOKPRJMGNT_PROJECT_FIELD_STATUS_LABEL'),
