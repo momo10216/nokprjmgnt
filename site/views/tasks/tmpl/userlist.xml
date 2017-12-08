@@ -6,9 +6,9 @@
 	<fields name="request">
 		<fieldset name="request" label="COM_NOKPRJMGNT_REQUEST_OPTIONS_FIELDSET_LABEL">
 			<field name="format" type="list" default="html" label="COM_NOKPRJMGNT_OUTPUT_FORMAT_LABEL" description="COM_NOKPRJMGNT_OUTPUT_FORMAT_DESC" >
-				<!-- <option value="csv">CSV (Excel)</option> -->
-				<option value="html">HTML</option>
-				<!-- <option value="pdf">PDF</option> -->
+				<!-- <option value="csv">COM_NOKPRJMGNT_OUTPUT_FORMAT_CSV</option> -->
+				<option value="html">COM_NOKPRJMGNT_OUTPUT_FORMAT_HTML</option>
+				<!-- <option value="pdf">COM_NOKPRJMGNT_OUTPUT_FORMAT_PDF</option> -->
 			</field>
 		</fieldset>
 	</fields>
@@ -58,23 +58,23 @@
 		<fieldset name="advanced" label="COM_NOKPRJMGNT_ADVANCED_OPTIONS_FIELDSET_LABEL">
 			<field name="sort_column_1" type="pmtaskcolumn" columntype="view" default="titel" label="COM_NOKPRJMGNT_SORT_COLUMN_1_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_1_DESC"/>
 			<field name="sort_direction_1" type="radio" default="ASC" label="COM_NOKPRJMGNT_SORT_DIRECTION_1_LABEL" description="COM_NOKPRJMGNT_SORT_DIRECTION_1_DESC">
-				<option value="ASC">Ascending</option>
-				<option value="DESC">Descending</option>
+				<option value="ASC">COM_NOKPRJMGNT_SORT_DIRECTION_ASCENDING</option>
+				<option value="DESC">COM_NOKPRJMGNT_SORT_DIRECTION_DESCENDING</option>
 			</field>
 			<field name="sort_column_2" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_2_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_2_DESC"/>
 			<field name="sort_direction_2" type="radio" default="ASC" label="COM_NOKPRJMGNT_SORT_DIRECTION_2_LABEL" description="COM_NOKPRJMGNT_SORT_DIRECTION_2_DESC">
-				<option value="ASC">Ascending</option>
-				<option value="DESC">Descending</option>
+				<option value="ASC">COM_NOKPRJMGNT_SORT_DIRECTION_ASCENDING</option>
+				<option value="DESC">COM_NOKPRJMGNT_SORT_DIRECTION_DESCENDING</option>
 			</field>
 			<field name="sort_column_3" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_3_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_3_DESC"/>
 			<field name="sort_direction_3" type="radio" default="ASC" label="COM_NOKPRJMGNT_SORT_DIRECTION_3_LABEL" description="COM_NOKPRJMGNT_SORT_DIRECTION_3_DESC">
-				<option value="ASC">Ascending</option>
-				<option value="DESC">Descending</option>
+				<option value="ASC">COM_NOKPRJMGNT_SORT_DIRECTION_ASCENDING</option>
+				<option value="DESC">COM_NOKPRJMGNT_SORT_DIRECTION_DESCENDING</option>
 			</field>
 			<field name="sort_column_4" type="pmtaskcolumn" columntype="view" default="" label="COM_NOKPRJMGNT_SORT_COLUMN_4_LABEL" description="COM_NOKPRJMGNT_SORT_COLUMN_4_DESC"/>
 			<field name="sort_direction_4" type="radio" default="ASC" label="COM_NOKPRJMGNT_SORT_DIRECTION_4_LABEL" description="COM_NOKPRJMGNT_SORT_DIRECTION_4_DESC">
-				<option value="ASC">Ascending</option>
-				<option value="DESC">Descending</option>
+				<option value="ASC">COM_NOKPRJMGNT_SORT_DIRECTION_ASCENDING</option>
+				<option value="DESC">COM_NOKPRJMGNT_SORT_DIRECTION_DESCENDING</option>
 			</field>
 			<field name="@spacer" type="spacer" default="" label="" description="" />
 			<field name="table_center" type="radio" default="0" label="COM_NOKPRJMGNT_CENTER_LIST_LABEL" description="COM_NOKPRJMGNT_CENTER_LIST_DESC">
@@ -92,9 +92,9 @@
 			</field>
 			<field name="border_type" type="list" default="" label="COM_NOKPRJMGNT_BORDER_TYPE_LABEL" description="COM_NOKPRJMGNT_BORDER_TYPE_DESC">
 				<option value="">JNONE</option>
-				<option value="border">Border</option>
-				<option value="row">Row</option>
-				<option value="grid">Grid</option>
+				<option value="border">COM_NOKPRJMGNT_BORDER_TYPE_BORDER</option>
+				<option value="row">COM_NOKPRJMGNT_BORDER_TYPE_ROW</option>
+				<option value="grid">COM_NOKPRJMGNT_BORDER_TYPE_GRID</option>
 			</field>
 			<field name="cellpadding" type="integer" label="COM_NOKPRJMGNT_CELLPADDING_LABEL"
 				description="COM_NOKPRJMGNT_CELLPADDING_DESC" required="true" first="0" last="10" step="1" default="0" />
