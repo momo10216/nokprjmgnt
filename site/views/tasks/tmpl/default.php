@@ -48,7 +48,7 @@ $colcount = count($cols);
 $pbWidth = $this->paramsComponent->get('progress_width');
 if (empty($pbWidth)) { $pbWidth = '100px'; }
 $pbHeight = $this->paramsComponent->get('progress_height');
-if (empty($pbHeight)) { $pbHeight = '10px'; }
+if (empty($pbHeight)) { $pbHeight = '12px'; }
 $pbColor = $this->paramsComponent->get('progress_color');
 ?>
 <style type="text/css" media="screen">
@@ -59,6 +59,9 @@ $pbColor = $this->paramsComponent->get('progress_color');
 .pb-bar {
 	height: <?php echo $pbHeight; ?>;
 	background-color: <?php echo $pbColor; ?>;
+}
+.pb-value {
+	font-size: smaller;
 }
 </style>
 <?php
@@ -131,7 +134,7 @@ if ($this->items) {
 				}
 				if ($field == 'progress') {
 					if ($data == '') { $data = '0'; }
-					$data = '<div class="pb-border"><div class="pb-bar" style="width:'.$data.'%;">'.$data.'%</div></div>';
+					$data = '<div class="pb-border"><div class="pb-bar" style="width:'.$data.'%;"><span class="pb-value">'.$data.'%</span></div></div>';
 				}
 				echo '<td';
 				if (isset($aligns[$field]) && !empty($aligns[$field])) {
