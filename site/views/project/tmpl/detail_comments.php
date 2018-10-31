@@ -45,7 +45,7 @@ if (is_array($commentItems) && (count($commentItems)>0)) {
 	foreach($commentItems as $item) {
 		$row = (array) $item;
 		echo "<div class=\"comment\">\n";
-		echo "\t<div class=\"commenttitle\">".$row['title']."</div>\n";
+		echo "\t<h2 class=\"commenttitle\">".$row['title']."</h2>\n";
 		echo "\t<div class=\"commentmeta\">";
 		foreach ($metaColumns as $metaCol) {
 			if (isset($commentHeader[$metaCol]) && !empty($commentHeader[$metaCol])) {
@@ -69,6 +69,7 @@ if (is_array($commentItems) && (count($commentItems)>0)) {
 		echo "</div>\n";
 		echo "\t<div class=\"commenttext\">".$row['description']."</div>\n";
 		echo "</div>\n";
+		echo "<hr class=\"commentseparator\"/>\n";
 	}
 }
 if ($add) {
