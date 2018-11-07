@@ -46,6 +46,7 @@ class NoKPrjMgntModelTask extends JModelForm {
 			"priority" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_PRIORITY_LABEL',true),'`t`.`priority`'),
 			"duedate" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_DUE_DATE_LABEL',true),'`t`.`duedate`'),
 			"status" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_STATUS_LABEL',true),'`t`.`status`'),
+			"progress" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_PROGRESS_LABEL',true),'`t`.`progress`'),
 			"responsible_user_id" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_RESPONSIBLE_LABEL',true),'`t`.`responsible_user_id`'),
 			"assign_user_ids" => array(JText::_('COM_NOKPRJMGNT_TASK_FIELD_ASSIGN_LABEL',true),'`t`.`assign_user_ids`'),
 			"createdby" => array(JText::_('COM_NOKPRJMGNT_COMMON_FIELD_CREATEDBY_LABEL',true),'`p`.`createdby`'),
